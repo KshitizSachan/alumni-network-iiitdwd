@@ -1,8 +1,18 @@
 const PrimaryButton = () =>{
     return (
         <>
-            <div>Button Component</div>
+            <div>Primary Button Component</div>
         </>
     )
 }
-export  {PrimaryButton};
+
+const BorderButton = () =>{
+    return (
+        <>
+            <div>Border Button Component</div>
+        </>
+    )
+}
+
+
+export  {PrimaryButton, BorderButton};
