@@ -1,10 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const connection = require('./db');
+const userRoute = require('./routes/userRoute');
+const projectRoute = require('./routes/projectRoute');
+const newsRoute = require('./routes/newsRoute');
+const jobRoute = require('./routes/jobRoute');
 require('dotenv').config();
+
 
 const app = express();
 app.use(express.json());
+
+//--------------------------------------------------CORS Setup-----------------------------------------------
+
 const frontendUrl=process.env.FRONTENDURI;
 const allowedOrigins = [
     frontendUrl
@@ -21,20 +29,30 @@ app.use(cors({
     credentials: true // Enable credentials (cookies, authorization headers)
 }));
 
-const port = process.env.PORT || 5000;
+//-----------------------------------------------------Routers----------------------------------------------------------------
 
-//-----------------------------Connection to Database--------------------------------
-connection();
+app.use('/user',userRoute);
+app.use('/project',projectRoute);
+app.use('/news',newsRoute);
+app.use('/job',jobRoute);
 
-app.get('/', (req, res) =>{
-    res.send("Server up and running")
-})
+//---------------------------------------------------Milldewares--------------------------------------------------
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send("Server Side Error");
 });
 
+//---------------------------------------------Connection to Database----------------------------------------------------
+connection();
+
+//----------------------------------------------------Listening---------------------------------------------------------------
+
+app.get('/', (req, res) =>{
+    res.send("Server up and running")
+})
+
+const port = process.env.PORT || 5000;
 app.listen(port, () =>{
     console.log("Server up and running on ", port);
 })
