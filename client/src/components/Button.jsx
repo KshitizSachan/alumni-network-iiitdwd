@@ -14,5 +14,13 @@ const BorderButton = () =>{
     )
 }
 
+const SecondaryButton = () =>{
+    return (
+        <>
+            <div>Secondary Button Component</div>
+        </>
+    )
+}
 
-export  {PrimaryButton, BorderButton};
+
+export  {PrimaryButton, BorderButton, SecondaryButton};
