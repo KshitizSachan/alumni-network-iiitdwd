@@ -1,9 +1,14 @@
 const router = require('express').Router();
-
-router.post("/create", create); // News Creation
-router.get("/get", get); // Get News By ID
+const { jwtAuth } = require('../middlewares/jwtAuth');
+const { create } = require('../controllers/newsController/createController');
+const { remove } = require('../controllers/newsController/deleteController');
+const { edit } = require('../controllers/newsController/editController');
+const { get } = require('../controllers/newsController/getController');
+const { getAll } = require('../controllers/newsController/getAllController');
+router.post("/create",jwtAuth, create); // News Creation
+router.get("/get",jwtAuth, get); // Get News By ID
 router.get("/getAll", getAll); // Get All News
-router.put("/edit", edit); // Edit News Info
-router.delete("/delete", deleteUser); // Delete News
+router.put("/edit",jwtAuth, edit); // Edit News Info
+router.delete("/delete",jwtAuth, remove); // Delete News
 
-moudle.exports = router;
+module.exports = router;

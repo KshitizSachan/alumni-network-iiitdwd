@@ -1,17 +1,20 @@
 const mongoose = require('mongoose');
-
+const currentYear = new Date().getFullYear() % 100;// Required for calculating batch year max limit.
 //-------------------------------------------------Defining Job Schema------------------------------------------------
 const jobSchema = new mongoose.Schema({
     jobID: {
         type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId, // Automatically generates a unique identifier
+        index: true,
+        required: true,
+        auto: true,
     },
     floatedBy: {
         type: String,
         required: true
     },
     appliedBy:{
-        type: [String]
+        type: [String],
+        default:[]
     },
     title: {
     type: String,
@@ -52,7 +55,9 @@ const jobSchema = new mongoose.Schema({
         required: true
     },
     eligibleBatch: {
-        type: [Number]
+        type: [Number],
+        min: 20,
+        max: currentYear+4
     },
     stipend: {
         type: Number,

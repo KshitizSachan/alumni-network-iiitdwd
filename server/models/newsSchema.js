@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const newsSchema = new mongoose.Schema({
     newsID: {
         type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId, // Automatically generates a unique identifier
+        index: true,
+        required: true,
+        auto: true,
     },
     floatedBy: {
         type: String,
