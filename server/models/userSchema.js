@@ -2,71 +2,78 @@ const mongoose = require('mongoose');
 const currentYear = new Date().getFullYear() % 100;// Required for calculating batch year max limit. 
 
 //------------------------------------------------Subschema for notifications----------------------------------------
-const notificationSchema = new Schema({
+const notificationSchema = new mongoose.Schema({
     type: String,
     name: String,
-    userID: Number,
+    userID: String,
     objID: String
   });
 
+//------------------------------------------------Default Notifications----------------------------------------------
+const defaultNotification = {
+    type: "Account Creation",
+    name: "admin",
+    objID: "Yahoo! Account Created."
+  };
 //------------------------------------------------Subschema for jobLocation----------------------------------------
-const jobLocationSchema = new Schema({
-    city: String,
-    state: String,
-  });
+// const jobLocationSchema = new mongoose.Schema({
+//     city: String,
+//     state: String,
+//   });
 
 //-------------------------------------------------Defining User Schema------------------------------------------------
 const userSchema = new mongoose.Schema({
     userID: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: mongoose.Types.ObjectId, // Automatically generates a unique identifier
-    },
+        type: mongoose.Schema.Types.ObjectId,
+        index: true,
+        required: true,
+        auto: true,
+      },
     name: {
-    type: String,
-    required: true,
-    minlength: 3,
-    match: /^[a-zA-Z]+$/
+            type: String,
+            required: true,
+            minlength: 3,
     },
     email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-        validator: function (value) {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Example: Check if the email is in a valid format
-          return emailRegex.test(value);
-        },
-        message: 'Invalid email format',
-      }
+            type: String,
+            required: true,
+            unique: true,
+            validate: {
+            validator: function (value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Example: Check if the email is in a valid format
+            return emailRegex.test(value);
+            },
+            message: 'Invalid email format',
+            }
     },
     password: {
-    type: String,
-    required: true
+            type: String,
+            required: true
     },
     createdAt: {
-    type: Date,
-    default: Date.now
+            type: Date,
+            default: Date.now
     },
     rank: {
-    type: Number,
-    required: true,
-    enum: [0,1,2,3]
+            type: Number,
+            required: true,
+            enum: [0,1,2,3]
     },
     profilePicURL: {
         type: String,
-        default: "" // Yet to be filled
+        //default: "" // Yet to be filled
     },
     githubURL: {
         type: String,
-        unique: true
+        // unique: true
     },
     xURL: {
         type: String,
-        unique: true
+        // unique: true
     },
     linkedinURL: {
         type: String,
-        unique: true
+        // unique: true
     },
     branch: {
         type: String
@@ -76,8 +83,11 @@ const userSchema = new mongoose.Schema({
         min: 20,
         max: currentYear+4
     },
-    notifications: [notificationSchema],
-    jobLocation: [jobLocationSchema],
+    notifications: {
+        type: [notificationSchema],
+        default: [defaultNotification]
+    },
+    jobLocation: String,
     companyName: {
         type: String
     },
@@ -85,13 +95,13 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     floatedProjects: {
-        type: String
+        type: [String]
     },
     floatedJobs: {
-        type: String
+        type: [String]
     },
     offeredReferrals: {
-        type: String
+        type: [String]
     }
 });
 

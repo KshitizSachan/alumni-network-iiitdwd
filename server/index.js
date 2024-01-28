@@ -11,7 +11,7 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-//--------------------------------------------------CORS Setup-----------------------------------------------
+// ======================================================||   Cors Setup     ||=======================================
 
 const frontendUrl=process.env.FRONTENDURI;
 const allowedOrigins = [

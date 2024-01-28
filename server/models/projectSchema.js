@@ -4,14 +4,17 @@ const mongoose = require('mongoose');
 const projectSchema = new mongoose.Schema({
     projectID: {
         type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId, // Automatically generates a unique identifier
+        index: true,
+        required: true,
+        auto: true,
     },
     floatedBy: {
         type: String,
         required: true
     },
     appliedBy:{
-        type: [String]
+        type: [String],
+        default: []
     },
     title: {
         type: String,
@@ -19,7 +22,7 @@ const projectSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: [],// Yet to be filled
+        //enum: [],// Yet to be filled
         required: true
     },
     handler: {
