@@ -1,20 +1,46 @@
 //==============================|| Library Imports ||================================
 import {RecoilRoot} from "recoil";
-
+import useErrorBoundary from "use-error-boundary"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //==============================|| Project Imports ||================================
-import Count from "./components/Count";
-import {PrimaryButton} from './components/Buttons'
+import ErrorBoundaryPage from "./pages/ErrorBoundaryPage";
+import HomePage from "./pages/HomePage";
+import AboutUs from "./pages/AboutUs";
+import AlumniListing from "./pages/AlumniListing";
+import Jobs from "./pages/Jobs";
+import NewsHub from "./pages/NewsHub";
+import Profile from "./pages/Profile";
+import Page404 from "./pages/Page404";
+import LoginSignup from "./pages/LoginSignup";
 
 const App =() => {
+  const {ErrorBoundary,didCatch, error, reset} = useErrorBoundary()
+
   return (
 <>
+  {didCatch ? (
+      <ErrorBoundaryPage error={error} reset={reset} />
+  ) : (
+  <ErrorBoundary>
   <RecoilRoot>
-  <p className='text-2xl'>Hello from client</p>
-  <PrimaryButton/>
-    <Count/>
-    </RecoilRoot>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<HomePage/>} />
+        <Route exact path="/about" element={<AboutUs/>} />
+        <Route exact path="/alumni" element={<AlumniListing/>} />
+        <Route exact path="/news" element={<NewsHub/>} />
+        <Route exact path="/profile" element={<Profile/>} />
+        <Route exact path="/jobs" element={<Jobs/>} />
+        <Route exact path="/login" element={<LoginSignup/>} />
+        <Route path="*" element={<Page404/>} />
+      </Routes>
+    </Router>
+  </RecoilRoot>
+  </ErrorBoundary>
+      )}
 </>
   );
 }
 
 export default App;
+
