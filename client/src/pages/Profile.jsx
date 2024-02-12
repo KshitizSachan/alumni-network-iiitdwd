@@ -1,7 +1,7 @@
 const Profile =() => {
     return (
         <>
-            <p className='text-2xl'>Hello from Profile</p>
+            <p className='text-2xl'>Hello from Profile.</p>
         </>
     );
 }
