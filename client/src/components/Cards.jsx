@@ -134,7 +134,6 @@ const JobsCard = (props) => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

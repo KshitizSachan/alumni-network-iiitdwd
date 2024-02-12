@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        '2xl': '25px 25px 50px 0px rgba(0, 0, 0, 0.25)',
+      },
       colors: {
         //--------------------------------Custom Colors------------------------------------
         primaryPink: '#FA005E',
