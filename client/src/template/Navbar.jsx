@@ -23,7 +23,7 @@ const Navbar = () => {
 
     return (
       <>
-        <div className="shadow-2xl z-50 h-auto top-0 left-0 right-0 bg-white m-5 rounded-lg fixed flex justify-between items-center px-2 py-2 ">
+        <div className="shadow-navbarShadow z-50 h-auto top-0 left-0 right-0 bg-white m-5 rounded-lg fixed flex justify-between items-center px-2 py-2 ">
             <Link to="/" className="home-link flex">
                 {/*<img src={logo2} alt="logo" className="" />*/}
                 <div className="text-black hover:text-primaryPink flex">
