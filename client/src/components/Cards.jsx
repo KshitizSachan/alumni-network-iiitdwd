@@ -5,6 +5,7 @@ import Stipend from "../assets/Components/Cards/Stipend.svg";
 import Batch from "../assets/Components/Cards/Batch.svg";
 import Clock from "../assets/Components/Cards/Clock.svg";
 import Applicants from "../assets/Components/Cards/Applicants.svg";
+import Bgnewscard1 from "../assets/Components/Cards/Bgnewscard1.svg";
 
 const ProjectCard = (props) => {
   return (
@@ -43,7 +44,7 @@ const ProjectCard = (props) => {
 const JobsCard = (props) => {
   return (
     <>
-      <div className="flex justify-center" style={{maxWidth:'880px'}}>
+      <div className="flex justify-center" style={{ maxWidth: "880px" }}>
         <div
           className=" text-wrap rounded-lg shadow-md bg-white-100 w-11/12  
         sm:w-7/12 pt-3 pb-3"
@@ -56,12 +57,12 @@ const JobsCard = (props) => {
               {props.company}
             </p>
           </div>
-                   <div className=" flex m-2">
+          <div className=" flex m-2">
             <img src={Location} alt="Location" className="w-4 h-4 m-1" />
             {props.location}
           </div>
           <div className="flex m-2 ">
-          <img src={Clock} alt="Posted By" className="w-4 h-4 m-1" />
+            <img src={Clock} alt="Posted By" className="w-4 h-4 m-1" />
             <p>Posted: {props.posted}</p>
           </div>
           <div className="sm:grid sm:grid-cols-4 sm:grid-rows-2 hidden">
@@ -125,12 +126,18 @@ const JobsCard = (props) => {
 
           <div className="flex justify-evenly">
             <PrimaryButton name="Apply" />
-           <div className="hidden md:block"><BorderButton name="Request for Referal" />
-           </div> 
-           <div className="md:hidden"><BorderButton name ="Referal"/></div>
-           <div className="hidden md:block"><BorderButton name="View Profile" />
-           </div> 
-           <div className="md:hidden"><BorderButton name ="Profile"/></div>
+            <div className="hidden md:block">
+              <BorderButton name="Request for Referal" />
+            </div>
+            <div className="md:hidden">
+              <BorderButton name="Referal" />
+            </div>
+            <div className="hidden md:block">
+              <BorderButton name="View Profile" />
+            </div>
+            <div className="md:hidden">
+              <BorderButton name="Profile" />
+            </div>
           </div>
         </div>
       </div>
@@ -138,4 +145,50 @@ const JobsCard = (props) => {
   );
 };
 
-export { ProjectCard, JobsCard };
+const NewsCard = (props) => {
+  const link = props.link ? props.link : "https://www.google.co.in/";
+  return (
+    <a href={link}>
+    <div className="my-10 m-auto rounded-2xl sm:w-3/4 w-11/12 overflow-hidden">
+       
+      <div
+        className="relative rounded-2xl bg-cover p-4  bg-opacity-100"
+        style={{
+          backgroundImage: `url(${
+            Bgnewscard1
+          })`,
+        }}
+      >
+        <div className="absolute top-0 left-0 size-full bg-black/40"></div>
+        <div className="lg:mr-48 sm:ml-5 mb-5 relative">
+        <h3 className="text-3xl  font-normal text-white">
+          {props.title ||
+            "Shark Tank For IIIT Students. Participate and Show your creativity"}
+        </h3>
+        <p className="text-gray-200  font-thin text-sm pt-5">
+          {props.description ||
+            "Lorem ipsum dolor sit amet consectetur. Montes mauris feugiat eleifend faucibus id maecenas. Aliquet at ornare vitae convallis non amet lacus sdasd sdasds asdasdas asdad."}
+        </p>
+        <div className="flex  mt-4 gap-4 ">
+          <span className="text-md border p-4  md:max-h-8 flex place-items-center  rounded-2xl text-white">
+            {props.venue || "240 seater"}
+          </span>
+          <span className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white">
+            {props.event || "Cultural"}
+          </span>
+          <span className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white">
+            {props.club || "E-cell"}
+          </span>
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+</a>
+  );
+};
+
+
+
+export { ProjectCard, JobsCard, NewsCard };
