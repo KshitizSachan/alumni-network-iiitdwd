@@ -27,13 +27,9 @@ const Profile = () => {
           <BorderButton name={"Edit Profile"} />
         </div>
       </div>
-      {/* <div className="relative">
-        <div className="absolute -top-16 sm:-top-20 lg:-top-28 xl:-top-32 left-6 sm:left-14 lg:left-20 xl:left-28 2xl:left-36 overflow-hidden rounded-full size-32 sm:size-40 lg:size-52 xl:size-60">
-          <img src="/rnd.jpg" alt="profile-img" className="w-full object-cover" />
-        </div>
-      </div> */}
+
       <div className="flex flex-col md:flex-row">
-        <div className="relative flex flex-col items-center md:w-[37%] bg-[#d9d9d9]/40 gap-16 px-8">
+        <div className="relative flex flex-col items-center md:w-[37%] lg:w-[33%] bg-[#d9d9d9]/40 gap-16 px-8">
           <div className="absolute -top-16 sm:-top-20 lg:-top-28 xl:-top-32 left-8 sm:left-auto overflow-hidden rounded-full size-32 sm:size-40 lg:size-52 xl:size-60">
             <img
               src="/rnd.jpg"
@@ -58,7 +54,7 @@ const Profile = () => {
           <div className="">{/* Projects floated section */}</div>
         </div>
 
-        <div className="flex flex-col gap-14 px-8 py-6 bg-primaryBackground md:w-[63%]">
+        <div className="flex flex-col gap-14 px-8 pt-6 pb-40 bg-primaryBackground md:w-[63%] lg:w-[67%]">
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-8 lg:items-center">
             <p className="font-poppins text-3xl xl:text-4xl">Kshitiz Sachan</p>
             <div className="flex gap-3">
@@ -72,7 +68,7 @@ const Profile = () => {
           </div>
 
           {/* Details and notifications */}
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col xl:flex-row justify-between gap-8">
             <div className="flex flex-col gap-3">
               <ProfileDetail type={"Position"} detail={sample.position} />
               <ProfileDetail type={"Company"} detail={sample.company} />
@@ -80,6 +76,8 @@ const Profile = () => {
               <ProfileDetail type={"Batch"} detail={sample.batch} />
               <ProfileDetail type={"Branch"} detail={sample.branch} />
             </div>
+
+            <div className="border border-solid border-black/20"></div>
           </div>
         </div>
       </div>
