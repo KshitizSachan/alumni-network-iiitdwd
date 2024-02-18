@@ -1,14 +1,15 @@
-import Navbar from "../template/Navbar"
+import Navbar from "../template/Navbar";
 import { BorderButton } from "../components/Buttons";
 import ProfileDetail from "../components/ProfileDetail";
+import Footer from "../template/Footer";
 
 const sample = {
   position: "Software Engineer",
   company: "Walmart",
   email: "johndoe@hotmail.com",
   batch: 2020,
-  branch: "Computer Science and Engineering"
-}
+  branch: "Computer Science and Engineering",
+};
 
 const Profile = () => {
   return (
@@ -26,17 +27,27 @@ const Profile = () => {
           <BorderButton name={"Edit Profile"} />
         </div>
       </div>
-      <div className="relative">
+      {/* <div className="relative">
         <div className="absolute -top-16 sm:-top-20 lg:-top-28 xl:-top-32 left-6 sm:left-14 lg:left-20 xl:left-28 2xl:left-36 overflow-hidden rounded-full size-32 sm:size-40 lg:size-52 xl:size-60">
           <img src="/rnd.jpg" alt="profile-img" className="w-full object-cover" />
         </div>
-      </div>
+      </div> */}
       <div className="flex flex-col md:flex-row">
-        <div className="flex flex-col items-center pt-36 md:w-[37%] bg-[#d9d9d9]/40 gap-16 px-8">
-          <div className="flex flex-col items-center gap-8">
+        <div className="relative flex flex-col items-center md:w-[37%] bg-[#d9d9d9]/40 gap-16 px-8">
+          <div className="absolute -top-16 sm:-top-20 lg:-top-28 xl:-top-32 left-8 sm:left-auto overflow-hidden rounded-full size-32 sm:size-40 lg:size-52 xl:size-60">
+            <img
+              src="/rnd.jpg"
+              alt="profile-img"
+              className="w-full object-cover"
+            />
+          </div>
+
+          <div className="flex flex-col items-center gap-8 pt-28 md:pt-36">
             <div className="flex gap-1">
               <img src="/location-icon.svg" alt="" />
-              <p className="text-base lg:text-xl font-poppins">Bangalore, Karnataka</p>
+              <p className="text-base lg:text-xl font-poppins">
+                Bangalore, Karnataka
+              </p>
             </div>
             <div className="flex justify-between items-center w-full">
               <img src="/github.svg" alt="github-icon" />
@@ -44,9 +55,7 @@ const Profile = () => {
               <img src="/linkedin.svg" alt="linkedin-icon" />
             </div>
           </div>
-          <div className="">
-            {/* Projects floated section */}
-          </div>
+          <div className="">{/* Projects floated section */}</div>
         </div>
 
         <div className="flex flex-col gap-14 px-8 py-6 bg-primaryBackground md:w-[63%]">
@@ -74,6 +83,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
