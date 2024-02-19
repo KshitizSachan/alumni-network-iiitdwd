@@ -1,6 +1,7 @@
 import Navbar from "../template/Navbar";
 import { BorderButton } from "../components/Buttons";
 import ProfileDetail from "../components/ProfileDetail";
+import Notification from "../components/Notification";
 import Footer from "../template/Footer";
 
 const sample = {
@@ -10,6 +11,13 @@ const sample = {
   batch: 2020,
   branch: "Computer Science and Engineering",
 };
+
+const sampleNotifications = [
+  {id: 1, type: "REFERRAL_REQUEST", name: "Priyal", project: "", position: "SDE", company: "IIIT Dharwad", actionTaken: ""},
+  {id: 2, type: "PROJECT_COLLAB_REQUEST", name: "Priyal", project: "mini project", position: "", company: "", actionTaken: ""},
+  {id: 3, type: "PROJECT_COLLAB_RESPONSE", name: "Priyal", project: "mini project", position: "", company: "", actionTaken: "rejected"},
+  {id: 4, type: "REFERRAL_RESPONSE", name: "Priyal", project: "", position: "SDE", company: "IIIT Dharwad", actionTaken: "accepted"}
+]
 
 const Profile = () => {
   return (
@@ -68,7 +76,7 @@ const Profile = () => {
           </div>
 
           {/* Details and notifications */}
-          <div className="flex flex-col xl:flex-row justify-between gap-8">
+          <div className="flex flex-col xl:flex-row gap-10 xl:gap-6 2xl:gap-14">
             <div className="flex flex-col gap-3">
               <ProfileDetail type={"Position"} detail={sample.position} />
               <ProfileDetail type={"Company"} detail={sample.company} />
@@ -78,6 +86,12 @@ const Profile = () => {
             </div>
 
             <div className="border border-solid border-black/20"></div>
+
+            <div className="flex flex-col gap-6">
+              {sampleNotifications.map((item) => (
+                <Notification key={item.id} type={item.type} name={item.name} project={item.project} position={item.position} company={item.company} actionTaken={item.actionTaken} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
