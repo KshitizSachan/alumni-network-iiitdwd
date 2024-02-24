@@ -14,6 +14,8 @@ module.exports = {
         primaryPink: '#FA005E',
         primaryBackground: '#F7F6F6',
         accent: '#ffc107',
+        grad1: '#ffe6d5',
+        grad2: '#F97C54'
       },
       fontFamily: {
         'poppins': 'Poppins, sans-serif',
