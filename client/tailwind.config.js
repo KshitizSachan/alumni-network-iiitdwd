@@ -11,6 +11,8 @@ module.exports = {
       },
       colors: {
         //--------------------------------Custom Colors------------------------------------
+        backgroundColor: '#F7F6F6',
+        greyLine: '#D6D6D6',
         primaryPink: '#FA005E',
         primaryBackground: '#F7F6F6',
         accent: '#ffc107',

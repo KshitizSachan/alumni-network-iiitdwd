@@ -44,10 +44,10 @@ const ProjectCard = (props) => {
 const JobsCard = (props) => {
   return (
     <>
-      <div className="flex justify-center" style={{ maxWidth: "880px" }}>
+      <div className="flex " style={{ maxWidth: "1200px", minWidth: "1000px" }}>
         <div
-          className=" text-wrap rounded-lg shadow-md bg-white-100 w-11/12  
-        sm:w-7/12 pt-3 pb-3"
+          className=" text-wrap rounded-md shadow-md bg-white w-11/12
+        sm:w-7/12 pt-3 pb-3 pr-3 pl-3"
         >
           <div>
             <p className=" px-2 font-bold text-xl text-gray-800">
