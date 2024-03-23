@@ -3,9 +3,26 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import {BorderButton, PrimaryButton} from "../components/Buttons";
+import LoginSignup from "../pages/LoginSignup";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
     const [nav, setNav] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState("");
+
+    const notify = (msg) => {
+        toast.info(msg, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "colored"
+        })
+    };
 
     const handleNav = () => {
         setNav(!nav);
@@ -102,9 +119,13 @@ const Navbar = () => {
                 )}
             </ul>
             {isLaptop && (
-              <div className="flex">
-                  <Link to="/login"> <PrimaryButton name="Login" /> </Link> <Link to="/signup"> <BorderButton name="Signup" />
-                    </Link>
+                <div className="flex">
+                    <div onClick={() => setDialogOpen("login")}>
+                        <PrimaryButton name="Login" />
+                    </div>
+                    <div onClick={() => setDialogOpen("signup")}>
+                        <BorderButton name="Signup" />
+                    </div>
                 </div>
             )}
 
@@ -121,7 +142,7 @@ const Navbar = () => {
             >
                 <div className="">
                     <div onClick={handleNav}
-                         className="block md:hidden fixed right-7 top-10 ">
+                         className="block md:hidden fixed right-7 top-10">
                         {nav ? <AiOutlineClose size={20} /> : (null)}
                     </div>
                     {/* <h1 className='w-full text-3xl font-bold  m-4'>REACT.</h1> */}
@@ -141,11 +162,26 @@ const Navbar = () => {
                         <Link to="/about">About Us</Link>
                     </li>
                     <li className="p-4 border-b border-gray-600">
-                        <Link to="/login">Login/Signup</Link>
+                        <div className="cursor-pointer" onClick={() => setDialogOpen("login")}>
+                            Login/Signup
+                        </div>
                     </li>
                 </div>
             </ul>
         </div>
+        {dialogOpen!=="" && <LoginSignup type={dialogOpen} handleClose={() => setDialogOpen("")} callToast={notify} />}
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable={false}
+            pauseOnHover={false}
+            theme="colored"
+        />
       </>
     );
 };
