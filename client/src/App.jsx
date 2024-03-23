@@ -11,7 +11,7 @@ import Jobs from "./pages/Jobs";
 import NewsHub from "./pages/NewsHub";
 import Profile from "./pages/Profile";
 import Page404 from "./pages/Page404";
-import LoginSignup from "./pages/LoginSignup";
+// import LoginSignup from "./pages/LoginSignup";
 
 const App =() => {
   const {ErrorBoundary,didCatch, error, reset} = useErrorBoundary()
@@ -31,7 +31,7 @@ const App =() => {
         <Route exact path="/news" element={<NewsHub/>} />
         <Route exact path="/profile" element={<Profile/>} />
         <Route exact path="/jobs" element={<Jobs/>} />
-        <Route exact path="/login" element={<LoginSignup/>} />
+        {/* <Route exact path="/login" element={<LoginSignup/>} /> */}
         <Route path="*" element={<Page404/>} />
       </Routes>
     </Router>
