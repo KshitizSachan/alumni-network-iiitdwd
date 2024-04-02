@@ -6,7 +6,7 @@ import Batch from "../assets/Components/Cards/Batch.svg";
 import Clock from "../assets/Components/Cards/Clock.svg";
 import Applicants from "../assets/Components/Cards/Applicants.svg";
 import Bgnewscard1 from "../assets/Components/Cards/Bgnewscard1.svg";
-
+const _ = require('lodash');
 const ProjectCard = (props) => {
   return (
     <div className="flex justify-center">
@@ -42,6 +42,7 @@ const ProjectCard = (props) => {
 };
 
 const JobsCard = (props) => {
+  
   return (
     <>
       <div className="flex " style={{ maxWidth: "1200px", minWidth: "1000px" }}>
@@ -59,7 +60,7 @@ const JobsCard = (props) => {
           </div>
           <div className=" flex m-2">
             <img src={Location} alt="Location" className="w-4 h-4 m-1" />
-            {props.location}
+            {_.capitalize(props.location)}
           </div>
           <div className="flex m-2 ">
             <img src={Clock} alt="Posted By" className="w-4 h-4 m-1" />
@@ -87,8 +88,14 @@ const JobsCard = (props) => {
             </div>
 
             <p className="ml-8">{props.startDate}</p>
-            <p className="ml-8">{props.stipend}</p>
-            <p className="ml-8">{props.batch}</p>
+            <p className="ml-8">₹{props.stipend}</p>
+            <div className="ml-8">
+              {props.batch.map((item, index) => (
+                <span key={index}>
+                  {index > 0 && ','} {item}
+                </span>
+              ))}
+            </div>
             <p className="ml-10">{props.postedBy}</p>
           </div>
 
@@ -162,24 +169,22 @@ const NewsCard = (props) => {
         <div className="absolute top-0 left-0 size-full bg-black/40"></div>
         <div className="lg:mr-48 sm:ml-5 mb-5 relative">
         <h3 className="text-3xl  font-normal text-white">
-          {props.title ||
-            "Shark Tank For IIIT Students. Participate and Show your creativity"}
+          {props.title}
         </h3>
         <p className="text-gray-200  font-thin text-sm pt-5">
-          {props.description ||
-            "Lorem ipsum dolor sit amet consectetur. Montes mauris feugiat eleifend faucibus id maecenas. Aliquet at ornare vitae convallis non amet lacus sdasd sdasds asdasdas asdad."}
+          {props.description}
         </p>
-        <div className="flex  mt-4 gap-4 ">
-          <span className="text-md border p-4  md:max-h-8 flex place-items-center  rounded-2xl text-white">
-            {props.venue || "240 seater"}
-          </span>
-          <span className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white">
-            {props.event || "Cultural"}
-          </span>
-          <span className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white">
-            {props.club || "E-cell"}
-          </span>
-          </div>
+        {props.tags? 
+        (<div className="flex mt-4 gap-4">
+          {props.tags.map((tag, index) => (
+            <span
+              key={index}
+              className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>) : null}
         </div>
         
       </div>
