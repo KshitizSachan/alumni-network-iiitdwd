@@ -22,7 +22,7 @@ const PrimaryButton = ({ name, isDisabled = false }) => {
 const BorderButton = ({name}) => {
   return (
     <button
-      className= "flex justify-center items-center p-2 m-2 text-md font-semibold max-h-9  text-primaryPink bg-white rounded-md border border-primaryPink hover:bg-primaryPink hover:text-white hover:shadow-md transition duration-300 ease-in-out  "
+      className= "flex justify-center items-center min-w-max p-2 m-2 text-md font-semibold max-h-9  text-primaryPink bg-white rounded-md border border-primaryPink hover:bg-primaryPink hover:text-white hover:shadow-md transition duration-300 ease-in-out  "
       style={{ letterSpacing: '0.075em' ,borderWidth: '1.25px'}}
     >
       {name}
