@@ -35,6 +35,8 @@ export const fetcherGet = async (args) => {
 // const response = await fetcherPost(url, { token, wisperContent });
 
 export const fetcherPost = async (url, { token = '', body = {}} = {}) => {
+    console.log('Post Request Body:', body)
+    console.log('Post Request URL:', url)
     try {
         const res = await axiosInstance.post(
             url,
@@ -48,12 +50,9 @@ export const fetcherPost = async (url, { token = '', body = {}} = {}) => {
                 }
             }
         );
-        if (res.status !== 200) {
-            throw new Error('Error fetching data (from utils/axiosInstance), Status Text: ' + res.statusText);
-        }
         return res.data;
     } catch (error) {
-        console.error('Error fetching data (from utils/axiosInstance):', error);
+        throw new Error('Error fetching data (from utils/axiosInstance):', error);
     }
 };
 

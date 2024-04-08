@@ -1,13 +1,18 @@
 import PropTypes from "prop-types";
 
-const PrimaryButton = ({ name }) => {
+const PrimaryButton = ({ name, isDisabled = false }) => {
   PrimaryButton.propTypes = {
     name: PropTypes.string.isRequired,
   };
   return (
     <button
-      className= "flex justify-center items-center min-w-max p-2 m-2 text-md font-semibold text-white max-h-9 bg-primaryPink rounded-md border border-primaryPink hover:bg-hoverpink hover:text-white transition duration-300 ease-in-out "
-      style={{ letterSpacing: '0.075em', borderWidth: '1.25px'}}
+      className={`flex justify-center items-center p-2 m-2 text-md font-semibold max-h-9 rounded-md transition duration-300 ease-in-out ${
+        isDisabled
+          ? 'bg-gray-200 text-gray-300 border border-gray-300 cursor-not-allowed'
+          : 'text-white bg-primaryPink border-primaryPink hover:bg-hoverpink hover:text-white border hover:border-transparent'
+      }`}
+      style={{ letterSpacing: '0.075em', borderWidth: '1.25px' }}
+      disabled={isDisabled}
     >
       {name}
     </button>
