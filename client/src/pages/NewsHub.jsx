@@ -15,17 +15,10 @@ const NewsHub =() => {
             ) : (
                 data?.map((news, index) => (
                     <div key={index}>
-                        <div>Title: {news.title}</div>
-                        <div>Description: {news.description}</div>
+                        ]<NewsCard title={news.title} description={news.description} venue={news.tags[0]} event={news.tags[1]} club={news.tags[2]} link={news.link}   />
                     </div>
                 ))
             )}
-           
-            <NewsCard />
-            <NewsCard />
-            <NewsCard />
-            <NewsCard />
-
 
 
             <Footer/>

@@ -149,46 +149,110 @@ const NewsCard = (props) => {
   const link = props.link ? props.link : "https://www.google.co.in/";
   return (
     <a href={link}>
-    <div className="my-10 m-auto rounded-2xl sm:w-3/4 w-11/12 overflow-hidden">
-       
-      <div
-        className="relative rounded-2xl bg-cover p-4  bg-opacity-100"
-        style={{
-          backgroundImage: `url(${
-            Bgnewscard1
-          })`,
-        }}
-      >
-        <div className="absolute top-0 left-0 size-full bg-black/40"></div>
-        <div className="lg:mr-48 sm:ml-5 mb-5 relative">
-        <h3 className="text-3xl  font-normal text-white">
-          {props.title ||
-            "Shark Tank For IIIT Students. Participate and Show your creativity"}
-        </h3>
-        <p className="text-gray-200  font-thin text-sm pt-5">
-          {props.description ||
-            "Lorem ipsum dolor sit amet consectetur. Montes mauris feugiat eleifend faucibus id maecenas. Aliquet at ornare vitae convallis non amet lacus sdasd sdasds asdasdas asdad."}
-        </p>
-        <div className="flex  mt-4 gap-4 ">
-          <span className="text-md border p-4  md:max-h-8 flex place-items-center  rounded-2xl text-white">
-            {props.venue || "240 seater"}
-          </span>
-          <span className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white">
-            {props.event || "Cultural"}
-          </span>
-          <span className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white">
-            {props.club || "E-cell"}
-          </span>
+      <div className="my-10 m-auto rounded-2xl sm:w-3/4 w-11/12 overflow-hidden">
+        <div
+          className="relative rounded-2xl bg-cover p-4  bg-opacity-100"
+          style={{
+            backgroundImage: `url(${Bgnewscard1})`,
+          }}
+        >
+          <div className="absolute top-0 left-0 size-full bg-black/40"></div>
+          <div className="lg:mr-48 sm:ml-5 mb-5 relative">
+            <h3 className="text-3xl  font-normal text-white">
+              {props.title ||
+                "Shark Tank For IIIT Students. Participate and Show your creativity"}
+            </h3>
+            <p className="text-gray-200  font-thin text-sm pt-5">
+              {props.description ||
+                "Lorem ipsum dolor sit amet consectetur. Montes mauris feugiat eleifend faucibus id maecenas. Aliquet at ornare vitae convallis non amet lacus sdasd sdasds asdasdas asdad."}
+            </p>
+            <div className="flex  mt-4 gap-4 ">
+              <span className="text-md border p-4  md:max-h-8 flex place-items-center  rounded-2xl text-white">
+                {props.venue || "240 seater"}
+              </span>
+              <span className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white">
+                {props.event || "Cultural"}
+              </span>
+              <span className="text-md border p-4 md:max-h-8 flex place-items-center rounded-2xl text-white">
+                {props.club || "E-cell"}
+              </span>
+            </div>
           </div>
         </div>
-        
       </div>
-
-    </div>
-</a>
+    </a>
   );
 };
 
+const AlumniCard = (props) => {
+  return (
+    <>
+    <div className="md:flex hidden md:justify-evenly">
+    <div className="p-4 shadow-md rounded-md grid grid-cols-6 grid-rows-4 gap-x-3 w-full ">
+  <img
+    src="https://picsum.photos/536/354"
+    alt={props.name}
+    className="row-start-1 col-span-1 row-span-4 h-20 w-20 rounded-full"
+  />
+
+        <div
+          className="row-start-1  col-span-3 row-span-2 flex items-center mb-4 justify-start text-2xl font-bold
+    "
+        >
+          {props.name}
+        </div>
+        <div className="row-start-3 col-span-3 row-span-1 flex items-center   ">
+          <span className="mr-2 font-thin text-sm ">
+            {props.batch} || {props.branch}
+          </span>
+        </div>
+        <div className="row-start-4  col-span-3 row-span-1 flex items-center  ">
+          <span className="mr-2 font-thin text-sm ">
+            {props.position} || at {props.company}
+          </span>
+        </div>
+
+        <div className=" col-span-2 row-span-4 justify-center place-items-center row-start-1 flex">
+          <BorderButton name="View Profile" />
+          <div />
+        </div>
+      </div>
+    </div>
 
 
-export { ProjectCard, JobsCard, NewsCard };
+<div className="flex md:hidden justify-end">
+<div className="p-4 shadow-md rounded-md grid grid-cols-6 grid-rows-5 gap-x-3">
+  
+  <div className="row-start-1 col-span-2 row-span-5">
+  <img
+    src="https://picsum.photos/536/354"
+    alt={props.name}
+    className="row-start-1 col-span-2 row-span-4 h-16 w-28 rounded-full"
+  />
+  <div className="flex place-items-end">
+  <BorderButton name="Profile" />
+  </div>
+  </div>
+
+ 
+  <div className="row-start-1 col-start-3 col-span-4 row-span-5">
+<p className=" text-lg font-semibold"> {props.name}</p>
+<p className=" font-thin text-sm"> {props.batch}</p>
+<p className=" font-thin text-sm"> {props.branch}</p>
+<p className=" font-thin text-sm"> {props.position}</p>
+<p className=" font-thin text-sm"> {props.company}</p>
+
+    </div>
+
+  {/* <div className="col-span-2 row-span-4 justify-center place-items-center row-start-1 flex">
+    <BorderButton name="View Profile" />
+    <div /> */}
+  {/* </div> */}
+</div>
+</div>
+    </>
+
+  );
+};
+
+export { ProjectCard, JobsCard, NewsCard, AlumniCard };

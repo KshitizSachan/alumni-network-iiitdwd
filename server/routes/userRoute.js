@@ -10,7 +10,7 @@ const { verify } = require('../controllers/userController/otpController');
 router.post("/signup", signup); // User Signup
 router.post("/login", login); // User Login
 router.get("/get", get); // Get User By ID
-router.get("/getAll", jwtAuth, getAll); // Get All Users
+router.get("/getAll", getAll); // Get All Users
 router.put("/edit", jwtAuth, edit); // Edit User Info
 router.delete("/delete",jwtAuth, remove);// Delete User
 router.post("/signup/verify",verify); // OTP Verification
