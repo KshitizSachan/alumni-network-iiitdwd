@@ -6,43 +6,52 @@ import Batch from "../assets/Components/Cards/Batch.svg";
 import Clock from "../assets/Components/Cards/Clock.svg";
 import Applicants from "../assets/Components/Cards/Applicants.svg";
 import Bgnewscard1 from "../assets/Components/Cards/Bgnewscard1.svg";
+import {toast} from "react-toastify";
 const _ = require('lodash');
-const ProjectCard = (props) => {
-  return (
-    <div className="flex justify-center">
-      <section
-        className="flex flex-col text-wrap my-2 p-4 rounded-lg shadow-md bg-white-100 w-11/12
-      md:grid md:grid-cols-3 md:grid-rows-5 md:w-7/12"
-      >
-        <div className="md:grid md:col-span-1 md:row-span-5 md:gap-1">
-          <i className="text-xs font-semibold text-yellow-400">
-            {props.developmentGenre}
-          </i>
-          <p className=" text-md font-bold text-black-800">
-            {props.projectTitle}
-          </p>
-          <p className="text-gray-700">By: {props.handlerName}</p>
-          <p className="text-gray-700">{props.techStack}</p>
-          <div className=" flex m-1">
-            <img src={Applicants} alt="applicants" className="w-4 h-4 m-1" />
-            {props.applicants}
-          </div>
-        </div>
-        <p className="md:grid md:col-span-2 md:row-span-1"></p>
-        <p className="md:grid md:col-span-2 md:row-span-5">
-          {props.description}
-        </p>
-        <div className=" flex justify-center mt-2 md:flex md:col-span-3 md:justify-end">
-          <PrimaryButton name="APPLY" />
-          <BorderButton name="Handler Profile" />
-        </div>
-      </section>
-    </div>
-  );
-};
+//const ProjectCard = (props) => {
+//  return (
+//    <div className="flex justify-center">
+//      <section
+//        className="flex flex-col text-wrap my-2 p-4 rounded-lg shadow-md bg-white-100 w-11/12
+//      md:grid md:grid-cols-3 md:grid-rows-5 md:w-7/12"
+//      >
+//        <div className="md:grid md:col-span-1 md:row-span-5 md:gap-1">
+//          <i className="text-xs font-semibold text-yellow-400">
+//            {props.developmentGenre}
+//          </i>
+//          <p className=" text-md font-bold text-black-800">
+//            {props.projectTitle}
+//          </p>
+//          <p className="text-gray-700">By: {props.handlerName}</p>
+//          <p className="text-gray-700">{props.techStack}</p>
+//          <div className=" flex m-1">
+//            <img src={Applicants} alt="applicants" className="w-4 h-4 m-1" />
+//            {props.applicants}
+//          </div>
+//        </div>
+//        <p className="md:grid md:col-span-2 md:row-span-1"></p>
+//        <p className="md:grid md:col-span-2 md:row-span-5">
+//          {props.description}
+//        </p>
+//        <div className=" flex justify-center mt-2 md:flex md:col-span-3 md:justify-end">
+//          <PrimaryButton name="APPLY" />
+//          <BorderButton name="Handler Profile" />
+//        </div>
+//      </section>
+//    </div>
+//  );
+//};
 
 const JobsCard = (props) => {
-  
+  const rank=props.rank;
+  const shouldBlur = (value) =>{
+    if(rank == -1 && value != 'jobPosition')
+      return 'blur-sm';
+    else if(rank == 3 && value == 'postedBy')
+      return 'blur-sm';
+    return '';
+  }
+
   return (
     <>
       <div className="flex " style={{ maxWidth: "1200px", minWidth: "1000px" }}>
@@ -51,7 +60,7 @@ const JobsCard = (props) => {
         sm:w-7/12 pt-3 pb-3 pr-3 pl-3"
         >
           <div>
-            <p className=" px-2 font-bold text-xl text-gray-800">
+            <p className=" px-2 font-bold text-xl text-gray-800 ">
               {props.jobPosition}
             </p>
             <p className="  flex flex-col px-2 font-semibold text-gray-500">
@@ -87,16 +96,16 @@ const JobsCard = (props) => {
               <p className="hidden sm:block">Posted By</p>
             </div>
 
-            <p className="ml-8">{props.startDate}</p>
-            <p className="ml-8">₹{props.stipend}</p>
-            <div className="ml-8">
+            <p className={`ml-8 ${shouldBlur('startDate')}`}>{props.startDate}</p>
+            <p className={`ml-8 ${shouldBlur('stipend')}`}>₹{props.stipend}</p>
+            <div className={`ml-8 ${shouldBlur('batch')}`}>
               {props.batch.map((item, index) => (
                 <span key={index}>
                   {index > 0 && ','} {item}
                 </span>
               ))}
             </div>
-            <p className="ml-10">{props.postedBy}</p>
+            <p className={`ml-8 ${shouldBlur('postedBy')}`}>{props.postedBy}</p>
           </div>
 
           <div className="sm:hidden">
@@ -108,22 +117,22 @@ const JobsCard = (props) => {
               >
                 START DATE:
               </p>
-              <p className="ml-2">{props.startDate}</p>
+              <p className={`ml-2 ${shouldBlur('startDate')}`}>{props.startDate}</p>
             </div>
             <div className="flex items-center m-2 ml-3">
               <img src={Stipend} alt="Stipend" className="w-4 h-4" />
               <p className="hidden sm:block">Stipend</p>
-              <p className="ml-2">{props.stipend}</p>
+              <p className={`ml-2 ${shouldBlur('stipend')}`}>{props.stipend}</p>
             </div>
             <div className="flex items-center m-2 ml-3">
               <img src={Batch} alt="Batch" className="w-4 h-4" />
               <p className="hidden sm:block">Batch</p>
-              <p className="ml-2">{props.batch}</p>
+              <p className={`ml-2 ${shouldBlur('batch')}`}>{props.batch}</p>
             </div>
             <div className="flex items-center m-2 ml-3 ">
               <img src={Clock} alt="Posted By" className="w-4 h-4" />
               <p className="hidden sm:block">Posted By</p>
-              <p className="ml-2">{props.postedBy}</p>
+              <p className={`ml-2 ${shouldBlur('postedBy')}`}>{props.postedBy}</p>
             </div>
             <div className=" flex items-center m-2 ml-3 sm:hidden ">
               <img src={Clock} alt="posted at" className="w-4 h-4  " />
@@ -132,7 +141,7 @@ const JobsCard = (props) => {
           </div>
 
           <div className="flex justify-evenly">
-            <PrimaryButton name="Apply" />
+            {rank==0||rank==1||rank==2? <PrimaryButton onClick={() => toast.error('Login from iiitdwd account to apply')} name="Apply" isDisabled={false} /> : <PrimaryButton name="Apply" isDisabled={true} /> }
             <div className="hidden md:block">
               <BorderButton name="Request for Referal" />
             </div>
@@ -153,6 +162,15 @@ const JobsCard = (props) => {
 };
 
 const NewsCard = (props) => {
+    const rank=props.rank;
+    const shouldBlur = (value) =>{
+      if(rank == -1 && value != 'jobPosition')
+        return 'blur-sm';
+      else if(rank == 3 && value == 'postedBy')
+        return 'blur-sm';
+      return '';
+    }
+
   const link = props.link ? props.link : "https://www.google.co.in/";
   return (
     <a href={link}>
@@ -196,4 +214,4 @@ const NewsCard = (props) => {
 
 
 
-export { ProjectCard, JobsCard, NewsCard };
+export {  JobsCard, NewsCard };

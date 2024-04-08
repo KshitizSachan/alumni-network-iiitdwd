@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {get_fetcher} from '../utils/Fetcher'
 // import { Grid } from "@mui/material";
 import { JobsFilterButton } from "../components/jobsFilterButton";
@@ -7,9 +7,18 @@ import { JobsFilterButton } from "../components/jobsFilterButton";
 import Navbar from "../template/Navbar";
 import Footer from "../template/Footer";
 import { NewsCard } from '../components/Cards';
+import {useRecoilValue} from "recoil";
+import {userAtom} from "../store/atoms/User";
+import {Typography} from "@mui/material";
 
 const NewsHub =() => {
     const {data, isLoading} = useSWR("http://localhost:5000/news/getall", get_fetcher)
+  const user= useRecoilValue(userAtom);
+
+  useEffect(() => {
+    console.log('User', user);
+  }, [user]);
+
     useEffect(() =>{
         if(data){
             console.log('Data: ', data);
@@ -53,8 +62,15 @@ const NewsHub =() => {
    
     return (
         <>
-            <Navbar/>
-            <div className="bg-white pt-32 flex justify-center">
+          <Navbar/>
+          <p className='mt-32'></p>
+          {(user.basic.rank === 3) && (
+            <Typography className='flex justify-center' style={{marginBottom: '1rem'}}> Want to unblur the hidden sections ? Login using iiitdwd college mail</Typography>
+          )}
+          {(user.basic.rank === -1) && (
+            <Typography className='flex justify-center' style={{marginBottom: '1rem'}}> Login to get more access and unblur hidden items.</Typography>
+          )}
+            <div className="bg-white flex justify-center">
               <div className="flex font-bold items-center justify-center">
                 <div className='items-center'>
                   <img
@@ -98,7 +114,7 @@ const NewsHub =() => {
                 ) : (
                     filteredData?.map((news, index) => (
                     <div  key={index} className='mb-14'>
-                        <NewsCard title={news.title} tags={news.tags} tag1={news.tags[0]} tag2={news.tags[1]} tag3={news.tags[2]} description={news.description} />
+                        <NewsCard rank={user?.basic?.isLoggedIn ? user?.basic?.rank : -1} title={news.title} tags={news.tags} tag1={news.tags[0]} tag2={news.tags[1]} tag3={news.tags[2]} description={news.description} />
                     </div>
                     ))
                 )}

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Navbar from "../template/Navbar";
 import { BorderButton } from "../components/Buttons";
 import { Detail, EditDetails } from "../components/ProfileDetail";
 import Notification from "../components/Notification";
 import Footer from "../template/Footer";
 import { Bounce, ToastContainer } from "react-toastify";
+import {useRecoilValue} from "recoil";
+import {userAtom} from "../store/atoms/User";
 
 const sample = {
   _id: 223123213,
@@ -28,6 +30,12 @@ const sampleNotifications = [
 
 const Profile = () => {
   const [data, setData] = useState(sample)
+  const user= useRecoilValue(userAtom);
+
+  useEffect(() => {
+    console.log('User', user);
+  }, [user]);
+
 
   const handleDetailChange = (title, event) => {
     setData({...data, [title]: event.target.value})

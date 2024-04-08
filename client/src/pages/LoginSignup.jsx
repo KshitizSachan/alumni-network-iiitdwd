@@ -19,16 +19,19 @@ import { Visibility, VisibilityOff, Close } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { fetcherPost } from "../utils/axiosAPI";
+import {toast} from 'react-toastify';
+import {useSetRecoilState} from "recoil";
+import {userAtom} from "../store/atoms/User";
 
 const signupValidationSchema = yup.object({
   password: yup
     .string()
-    .required("Password is required")
-    .matches(
-      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
-    ),
-  usertype: yup.string().required("User Type is required"),
+    .required("Password is required"),
+//    .matches(
+//      /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+//      "Password must contain at least 8 characters, one uppercase, one number and one special case character"
+//    ),
+//  usertype: yup.string().required("User Type is required"),
   confirm: yup
     .string()
     .required("Confirm Password is required")
@@ -93,6 +96,8 @@ const LoginSignup = ({
     else return 1;
   });
   const [dialogContent, setDialogContent] = useState("login");
+  const setUser = useSetRecoilState(userAtom);
+
 
   const formik = useFormik({
     initialValues: {
@@ -115,9 +120,21 @@ const LoginSignup = ({
         };
         try {
           const response = await fetcherPost(url, { body });
+          setUser((prevData) => ({
+            ...prevData,
+            basic: {
+              ...prevData.basic,
+              isLoggedIn: true,
+              email: body.email,
+              rank: body.rank,
+            }
+          }))
+          console.log('Response', response);
+          toast.success('Logged in successfully');
           handleDialogClose();
-          callToast(response?.msg);
+          localStorage.setItem("token", response?.token);
         } catch (err) {
+          toast.error('Some Error ')
           console.log("Error while login/signup: ", err);
         }
       } else {
@@ -162,6 +179,8 @@ const LoginSignup = ({
       };
       try {
         const response = await fetcherPost(url, { body });
+        console.log('Response', response);
+        toast.success('Account Created Successfully');
         handleDialogClose();
         callToast(response?.msg);
         setDialogContent("login");

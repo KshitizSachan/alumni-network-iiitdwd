@@ -3,9 +3,12 @@ import useSWR from "swr";
 import { get_fetcher } from "../utils/Fetcher";
 import Navbar from "../template/Navbar";
 import Footer from "../template/Footer";
-import { Grid } from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import { JobsFilterButton } from "../components/jobsFilterButton";
 import { JobsCard } from "../components/Cards";
+import {userAtom} from "../store/atoms/User";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
+
 
 const Jobs = () => {
   const { data, isLoading } = useSWR(
@@ -13,11 +16,18 @@ const Jobs = () => {
     get_fetcher
   );
 
+  const user= useRecoilValue(userAtom);
+
   useEffect(() => {
-    if (data) {
-      console.log("Data: ", data);
-    }
-  }, [isLoading, data]);
+    console.log('User', user);
+  }, [user]);
+
+
+//  useEffect(() => {
+//    if (data) {
+//      console.log("Data: ", data);
+//    }
+//  }, [isLoading, data]);
 
   const [filteredData, setFilteredData] = useState([]);
   const [filters, setFilters] = useState({
@@ -106,9 +116,9 @@ const Jobs = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(filters);
-  }, [filters]);
+//  useEffect(() => {
+//    console.log(filters);
+//  }, [filters]);
 
   return (
     <>
@@ -116,6 +126,12 @@ const Jobs = () => {
         <Navbar />
         <div className="mx-24 pt-14">
           <p style={{ marginTop: "100px" }}></p>
+          {(user.basic.rank === 3) && (
+          <Typography className='flex justify-center' style={{marginBottom: '1rem'}}> Want to unblur the hidden sections ? Login using iiitdwd college mail</Typography>
+            )}
+          {(user.basic.rank === -1) && (
+            <Typography className='flex justify-center' style={{marginBottom: '1rem'}}> Login to get more access and unblur hidden items.</Typography>
+          )}
           <Grid container>
             <Grid xs={4} className="">
               <div className="bg-white min-h-40 pt-14 pb-14 rounded-md shadow-md">
@@ -279,6 +295,7 @@ const Jobs = () => {
                   sortedData.map((job, index) => (
                     <div key={index} className="mb-14">
                       <JobsCard
+                        rank={user?.basic?.isLoggedIn ? user?.basic?.rank : -1}
                         jobPosition={job.title}
                         company={job.companyName}
                         location={job.jobLocation}
