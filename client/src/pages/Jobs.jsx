@@ -5,7 +5,7 @@ import Navbar from "../template/Navbar";
 import Footer from "../template/Footer";
 import {Grid, Typography} from "@mui/material";
 import { JobsFilterButton } from "../components/jobsFilterButton";
-import { JobsCard } from "../components/Cards";
+import JobsCard from "../components/Cards/JobsCard";
 import {userAtom} from "../store/atoms/User";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 

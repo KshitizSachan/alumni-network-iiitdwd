@@ -6,7 +6,7 @@ import { JobsFilterButton } from "../components/jobsFilterButton";
 
 import Navbar from "../template/Navbar";
 import Footer from "../template/Footer";
-import { NewsCard } from '../components/Cards';
+import NewsCard from '../components/Cards/NewsCard';
 import {useRecoilValue} from "recoil";
 import {userAtom} from "../store/atoms/User";
 import {Typography} from "@mui/material";

@@ -6,10 +6,15 @@ import {BorderButton, PrimaryButton} from "../components/Buttons";
 import LoginSignup from "../pages/LoginSignup";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useRecoilValue} from "recoil";
+import {userAtom} from "../store/atoms/User";
+import {Avatar} from "@mui/material";
+import Avatar1 from "../assets/avatar-22.png";
 
 const Navbar = () => {
     const [nav, setNav] = useState(false);
     const [dialogOpen, setDialogOpen] = useState("");
+    const user= useRecoilValue(userAtom);
 
     const notify = (msg) => {
         toast.info(msg, {
@@ -118,7 +123,7 @@ const Navbar = () => {
                   </li>
                 )}
             </ul>
-            {isLaptop && (
+            {isLaptop && !user.basic.isLoggedIn &&(
                 <div className="flex">
                     <div onClick={() => setDialogOpen("login")}>
                         <PrimaryButton name="Login" />
@@ -128,7 +133,11 @@ const Navbar = () => {
                     </div>
                 </div>
             )}
-
+            {isLaptop && user.basic.isLoggedIn &&(
+              <Link to="/profile">
+                  <Avatar alt='profile' src={Avatar1} />
+              </Link>
+            )}
             <div onClick={handleNav} className="block md:hidden">
                 {nav ? (null) : <AiOutlineMenu size={20} />}
             </div>

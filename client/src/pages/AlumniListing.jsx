@@ -5,7 +5,8 @@ import { JobsFilterButton } from "../components/jobsFilterButton";
 import React, { useEffect, useState } from "react";
 import useSWR from 'swr';
 import { get_fetcher } from '../utils/Fetcher'
-import { AlumniCard } from "../components/Cards";
+// import { AlumniCard } from "../components/Cards";
+import AlumniCard from "../components/Cards/AlumniCard";
 const _ = require('lodash')
 
 const AlumniListing = () => {

@@ -283,5 +283,5 @@ const AlumniCard = (props) => {
   );
 };
 
-export { ProjectCard, JobsCard, NewsCard, AlumniCard };
+export { JobsCard, NewsCard, AlumniCard };
 
