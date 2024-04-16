@@ -38,7 +38,6 @@ const Detail = ({ type, detail }) => {
 };
 
 const EditDetails = ({ handleEdit, handleFormClose, data }) => {
-
   const handleSaveClick = async () => {
     // api call to update details with data._id
     toast.success("Saved successfully", {
