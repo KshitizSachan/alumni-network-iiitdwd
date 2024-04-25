@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const currentYear = new Date().getFullYear() % 100;// Required for calculating batch year max limit. 
+const currentYear = new Date().getFullYear();// Required for calculating batch year max limit. 
 
 //------------------------------------------------Subschema for notifications----------------------------------------
 const notificationSchema = new mongoose.Schema({
@@ -28,12 +28,12 @@ const userSchema = new mongoose.Schema({
         index: true,
         required: true,
         auto: true,
-      },
+          },
     name: {
             type: String,
             required: true,
             minlength: 3,
-    },
+          },
     email: {
             type: String,
             required: true,
@@ -61,38 +61,50 @@ const userSchema = new mongoose.Schema({
     },
     profilePicURL: {
         type: String,
-        //default: "" // Yet to be filled
+        default: "" // Yet to be filled,
+    
     },
     githubURL: {
         type: String,
+        default: ""
         // unique: true
     },
     xURL: {
         type: String,
+        default: ""
         // unique: true
     },
     linkedinURL: {
         type: String,
+        default: ""
         // unique: true
     },
     branch: {
-        type: String
+        type: String,
+        default: ""
+
     },
     batch: {
         type: Number,
-        min: 20,
-        max: currentYear+4
+        min: 2020,
+        max: currentYear+4,
+        default: null
     },
     notifications: {
         type: [notificationSchema],
         default: [defaultNotification]
     },
-    jobLocation: String,
+    jobLocation: {
+        type: String,
+        default: ""
+    },
     companyName: {
-        type: String
+        type: String,
+        default: ""
     },
     position: {
-        type: String
+        type: String,
+        default: ""
     },
     floatedProjects: {
         type: [String]
