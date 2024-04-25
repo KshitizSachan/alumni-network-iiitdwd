@@ -43,8 +43,17 @@ const generateAndSendOtp = async (email) =>{
     var mailOptions = {
       from: process.env.SMTP_MAIL,
       to: email,
-      subject: "AlmaMatter OTP Verification",
-      text: `The 6-digit OTP is ${otp}`,
+      subject: "Your OTP for AlmaMatter Verification ✔️",
+      text: `Dear User,
+  
+      Thank you for choosing AlmaMatter! Here is your OTP for verification:
+  
+      ${otp}
+  
+      This OTP will expire in 5 minutes. Please do not share it with anyone for security reasons.
+  
+      Regards,
+      The AlmaMatter Team`
     };
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {

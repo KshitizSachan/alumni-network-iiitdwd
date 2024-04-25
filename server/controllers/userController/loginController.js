@@ -22,7 +22,7 @@ const login = async (req, res) => {
                 const token = jwt.sign({ email: email, rank: rank }, process.env.jwtPassword, {
                   expiresIn: "4d"
                 });
-                return res.status(201).json({ msg: "Logged In Successfully", token }); // 201 Created with token
+                return res.status(201).json({ msg: "Logged In Successfully", token, userID: user.userID }); // 201 Created with token
               } catch (err) {
                 return res.status(500).json({ msg: "Error Generating JWT:", err }); // 500 Internal Server Error
               }
