@@ -11,9 +11,9 @@ import {toast} from "react-toastify";
 const JobsCard = (props) => {
   const rank=props.rank;
   const shouldBlur = (value) =>{
-    if(rank == -1 && value != 'jobPosition')
+    if(rank ===-1 && value !== 'jobPosition')
       return 'blur-sm';
-    else if(rank == 3 && value == 'postedBy')
+    else if(rank ===3 && value ==='postedBy')
       return 'blur-sm';
     return '';
   }
@@ -26,8 +26,11 @@ const JobsCard = (props) => {
         sm:w-7/12 pt-3 pb-3 pr-3 pl-3"
         >
           <div>
-            <p className=" px-2 font-bold text-xl text-gray-800 ">
-              {props.jobPosition}
+            <p className=" px-2 flex font-bold text-xl text-gray-800 ">
+              <p>{props.jobPosition}</p>
+              <div className="px-4 ml-7 py-1 bg-[#F5DEE7] border-2  h-fit border-[#FA005E] rounded-3xl text-xs  font-bold ">
+              {props.category ===1 ? "Internship" : "Job"}
+              </div>
             </p>
             <p className="  flex flex-col px-2 font-semibold text-gray-500">
               {props.company}
@@ -38,7 +41,7 @@ const JobsCard = (props) => {
             {_.capitalize(props.location)}
           </div>
           <div className="flex m-2 ">
-            <img src={Clock} alt="Posted By" className="w-4 h-4 m-1" />
+            <img src={Clock} alt="Posted " className="w-4 h-4 m-1" />
             <p>Posted: {props.posted}</p>
           </div>
           <div className="sm:grid sm:grid-cols-4 sm:grid-rows-2 hidden">
@@ -107,18 +110,22 @@ const JobsCard = (props) => {
           </div>
 
           <div className="flex justify-evenly">
-            {rank==0||rank==1||rank==2? <PrimaryButton onClick={() => toast.error('Login from iiitdwd account to apply')} name="Apply" isDisabled={false} /> : <PrimaryButton name="Apply" isDisabled={true} /> }
+            {rank===0||rank===1||rank===2? <PrimaryButton onClick={() => toast.error('Login from iiitdwd account to apply')} name="Apply" isDisabled={false} /> : <PrimaryButton name="Apply" isDisabled={true} /> }
             <div className="hidden md:block">
-              <BorderButton name="Request for Referal" />
+            {rank===0||rank===1||rank===2||rank===3? <BorderButton onClick={() => toast.error('Login from iiitdwd account to ask for referal')} name="Request for Referal" isDisabled={false} /> : <BorderButton name="Request for referal" isDisabled={true} /> }
             </div>
             <div className="md:hidden">
-              <BorderButton name="Referal" />
+            {rank===0||rank===1||rank===2||rank===3? <BorderButton onClick={() => toast.error('Login from iiitdwd account to ask for referal')} name=" Referal" isDisabled={false} /> : <BorderButton name="Referal" isDisabled={true} /> }
+              
             </div>
             <div className="hidden md:block">
-              <BorderButton name="View Profile" />
+            {rank===0||rank===1||rank===2? <BorderButton onClick={() => toast.error('Login from iiitdwd account to view profile')} name="View Profile" isDisabled={false} /> : <BorderButton name="View Profile" isDisabled={true} /> }
+
+              
             </div>
             <div className="md:hidden">
-              <BorderButton name="Profile" />
+            {rank===0||rank===1||rank===2? <BorderButton onClick={() => toast.error('Login from iiitdwd account to view profile')} name="Profile" isDisabled={false} /> : <BorderButton name="Profile" isDisabled={true} /> }
+
             </div>
           </div>
         </div>

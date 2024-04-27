@@ -3,9 +3,9 @@ import Bgnewscard1 from "../../assets/Components/Cards/Bgnewscard1.svg";
 const NewsCard = (props) => {
   const rank=props.rank;
   const shouldBlur = (value) =>{
-    if(rank == -1 && value != 'jobPosition')
+    if(rank === -1 && value !== 'jobPosition')
       return 'blur-sm';
-    else if(rank == 3 && value == 'postedBy')
+    else if(rank === 3 && value === 'postedBy')
       return 'blur-sm';
     return '';
   }
