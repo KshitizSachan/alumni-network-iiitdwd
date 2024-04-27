@@ -120,21 +120,26 @@ const LoginSignup = ({
         };
         try {
           const response = await fetcherPost(url, { body });
-          setUser((prevData) => ({
-            ...prevData,
-            basic: {
-              ...prevData.basic,
-              isLoggedIn: true,
-              email: body.email,
-              rank: body.rank,
-            }
-          }))
-          console.log('Response', response);
-          toast.success('Logged in successfully');
-          handleDialogClose();
-          localStorage.setItem("token", response?.token);
+          if (response?.msg === "Logged In Successfully") {
+            setUser((prevData) => ({
+              ...prevData,
+              basic: {
+                ...prevData.basic,
+                isLoggedIn: true,
+                email: body.email,
+                rank: body.rank,
+                id: response.userID
+              }
+            }))
+            toast.success('Logged in successfully');
+            handleDialogClose();
+            localStorage.setItem("token", response?.token);
+          } else {
+            toast.error(response?.msg);
+          }
+          // console.log('Response', response);
         } catch (err) {
-          toast.error('Some Error ')
+          toast.error('Some Error')
           console.log("Error while login/signup: ", err);
         }
       } else {

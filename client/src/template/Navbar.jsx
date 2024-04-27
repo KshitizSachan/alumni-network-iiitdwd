@@ -181,7 +181,7 @@ const Navbar = () => {
         {dialogOpen!=="" && <LoginSignup type={dialogOpen} handleClose={() => setDialogOpen("")} callToast={notify} />}
         <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -189,7 +189,7 @@ const Navbar = () => {
             pauseOnFocusLoss
             draggable={false}
             pauseOnHover={false}
-            theme="colored"
+            theme="light"
         />
       </>
     );
