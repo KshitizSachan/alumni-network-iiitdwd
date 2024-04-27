@@ -10,6 +10,15 @@ import { Link } from "react-router-dom";
 import CountUp from 'react-countup';
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useState, useRef } from 'react'
+import TextGeneration from './animations/TextRelated/TextGeneration';
+import SmallTextGeneration from './animations/TextRelated/SmallTextGeneration';
+import SmallPinkTextGeneration from './animations/TextRelated/SmallPinkTextGeneration';
+import BigTextGeneration from './animations/TextRelated/BigTextGeneration';
+import BigPinkTextGeneration from './animations/TextRelated/BigPinkTextGeneration';
+import { AwesomeButton } from "react-awesome-button";
+import { TypeAnimation } from 'react-type-animation';
+import OutlinedButton from '../components/animations/OutlinedButton';
+
 const StaticHome = ()=>
 {
     const countUpRef = useRef(null); 
@@ -32,11 +41,11 @@ const StaticHome = ()=>
         <div className='flex justify-between'>
             <div className='flex flex-col gap-5'>
                 <div className='flex gap-2'>
-                    <p className='text-6xl font-bold'>Connect with</p><p className='text-primaryPink text-6xl font-bold'>Alumni</p>
+                    <BigTextGeneration words={'Connect with'} /><BigPinkTextGeneration words={'Alumni'} />
                 </div><div className='flex gap-2'>
-                    <p className='text-6xl font-bold'>Gain</p><p className='text-primaryPink text-6xl font-bold'>Opportunities</p>
+                <BigTextGeneration words={'Gain'} /><BigPinkTextGeneration words={'Opportunities'} />
                 </div><div className='flex gap-2'>
-                    <p className='text-6xl font-bold'>Boost your</p><p className='text-primaryPink text-6xl font-bold'>Career</p>
+                <BigTextGeneration words={'Boost your'} /><BigPinkTextGeneration words={'Career'} />
                 </div>
             </div>
 
@@ -46,10 +55,13 @@ const StaticHome = ()=>
         <div className='flex'>
             <img src={NetworkHome} alt='network' width="600" height="400" />
             <div className='flex flex-col justify-around'>
-                <p className=' text-5xl font-semibold'>Intuitive Networking Platform Bridging Students and Alumni.</p>
-                <p className='text-3xl'>
+                <TextGeneration words={'Intuitive Networking Platform Bridging Students and Alumni'} />
+                <SmallTextGeneration words={'Outstanding features which help in increasing '} />
+                <SmallPinkTextGeneration words={'opportunities, collaboration, and innovation'} />
+                <SmallTextGeneration words={'of ideas'} />
+                {/* <p className='text-3xl'>
             Outstanding features which help in increasing <span className='text-primaryPink'>opportunities, collaboration, and innovation</span> of ideas.
-        </p>
+        </p> */}
             </div>
         </div>
 
@@ -89,14 +101,31 @@ const StaticHome = ()=>
         <div className='flex justify-between'>
             <div className='flex flex-col justify-evenly'>
                 <div>
-                    <p className='text-5xl font-semibold text-wrap'>Connect students and alumni with diverse </p>
-                    <p className='text-5xl font-semibold bg-gradient-to-r mt-2 from-[#FA003C]/20 inline-block p-3 rounded-sm'>Job Opportunities.</p>
+                    <p className='text-5xl font-semibold text-wrap' style={{ lineHeight: '1.5' }}>Connecting students and alumni unlocking</p>
+                    <p className='text-5xl font-semibold bg-gradient-to-r mt-2 from-[#FA003C]/20 inline-block p-3 rounded-sm' style={{ lineHeight: '1.5' }}>
+                    <TypeAnimation
+  sequence={[
+    // Same substring at the start will only be typed once, initially
+    'Job Opportunities',
+    1000,
+    'Intern Opportunities',
+    1000,
+    'Felloship Opportunities',
+    1000,
+    'Research Opportunities',
+    1000,
+  ]}
+  speed={50}
+  repeat={Infinity}
+/> 
+                    </p>
                 </div>
                 <p className='text-xl text-slate-600'>This job portal aims to provide not only students but also alumni with enhanced job opportunities to advance their individual careers.</p>
                 <div className='flex justify-start items-center gap-6'>
                     <p className='text-3xl font-semibold text-'>Looking for openings?</p>
                     <Link to="/jobs">
-                        <PrimaryButton name="Find Jobs" />
+                        {/* <PrimaryButton name="Find Jobs" /> */}
+                        <OutlinedButton clr="#FA005E" title={'Find Jobs'} />
                     </Link>
                 </div>
             </div>
@@ -108,14 +137,31 @@ const StaticHome = ()=>
             <img src={newsHome} alt='companylogo' style={{ width: '50%', height: 'auto' }} />
             <div className='flex flex-col justify-evenly'>
                 <div>
-                    <p className='text-5xl font-semibold text-wrap'>Stay Connected: Alumni Stay Abreast of College Events with the Latest Updates on </p>
-                    <p className='text-5xl font-semibold bg-gradient-to-r mt-2 from-[#FA003C]/20 p-3 inline-block rounded-sm'>News Hub</p>
+                    <p className='text-5xl font-semibold text-wrap' style={{ lineHeight: '1.5' }}>Stay Connected: Students Stay Abreast of Information with the Latest Updates on </p>
+                    <p className='text-5xl font-semibold bg-gradient-to-r mt-2 from-[#FA003C]/20 p-3 inline-block rounded-sm' style={{ lineHeight: '1.5' }}>
+                    <TypeAnimation
+  sequence={[
+    // Same substring at the start will only be typed once, initially
+    'College Events',
+    1000,
+    'Scholarships',
+    1000,
+    'Technical Events',
+    1000,
+    'Non-Technical Events',
+    1000,
+  ]}
+  speed={50}
+  repeat={Infinity}
+/> 
+                    </p>
                 </div>
                 <p className='text-xl text-slate-600'>The news hub will serve to keep alumni abreast of the latest events and advancements at the college, ensuring they remain informed about campus activities.</p>
                 <div className='flex justify-start items-center gap-6'>
                     <p className='text-3xl font-semibold'>Feeling Nostalgic?</p>
                     <Link to="/news">
-                        <PrimaryButton name="Read News" />
+                        {/* <PrimaryButton name="Read News" /> */}
+                        <OutlinedButton clr="#FA005E" title={'Read News'} />
                     </Link>
                 </div>
             </div>
