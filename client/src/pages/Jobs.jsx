@@ -1,14 +1,17 @@
+
+
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { get_fetcher } from "../utils/Fetcher";
 import Navbar from "../template/Navbar";
 import Footer from "../template/Footer";
-import {Grid, Typography} from "@mui/material";
+import { Grid, Typography, Pagination, TextField } from "@mui/material";
 import { JobsFilterButton } from "../components/jobsFilterButton";
 import JobsCard from "../components/Cards/JobsCard";
-import {userAtom} from "../store/atoms/User";
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-
+import { userAtom } from "../store/atoms/User";
+import { useRecoilValue } from "recoil";
+import AddJobDialog from "../components/AddJobDialog";
+import _ from 'lodash';
 
 const Jobs = () => {
   const { data, isLoading } = useSWR(
@@ -16,18 +19,23 @@ const Jobs = () => {
     get_fetcher
   );
 
-  const user= useRecoilValue(userAtom);
+  const user = useRecoilValue(userAtom);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageData, setCurrentPageData] = useState([]);
+  const [numOfPages, setNumOfPages] = useState(0);
+  const cardsPerPage = 5;
+  
 
   useEffect(() => {
-    console.log('User', user);
+    console.log("User", user);
   }, [user]);
 
-
-//  useEffect(() => {
-//    if (data) {
-//      console.log("Data: ", data);
-//    }
-//  }, [isLoading, data]);
+  //  useEffect(() => {
+  //    if (data) {
+  //      console.log("Data: ", data);
+  //    }
+  //  }, [isLoading, data]);
 
   const [filteredData, setFilteredData] = useState([]);
   const [filters, setFilters] = useState({
@@ -42,6 +50,8 @@ const Jobs = () => {
     year2026: false,
     year2027: false,
   });
+  
+    
 
   useEffect(() => {
     if (!data) return;
@@ -62,16 +72,19 @@ const Jobs = () => {
     setFilteredData(filteredJobs);
   }, [data, filters]);
 
-  const [sort, setSort] = useState({
-    recent: true,
-    stipend: false,
-  });
 
-  const [sortedData, setSortedData] = useState([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  
+    const [sort, setSort] = useState({
+      recent: true,
+      stipend: false,
+    });
+  
+    const [sortedData, setSortedData] = useState([]);
 
   useEffect(() => {
     setSortedData(filteredData);
-  }, [filteredData]);
+  }, [filteredData,filters]);
 
   useEffect(() => {
     if (sortedData.length > 0) {
@@ -100,9 +113,18 @@ const Jobs = () => {
     }));
   };
 
+  //
   const handleFilterClick = (filterName) => {
-    if (filterName === "jobs" || filterName === "internships") {
-      // If jobs or internships filter is clicked, set the other filter to false
+    if (filterName === "addjob") {
+      setIsDialogOpen(true);
+    } else if (filterName === "myjobs") {
+      const userEmail = user?.basic.email; // Assuming user email is accessible in userAtom
+      if (userEmail) {
+        const filteredJobs = data.filter((job) => job.handler === userEmail);
+        setFilteredData(filteredJobs);
+      }
+      
+    } else if (filterName === "jobs" || filterName === "internships") {
       setFilters((prevFilters) => ({
         ...prevFilters,
         [filterName]: !prevFilters[filterName],
@@ -116,37 +138,91 @@ const Jobs = () => {
     }
   };
 
-//  useEffect(() => {
-//    console.log(filters);
-//  }, [filters]);
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+    window.scroll(0, 0);
+  };
+
+  const getCurrentPageData = (currPage) => {
+    if (filteredData?.length < cardsPerPage) {
+      setCurrentPageData(filteredData);
+    } else {
+      const startIndex = (currPage - 1) * cardsPerPage;
+      const endIndex = startIndex + cardsPerPage;
+      const newPageData = filteredData?.slice(startIndex, endIndex);
+      setCurrentPageData(newPageData);
+    }
+  };
+
+  useEffect(() => {
+    if (filteredData) {
+      console.log(filteredData);
+      setNumOfPages(Math.ceil(filteredData.length / cardsPerPage));
+      getCurrentPageData(1);
+    }
+    setCurrentPage(1);
+    // eslint-disable-next-line
+  }, [filteredData]);
+
+  useEffect(() => {
+    getCurrentPageData(currentPage);
+    // eslint-disable-next-line
+  }, [currentPage]);
+
+  //  useEffect(() => {
+  //    console.log(filters);
+  //  }, [filters]);
+
+  useEffect(() => {
+    if (sortedData) {
+      const pages = Math.ceil(sortedData.length / cardsPerPage);
+      setNumOfPages(pages);
+      setCurrentPageData(sortedData.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage));
+    }
+  }, [sortedData, currentPage, cardsPerPage]);
 
   return (
     <>
       <div className="bg-backgroundColor">
         <Navbar />
         <div className="mx-24 pt-14">
-          <p style={{ marginTop: "100px" }}></p>
-          {(user.basic.rank === 3) && (
-          <Typography className='flex justify-center' style={{marginBottom: '1rem'}}> Want to unblur the hidden sections ? Login using iiitdwd college mail</Typography>
-            )}
-          {(user.basic.rank === -1) && (
-            <Typography className='flex justify-center' style={{marginBottom: '1rem'}}> Login to get more access and unblur hidden items.</Typography>
+        <p style={{ marginTop: "100px" }}></p>
+          {user.basic.rank === 3 && (
+            <Typography
+              className="flex justify-center"
+              style={{ marginBottom: "1rem" }}
+            >
+              {" "}
+              Want to unblur the hidden sections ? Login using iiitdwd college
+              mail
+            </Typography>
           )}
-          <Grid container>
-            <Grid xs={4} className="">
+          {user.basic.rank === -1 && (
+            <Typography
+              className="flex justify-center"
+              style={{ marginBottom: "1rem" }}
+            >
+              {" "}
+              Login to get more access and unblur hidden items.
+            </Typography>
+          )}
+         <Grid container>
+            <Grid item xs={4} className="">
               <div className="bg-white min-h-40 pt-14 pb-14 rounded-md shadow-md">
-                <Grid xs={12} className="flex justify-center mb-2">
-                  <div className="flex font-bold">
-                    <div>
-                      <img
-                        src="/actions_icon.svg"
-                        alt="actions-icon"
-                        className="mt-1.5 mr-1 h-6"
-                      />
+                {user.basic.rank === 1 && (
+                  <Grid xs={12} className="flex justify-center mb-2">
+                    <div className="flex font-bold">
+                      <div>
+                        <img
+                          src="/actions_icon.svg"
+                          alt="actions-icon"
+                          className="mt-1.5 mr-1 h-6"
+                        />
+                      </div>
+                      <div className="ml-1 text-2xl">Actions</div>
                     </div>
-                    <div className="ml-1 text-2xl">Actions</div>
-                  </div>
-                </Grid>
+                  </Grid>
+                )}
                 <Grid xs={12} className="flex justify-center">
                   <div className="flex">
                     {/* <div onClick={() => handleFilterClick("myjobs")}>
@@ -156,7 +232,9 @@ const Jobs = () => {
                       className="ml-1"
                       onClick={() => handleFilterClick("addjob")}
                     >
-                      <JobsFilterButton name="ADD JOB" used={filters.addjob} />
+                      {user.basic.rank === 1 && (
+                        <JobsFilterButton name="ADD JOB" />
+                      )}
                     </div>
                   </div>
                 </Grid>
@@ -174,9 +252,14 @@ const Jobs = () => {
                 </Grid>
                 <Grid xs={12} className="flex justify-center">
                   <div className="flex">
-                    <div onClick={() => handleFilterClick("myjobs")}>
-                      <JobsFilterButton name="MY JOBS" used={filters.myjobs} />
-                    </div>
+                    {user.basic.rank === 1 && (
+                      <div onClick={() => handleFilterClick("myjobs")}>
+                        <JobsFilterButton
+                          name="MY JOBS"
+                          used={filters.myjobs}
+                        />
+                      </div>
+                    )}
                     <div onClick={() => handleFilterClick("jobs")} className="">
                       <JobsFilterButton name="JOBS" used={filters.jobs} />
                     </div>
@@ -288,31 +371,54 @@ const Jobs = () => {
               <div className="h-full bg-greyLine w-0.5"></div>
             </Grid>
             {isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <Grid xs={7} className="">
-                {sortedData && sortedData.length > 0 ? (
-                  sortedData.map((job, index) => (
-                    <div key={index} className="mb-14">
-                      <JobsCard
-                        rank={user?.basic?.isLoggedIn ? user?.basic?.rank : -1}
-                        jobPosition={job.title}
-                        company={job.companyName}
-                        location={job.jobLocation}
-                        posted={new Date(job.createdAt).toLocaleDateString(
-                          "en-GB"
-                        )}
-                        stipend={job.stipend}
-                        batch={job.eligibleBatch}
-                        postedBy={job.floatedBy}
-                        startDate={new Date(job.startDate).toLocaleDateString(
-                          "en-GB"
-                        )}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-center">No Match Found</p>
+                <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
+                  Loading...
+                </p>
+              ) : currentPageData?.length === 0 ? (
+                <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
+                  {" "}
+                  No results found.....
+                </p>
+              ) : (
+              <Grid xs={7}>
+                {currentPageData.map((job, index) => (
+                  <div key={index} className="mb-14">
+                    <JobsCard
+                     rank={user?.basic?.isLoggedIn ? user?.basic?.rank : -1}
+                     jobPosition={job.title}
+                     company={job.companyName}
+                     category={job.category}
+                     location={job.jobLocation}
+                     posted={new Date(job.createdAt).toLocaleDateString(
+                       "en-GB"
+                     )}
+                     stipend={job.stipend}
+                     batch={job.eligibleBatch}
+                     postedBy={job.floatedBy}
+                     startDate={new Date(job.startDate).toLocaleDateString(
+                       "en-GB"
+                     )}
+                    />
+                  </div>
+                ))}
+                {numOfPages > 1 && (
+                  <Pagination
+                  count={numOfPages}
+                  page={currentPage}
+                  onChange={handlePageChange}
+                  variant="outlined"
+                  sx={{
+                    "& .MuiPaginationItem-root": {
+                      color: "#FA005E",
+                      borderColor: "#FA005E",
+                      backgroundColor: "white",
+                    },
+                  }}
+                  size="large"
+                  //color="secondary"
+                  //hidePrevButton
+                  //hideNextButton
+                />
                 )}
               </Grid>
             )}
@@ -320,8 +426,19 @@ const Jobs = () => {
         </div>
         <Footer />
       </div>
+      {isDialogOpen && (
+        <AddJobDialog
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          setSortedData={setSortedData}
+          setFilters={setFilters}
+        />
+      )}
     </>
   );
 };
 
 export default Jobs;
+
+
+
