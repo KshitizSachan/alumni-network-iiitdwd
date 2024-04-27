@@ -5,6 +5,7 @@ const userRoute = require('./routes/userRoute');
 const projectRoute = require('./routes/projectRoute');
 const newsRoute = require('./routes/newsRoute');
 const jobRoute = require('./routes/jobRoute');
+const alumniRoute = require('./routes/alumniRoute');
 require('dotenv').config();
 
 
@@ -35,6 +36,7 @@ app.use('/user',userRoute);
 app.use('/project',projectRoute);
 app.use('/news',newsRoute);
 app.use('/job',jobRoute);
+app.use('/alumni',alumniRoute);
 
 //---------------------------------------------------Milldewares--------------------------------------------------
 

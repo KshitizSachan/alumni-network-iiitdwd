@@ -3,7 +3,7 @@ const getAll = async (req, res) =>{
     try {
         const users = await userModel.find({});
         if (!users) {
-          return res.status(401).json({ msg: "No Users" }); // 401 Unauthorized
+          return res.status(404).json({ msg: "Not Found" }); // 404 Not Found
         }
         return res.json(users);
       } catch (err) {
