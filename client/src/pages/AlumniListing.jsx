@@ -20,7 +20,7 @@ const AlumniListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageData, setCurrentPageData] = useState([]);
   const [numOfPages, setNumOfPages] = useState(0);
-  const cardsPerPage = 8;
+  const cardsPerPage = 5;
 
   const [filters, setFilters] = useState({
     All: true,
@@ -47,9 +47,9 @@ const AlumniListing = () => {
       if (filters.year2025 && user.batch !== 2025) return false;
       if (filters.year2026 && user.batch !== 2026) return false;
       if (filters.year2027 && user.batch !== 2027) return false;
-      if (filters.CSE && user.branch !== "cse") return false;
-      if (filters.ECE && user.branch !== "ece") return false;
-      if (filters.DSAI && user.branch !== "dsai") return false;
+      if (filters.CSE && user.branch.toLowerCase() != "cse") return false;
+      if (filters.ECE && user.branch.toLowerCase() != "ece") return false;
+      if (filters.DSAI && user.branch.toLowerCase() != "dsai") return false;
       if (
         searchQuery &&
         !user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -62,13 +62,16 @@ const AlumniListing = () => {
     setFilteredData(filteredAlumni);
   }, [data, filters, searchQuery]);
 
+  console.log('Data: ', data);
+  console.log('Filtered Data: ', filteredData);
+
   const handleFilterClick = (filterName) => {
     setFilters((prevFilters) => ({
-      // ...prevFilters,
+      ...Object.fromEntries(Object.entries(prevFilters).map(([key, _]) => [key, false])),
       [filterName]: !prevFilters[filterName],
     }));
   };
-
+  
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
     window.scroll(0, 0);
