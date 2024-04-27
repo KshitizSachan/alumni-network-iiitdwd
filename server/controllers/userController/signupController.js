@@ -41,9 +41,9 @@ const generateAndSendOtp = async (email) =>{
       email,otp,
     })
     var mailOptions = {
-      from: process.env.SMTP_MAIL,
+      from: '"AlmaMatter" <' + process.env.SMTP_MAIL + '>',
       to: email,
-      subject: "Your OTP for AlmaMatter Verification ✔️",
+      subject: "Your OTP for AlmaMatter Verification ✅",
       text: `Dear User,
   
       Thank you for choosing AlmaMatter! Here is your OTP for verification:
