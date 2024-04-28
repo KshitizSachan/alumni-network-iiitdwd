@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -10,6 +10,11 @@ import {
 } from "@mui/material";
 import { fetcherPost } from "../utils/axiosAPI";
 import { toast } from "react-toastify";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../store/atoms/User";
+
+
+
 
 const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
   const [jobDetails, setJobDetails] = useState({
@@ -23,6 +28,13 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
     category: "",
     contact: "",
   });
+
+  const user = useRecoilValue(userAtom);
+
+
+  useEffect(() =>{
+      console.log('User details from atom: ', user);
+  }, [user])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,17 +55,18 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
       !jobDetails.batch ||
       !jobDetails.startDate ||
       !jobDetails.stipend ||
-      !jobDetails.postedBy ||
       !jobDetails.category ||
-      !jobDetails.contact ||
-      !jobDetails.emailId
+      !jobDetails.contact 
     ) {
       toast.error("Please fill in all required fields");
       return;
     }
     const url = "/job/create";
+
+
     const body = {
-      floatedBy: jobDetails.postedBy,
+
+      floatedBy: user.basic.name,
       jobLocation: jobDetails.location,
       companyName: jobDetails.company,
       eligibleBatch: jobDetails.batch.split(","),
@@ -61,7 +74,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
       stipend: jobDetails.stipend,
       startDate: jobDetails.startDate,
       category: jobDetails.category === 'job' ? '0' : '1',
-      handler: jobDetails.emailId,
+      handler: user.basic.email,
       whatsappNo: jobDetails.contact,
       createdAt: Date.now()
 
@@ -169,7 +182,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
           margin="dense"
         />
         
-        <TextField
+        {/* <TextField
           label="Posted By"
           type="text"
           name="postedBy"
@@ -177,8 +190,8 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
           value={jobDetails.postedBy}
           onChange={handleChange}
           margin="dense"
-        />
-         <TextField
+        /> */}
+         {/* <TextField
           label="Email ID"
           type="email"
           name="emailId"
@@ -186,7 +199,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
           value={jobDetails.emailId}
           onChange={handleChange}
           margin="dense"
-        />
+        /> */}
         <TextField
           label="Contact Number"
           type="tel"
