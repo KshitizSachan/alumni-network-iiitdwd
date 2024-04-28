@@ -13,7 +13,7 @@ const AboutUs = () => {
   return (
     <>
       <Navbar />
-      <div className="mx-24 pt-14 pb-0">
+      <div className="mx-24 mt-28 mb-24">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={3}>
             <TeamCard
