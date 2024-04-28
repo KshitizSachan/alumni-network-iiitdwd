@@ -121,15 +121,37 @@ const LoginSignup = ({
         try {
           const response = await fetcherPost(url, { body });
           if (response?.msg === "Logged In Successfully") {
+            const userId = response.userID;
+            const body={
+              userID: userId
+            }
+            const userDetails = await fetcherPost('user/get', {body})
+            console.log('User details: ', userDetails);
             setUser((prevData) => ({
               ...prevData,
               basic: {
                 ...prevData.basic,
                 isLoggedIn: true,
-                email: body.email,
-                rank: body.rank,
-                id: response.userID
-              }
+                email: userDetails.email,
+                rank: userDetails.rank,
+                id: response.userID,
+                name: userDetails.name
+              },
+              profilePic: userDetails.profilePicURL,
+              socials: {
+                githubUrl: userDetails.githubURL,
+                linkedInUrl: userDetails.linkedinURL,
+                xUrl: userDetails.xURL
+              },
+              notifications: userDetails.notifications,
+              collegeDetails: {
+                branch: userDetails.branch,
+                batch: userDetails.batch
+            },
+            jobRelated: {
+                company: userDetails.companyName,
+                jobTitle: userDetails.position,
+            }
             }))
             toast.success('Logged in successfully');
             handleDialogClose();

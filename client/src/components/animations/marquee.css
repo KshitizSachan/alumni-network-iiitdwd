@@ -1,0 +1,16 @@
+.marquee_app {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.marquee_title {
+  margin-bottom: 50px;
+}
+
+.marquee_image_wrapper {
+  margin: 0px 30px;
+}
+
+.marquee_image_wrapper img {
+  width: 80%;
+}

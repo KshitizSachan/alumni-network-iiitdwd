@@ -36,7 +36,7 @@ const Jobs = () => {
   const cardsPerPage = 5;
 
   useEffect(() => {
-    console.log("User", user);
+    console.log("User Details from Atom: ", user);
   }, [user]);
 
   useEffect(() => {
