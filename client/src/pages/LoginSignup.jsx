@@ -132,8 +132,8 @@ const LoginSignup = ({
               basic: {
                 ...prevData.basic,
                 isLoggedIn: true,
-                email: body.email,
-                rank: body.rank,
+                email: userDetails.email,
+                rank: userDetails.rank,
                 id: response.userID,
                 name: userDetails.name
               },
