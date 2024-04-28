@@ -1,23 +1,32 @@
-
-
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { get_fetcher } from "../utils/Fetcher";
 import Navbar from "../template/Navbar";
 import Footer from "../template/Footer";
-import { Grid, Typography, Pagination, TextField } from "@mui/material";
+import { Grid, Typography, Pagination, Box, Paper } from "@mui/material";
 import { JobsFilterButton } from "../components/jobsFilterButton";
 import JobsCard from "../components/Cards/JobsCard";
 import { userAtom } from "../store/atoms/User";
 import { useRecoilValue } from "recoil";
 import AddJobDialog from "../components/AddJobDialog";
-import _ from 'lodash';
+import _ from "lodash";
 
 const Jobs = () => {
-  const { data, isLoading } = useSWR(
-    "http://localhost:5000/job/getAll",
-    get_fetcher
-  );
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // const { data, isLoading } = useSWR(
+  //   "http://localhost:5000/job/getAll",
+  //   get_fetcher
+  // );
+
+  const getData = async () => {
+    setIsLoading(true);
+    const url = "http://localhost:5000/job/getAll"
+    const res = await get_fetcher(url);
+    setData(res);
+    setIsLoading(false);
+  };
 
   const user = useRecoilValue(userAtom);
 
@@ -25,11 +34,14 @@ const Jobs = () => {
   const [currentPageData, setCurrentPageData] = useState([]);
   const [numOfPages, setNumOfPages] = useState(0);
   const cardsPerPage = 5;
-  
 
   useEffect(() => {
     console.log("User", user);
   }, [user]);
+
+  useEffect(() => {
+    getData();
+  }, [])
 
   //  useEffect(() => {
   //    if (data) {
@@ -50,8 +62,6 @@ const Jobs = () => {
     year2026: false,
     year2027: false,
   });
-  
-    
 
   useEffect(() => {
     if (!data) return;
@@ -72,19 +82,18 @@ const Jobs = () => {
     setFilteredData(filteredJobs);
   }, [data, filters]);
 
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
-    const [sort, setSort] = useState({
-      recent: true,
-      stipend: false,
-    });
-  
-    const [sortedData, setSortedData] = useState([]);
+
+  const [sort, setSort] = useState({
+    recent: true,
+    stipend: false,
+  });
+
+  const [sortedData, setSortedData] = useState([]);
 
   useEffect(() => {
     setSortedData(filteredData);
-  }, [filteredData,filters]);
+  }, [filteredData, filters]);
 
   useEffect(() => {
     if (sortedData.length > 0) {
@@ -120,10 +129,13 @@ const Jobs = () => {
     } else if (filterName === "myjobs") {
       const userEmail = user?.basic.email; // Assuming user email is accessible in userAtom
       if (userEmail) {
-        const filteredJobs = data.filter((job) => job.handler === userEmail);
+        const filteredJobs = data?.filter((job) => job.handler === userEmail);
         setFilteredData(filteredJobs);
       }
-      
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [filterName]: !prevFilters[filterName],
+      }));
     } else if (filterName === "jobs" || filterName === "internships") {
       setFilters((prevFilters) => ({
         ...prevFilters,
@@ -177,7 +189,12 @@ const Jobs = () => {
     if (sortedData) {
       const pages = Math.ceil(sortedData.length / cardsPerPage);
       setNumOfPages(pages);
-      setCurrentPageData(sortedData.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage));
+      setCurrentPageData(
+        sortedData.slice(
+          (currentPage - 1) * cardsPerPage,
+          currentPage * cardsPerPage
+        )
+      );
     }
   }, [sortedData, currentPage, cardsPerPage]);
 
@@ -185,8 +202,8 @@ const Jobs = () => {
     <>
       <div className="bg-backgroundColor">
         <Navbar />
-        <div className="mx-24 pt-14">
-        <p style={{ marginTop: "100px" }}></p>
+        <div className="mx-14 py-14">
+          <p style={{ marginTop: "75px" }}></p>
           {user.basic.rank === 3 && (
             <Typography
               className="flex justify-center"
@@ -206,9 +223,16 @@ const Jobs = () => {
               Login to get more access and unblur hidden items.
             </Typography>
           )}
-         <Grid container>
-            <Grid item xs={4} className="">
-              <div className="bg-white min-h-40 pt-14 pb-14 rounded-md shadow-md">
+          <Grid
+            container
+            spacing={{ xs: 3 }}
+            direction={{ xs: "column", lg: "row" }}
+          >
+            <Grid item xs={4} className="flex justify-center xl:justify-end">
+              <Box
+                component={Paper}
+                sx={{ padding: "2em", width: "fit-content", height: "fit-content" }}
+              >
                 {user.basic.rank === 1 && (
                   <Grid xs={12} className="flex justify-center mb-2">
                     <div className="flex font-bold">
@@ -223,7 +247,7 @@ const Jobs = () => {
                     </div>
                   </Grid>
                 )}
-                <Grid xs={12} className="flex justify-center">
+                <Grid xs={12} className="flex lg:justify-center">
                   <div className="flex">
                     {/* <div onClick={() => handleFilterClick("myjobs")}>
                       <JobsFilterButton name="MY JOBS" used={filters.myjobs} />
@@ -238,7 +262,7 @@ const Jobs = () => {
                     </div>
                   </div>
                 </Grid>
-                <Grid xs={12} className="flex justify-center mt-4 mb-2">
+                <Grid xs={12} className="flex justify-center my-2">
                   <div className="flex font-bold">
                     <div>
                       <img
@@ -365,60 +389,63 @@ const Jobs = () => {
                     </div>
                   </div>
                 </Grid>
-              </div>
+              </Box>
+              {/* <div className="bg-white min-h-40 py-14 px-10 rounded-md shadow-md w-fit">
+                
+              </div> */}
             </Grid>
-            <Grid xs={1} className="flex items-center justify-center">
+            <Grid xs={1} className="xl:flex items-center justify-center hidden">
               <div className="h-full bg-greyLine w-0.5"></div>
             </Grid>
             {isLoading ? (
-                <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
-                  Loading...
-                </p>
-              ) : currentPageData?.length === 0 ? (
-                <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
-                  {" "}
-                  No results found.....
-                </p>
-              ) : (
-              <Grid xs={7}>
+              <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
+                Loading...
+              </p>
+            ) : currentPageData?.length === 0 ? (
+              <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
+                {" "}
+                No results found.....
+              </p>
+            ) : (
+              <Grid item xs={7}>
                 {currentPageData.map((job, index) => (
                   <div key={index} className="mb-14">
                     <JobsCard
-                     rank={user?.basic?.isLoggedIn ? user?.basic?.rank : -1}
-                     jobPosition={job.title}
-                     company={job.companyName}
-                     category={job.category}
-                     location={job.jobLocation}
-                     posted={new Date(job.createdAt).toLocaleDateString(
-                       "en-GB"
-                     )}
-                     stipend={job.stipend}
-                     batch={job.eligibleBatch}
-                     postedBy={job.floatedBy}
-                     startDate={new Date(job.startDate).toLocaleDateString(
-                       "en-GB"
-                     )}
+                      rank={user?.basic?.isLoggedIn ? user?.basic?.rank : -1}
+                      jobPosition={job.title}
+                      company={job.companyName}
+                      category={job.category}
+                      location={job.jobLocation}
+                      posted={new Date(job.createdAt).toLocaleDateString(
+                        "en-GB"
+                      )}
+                      stipend={job.stipend}
+                      batch={job.eligibleBatch}
+                      postedBy={job.floatedBy}
+                      startDate={new Date(job.startDate).toLocaleDateString(
+                        "en-GB"
+                      )}
                     />
                   </div>
                 ))}
                 {numOfPages > 1 && (
                   <Pagination
-                  count={numOfPages}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  variant="outlined"
-                  sx={{
-                    "& .MuiPaginationItem-root": {
-                      color: "#FA005E",
-                      borderColor: "#FA005E",
-                      backgroundColor: "white",
-                    },
-                  }}
-                  size="large"
-                  //color="secondary"
-                  //hidePrevButton
-                  //hideNextButton
-                />
+                    count={numOfPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    variant="outlined"
+                    sx={{
+                      "& .MuiPaginationItem-root": {
+                        color: "#FA005E",
+                        borderColor: "#FA005E",
+                        backgroundColor: "white",
+                      },
+                    }}
+                    size="large"
+                    //color="secondary"
+                    //hidePrevButton
+                    //hideNextButton
+                  />
                 )}
               </Grid>
             )}
@@ -430,7 +457,8 @@ const Jobs = () => {
         <AddJobDialog
           isOpen={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
-          setSortedData={setSortedData}
+          //setSortedData={setSortedData}
+          refreshData={getData}
           setFilters={setFilters}
         />
       )}
@@ -439,6 +467,3 @@ const Jobs = () => {
 };
 
 export default Jobs;
-
-
-
