@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const connection = require('./db');
 const userRoute = require('./routes/userRoute');
-const projectRoute = require('./routes/projectRoute');
 const newsRoute = require('./routes/newsRoute');
 const jobRoute = require('./routes/jobRoute');
 const alumniRoute = require('./routes/alumniRoute');
@@ -33,7 +32,6 @@ app.use(cors({
 //-----------------------------------------------------Routers----------------------------------------------------------------
 
 app.use('/user',userRoute);
-app.use('/project',projectRoute);
 app.use('/news',newsRoute);
 app.use('/job',jobRoute);
 app.use('/alumni',alumniRoute);
