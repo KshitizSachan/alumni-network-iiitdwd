@@ -28,7 +28,7 @@ const Jobs = () => {
   
 
   useEffect(() => {
-    console.log("User", user);
+    console.log("User Details from Atom: ", user);
   }, [user]);
 
   //  useEffect(() => {
