@@ -1,6 +1,6 @@
 const jobModel = require('../../models/jobSchema');
 const edit = async (req,res) =>{
-    const { jobID, floatedBy, title,appliedBy, category, handler, whatsappNo, startDate, referral, jobLocation, companyName, eligibleBatch, stipend } = req.body;
+    const { jobID, floatedBy, title,appliedBy, category, handler, whatsappNo, startDate, referral, jobLocation, companyName, eligibleBatch, stipend, jobURL } = req.body;
     try {
         const date = startDate instanceof Date ? startDate : Date(startDate);
         const job = await jobModel.findOne({ jobID });
@@ -8,7 +8,7 @@ const edit = async (req,res) =>{
           return res.status(401).json({ msg: "Job Not Found" });
         }
         const update = {
-            jobID, floatedBy, title, category, handler, whatsappNo, referral, jobLocation, companyName, stipend,
+            jobID, floatedBy, title, category, jobURL, handler, whatsappNo, referral, jobLocation, companyName, stipend,
           appliedBy: appliedBy ? [...job.appliedBy,...(appliedBy instanceof Array ? appliedBy : [appliedBy])] : job.appliedBy,
           eligibleBatch: eligibleBatch ? [...job.eligibleBatch,...(eligibleBatch instanceof Array ? eligibleBatch : [eligibleBatch])] : job.eligibleBatch,
           startDate: date

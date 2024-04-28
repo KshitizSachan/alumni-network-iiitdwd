@@ -1,7 +1,7 @@
 const jobModel = require('../../models/jobSchema');
 const create = async (req,res) =>{
-    const { floatedBy, title, category, handler, whatsappNo, startDate, referral, jobLocation, companyName, eligibleBatch, stipend } = req.body;
-    const date = startDate instanceof Date ? startDate : Date(startDate);
+    const { floatedBy, title, category, handler, whatsappNo, startDate, referral, jobLocation, companyName, eligibleBatch, stipend, jobURL } = req.body;
+    // const date = startDate instanceof Date ? startDate : Date(startDate);
     try{
         await jobModel.create({
             floatedBy:floatedBy,
@@ -9,12 +9,13 @@ const create = async (req,res) =>{
             category: category,
             handler: handler,
             whatsappNo: whatsappNo,
-            startDate: date,
+            startDate: startDate,
             referral: referral,
             jobLocation: jobLocation,
             companyName: companyName,
             eligibleBatch: eligibleBatch,
-            stipend: stipend
+            stipend: stipend,
+            jobURL: jobURL
         });
         return res.status(201).json({msg:"Job Floated Successfully."});// 201 Created
     }
