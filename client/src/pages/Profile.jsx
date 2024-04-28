@@ -68,6 +68,9 @@ const Profile = () => {
       const body = { userID: userID };
       const response = await fetcherPost(url, { body });
       setData(response);
+
+      console.log(response);
+
       setEditData({
         position: response?.position || "",
         branch: response?.branch || "",
@@ -90,7 +93,7 @@ const Profile = () => {
     } else {
       if (user?.basic?.id) getUserProfileData(user.basic.id);
     }
-  }, [viewUserId]);
+  }, [viewUserId, user]);
 
   const handleDetailChange = (title, value) => {
     setEditData((prevdata) => ({ ...prevdata, [title]: value }));
@@ -156,7 +159,7 @@ const Profile = () => {
             <div className="relative flex flex-col items-center md:w-[37%] lg:w-[30%] bg-[#d9d9d9]/40 gap-16 px-8">
               <div className="absolute -top-16 sm:-top-20 lg:-top-28 xl:-top-32 left-8 sm:left-auto overflow-hidden rounded-full size-32 sm:size-40 lg:size-52 xl:size-60 bg-gray-300 flex justify-center items-center">
                 <img
-                  src="/dummy.jpg"
+                  src={data?.profilePicURL || "/blank-profile-picture.webp"}
                   alt="profile-img"
                   className="w-full object-cover"
                 />

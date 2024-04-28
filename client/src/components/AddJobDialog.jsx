@@ -6,7 +6,7 @@ import {
   DialogActions,
   Button,
   TextField,
-  MenuItem, Select, FormControl, InputLabel
+  MenuItem, Select, FormControl, InputLabel, Stack
 } from "@mui/material";
 import { fetcherPost } from "../utils/axiosAPI";
 import { toast } from "react-toastify";
@@ -16,7 +16,7 @@ import { userAtom } from "../store/atoms/User";
 
 
 
-const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
+const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
   const [jobDetails, setJobDetails] = useState({
     position: "",
     company: "",
@@ -77,7 +77,6 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
       handler: user.basic.email,
       whatsappNo: jobDetails.contact,
       createdAt: Date.now()
-
     };
 
     console.log(body);
@@ -87,8 +86,8 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
       if (response && response.msg === "Job Floated Successfully.") {
         onClose();
         toast.success("Job added successfully");
-        fetchUpdatedJobs(body);
-        setSortedData((data) => [...data, body]);
+        fetchUpdatedJobs();
+        refreshData();
 
       } else {
         toast.error("Failed to add job");
@@ -221,55 +220,17 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, setSortedData }) => {
           margin="dense"
         /></div>
       </DialogContent>
-      <DialogActions>
+      <Stack width={'100%'} justifyContent={'space-between'} alignItems={'center'} direction={'row'} spacing={2} sx={{ padding: '1em' }}>
+        <Button onClick={onClose}>Cancel</Button>
         <Button onClick={handleAddJob} variant="contained" color="primary">
           Add
         </Button>
-        <Button onClick={onClose}>Cancel</Button>
-      </DialogActions>
+      </Stack>
     </Dialog>
   );
 };
 
 export default AddJobDialog;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

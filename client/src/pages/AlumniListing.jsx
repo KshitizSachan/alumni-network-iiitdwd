@@ -1,6 +1,13 @@
 import Navbar from "../template/Navbar";
 import Footer from "../template/Footer";
-import { Grid, TextField, Pagination, Typography } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Pagination,
+  Typography,
+  Box,
+  Paper,
+} from "@mui/material";
 import { JobsFilterButton } from "../components/jobsFilterButton";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -62,16 +69,18 @@ const AlumniListing = () => {
     setFilteredData(filteredAlumni);
   }, [data, filters, searchQuery]);
 
-  console.log('Data: ', data);
-  console.log('Filtered Data: ', filteredData);
+  console.log("Data: ", data);
+  console.log("Filtered Data: ", filteredData);
 
   const handleFilterClick = (filterName) => {
     setFilters((prevFilters) => ({
-      ...Object.fromEntries(Object.entries(prevFilters).map(([key, _]) => [key, false])),
+      ...Object.fromEntries(
+        Object.entries(prevFilters).map(([key, _]) => [key, false])
+      ),
       [filterName]: !prevFilters[filterName],
     }));
   };
-  
+
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
     window.scroll(0, 0);
@@ -105,199 +114,223 @@ const AlumniListing = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="mx-24 pt-14">
-        <p style={{ marginTop: "100px" }}></p>
-        {user?.basic?.rank === 3 && (
-          <Grid container justifyContent={"center"} alignItems={"center"}>
-            <Typography
-              className="flex justify-center"
-              style={{ marginBottom: "1rem" }}
-            >
-              Want to unblur this section? Login using iiitdwd college mail
-            </Typography>
-          </Grid>
-        )}
-        {user?.basic?.rank === -1 && (
-          <Grid container justifyContent={"center"} alignItems={"center"}>
-            <Typography
-              className="flex justify-center"
-              style={{ marginBottom: "1rem" }}
-            >
-              Login to get more access and unblur hidden items.
-            </Typography>
-          </Grid>
-        )}
-        {(user?.basic?.rank === 1 || user?.basic?.rank === 2) && (
-          <Grid container>
-            <Grid xs={3} className="">
-              <div className="bg-white min-h-40 pt-7 pb-7 rounded-md shadow-md hidden md:block">
-                <div className="flex justify-center w-full">
-                  <TextField
-                    label="Search..."
-                    variant="outlined"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-                <Grid xs={12} className="flex justify-center mt-4 mb-2">
-                  <div className="flex font-bold">
-                    <div>
-                      <img
-                        src="/filter_icon.svg"
-                        alt="filter-icon"
-                        className="mt-1.5 mr-1 h-6"
-                      />
-                    </div>
-                    <div className="ml-1 text-2xl">Filter</div>
-                  </div>
-                </Grid>
-                <Grid xs={12} className="flex justify-center">
-                  <div className="flex">
-                    <div onClick={() => handleFilterClick("All")}>
-                      <JobsFilterButton name="ALL" used={filters.All} />
-                    </div>
-                    <div onClick={() => handleFilterClick("CSE")}>
-                      <JobsFilterButton name="CSE" used={filters.CSE} />
-                    </div>
-                    <div onClick={() => handleFilterClick("DSAI")}>
-                      <JobsFilterButton name="DSAI" used={filters.DSAI} />
-                    </div>
-                    <div onClick={() => handleFilterClick("ECE")}>
-                      <JobsFilterButton name="ECE" used={filters.ECE} />
-                    </div>
-                  </div>
-                </Grid>
-                <Grid xs={12} className="flex justify-center">
-                  <div className="flex">
-                    <div
-                      onClick={() => handleFilterClick("year2022")}
-                      className=""
-                    >
-                      <JobsFilterButton
-                        name="2022 BATCH"
-                        used={filters.year2022}
-                      />
-                    </div>
-                    <div
-                      onClick={() => handleFilterClick("year2023")}
-                      className=""
-                    >
-                      <JobsFilterButton
-                        name="2023 BATCH"
-                        used={filters.year2023}
-                      />
-                    </div>
-                  </div>
-                </Grid>
-                <Grid xs={12} className="flex justify-center">
-                  <div className="flex">
-                    <div
-                      onClick={() => handleFilterClick("year2024")}
-                      className=""
-                    >
-                      <JobsFilterButton
-                        name="2024 BATCH"
-                        used={filters.year2024}
-                      />
-                    </div>
-                    <div
-                      onClick={() => handleFilterClick("year2025")}
-                      className=""
-                    >
-                      <JobsFilterButton
-                        name="2025 BATCH"
-                        used={filters.year2025}
-                      />
-                    </div>
-                  </div>
-                </Grid>
-                <Grid xs={12} className="flex justify-center">
-                  <div className="flex">
-                    <div
-                      onClick={() => handleFilterClick("year2026")}
-                      className=""
-                    >
-                      <JobsFilterButton
-                        name="2026 BATCH"
-                        used={filters.year2026}
-                      />
-                    </div>
-                    <div
-                      onClick={() => handleFilterClick("year2027")}
-                      className=""
-                    >
-                      <JobsFilterButton
-                        name="2027 BATCH"
-                        used={filters.year2027}
-                      />
-                    </div>
-                  </div>
-                </Grid>
-              </div>
+      <div
+        className={`bg-backgroundColor ${
+          (user?.basic?.rank === 3 || user?.basic?.rank === -1) && "h-screen"
+        }`}
+      >
+        <Navbar />
+        <div className="mx-14 py-14">
+          <p style={{ marginTop: "75px" }}></p>
+          {user?.basic?.rank === 3 && (
+            <Grid container justifyContent={"center"} alignItems={"center"}>
+              <Typography
+                className="flex justify-center"
+                style={{ marginBottom: "1rem" }}
+              >
+                Want to unblur this section? Login using iiitdwd college mail
+              </Typography>
             </Grid>
-            <Grid xs={1} className="flex items-center justify-center">
-              <div className="h-full bg-greyLine w-0.5"></div>
+          )}
+          {user?.basic?.rank === -1 && (
+            <Grid container justifyContent={"center"} alignItems={"center"}>
+              <Typography
+                className="flex justify-center"
+                style={{ marginBottom: "1rem" }}
+              >
+                Login to get more access and unblur hidden items.
+              </Typography>
             </Grid>
-
-            <Grid xs={8} item container spacing={4} direction={"column"}>
-              {isLoading ? (
-                <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
-                  Loading...
-                </p>
-              ) : currentPageData?.length === 0 ? (
-                <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
-                  {" "}
-                  No results found.....
-                </p>
-              ) : (
-                <>
-                  {currentPageData?.map((alumni, index) => (
-                    <Grid item key={index}>
-                      <AlumniCard
-                        rank={user?.basic?.rank}
-                        name={alumni.name}
-                        batch={alumni.batch}
-                        branch={_.toUpper(alumni.branch)}
-                        position={_.startCase(alumni.position)}
-                        company={alumni.companyName}
-                        imageSrc={alumni.profilePicURL}
-                        userId={alumni.userID}
-                      />
-                    </Grid>
-                  ))}
-                  <Grid item>
-                    <Grid
-                      container
-                      justifyContent={"center"}
-                      alignItems={"center"}
-                    >
-                      <Pagination
-                        count={numOfPages}
-                        page={currentPage}
-                        onChange={handlePageChange}
-                        variant="outlined"
-                        sx={{
-                          "& .MuiPaginationItem-root": {
-                            color: "#FA005E",
-                            borderColor: "#FA005E",
-                            backgroundColor: "white",
-                          },
-                        }}
-                        size="large"
-                        //color="secondary"
-                        //hidePrevButton
-                        //hideNextButton
-                      />
-                    </Grid>
+          )}
+          {(user?.basic?.rank === 1 || user?.basic?.rank === 2) && (
+            <Grid
+              container
+              spacing={{ xs: 4 }}
+              direction={{ xs: "column", lg: "row" }}
+            >
+              <Grid item xs={3} className="flex justify-center xl:justify-end">
+                <Box
+                  component={Paper}
+                  sx={{
+                    padding: "2em",
+                    width: "fit-content",
+                    height: "fit-content",
+                  }}
+                >
+                  <div className="flex justify-center w-full">
+                    <TextField
+                      fullWidth
+                      label="Search..."
+                      variant="outlined"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                  <Grid xs={12} className="flex justify-center mt-4 mb-2">
+                    <div className="flex font-bold">
+                      <div>
+                        <img
+                          src="/filter_icon.svg"
+                          alt="filter-icon"
+                          className="mt-1.5 mr-1 h-6"
+                        />
+                      </div>
+                      <div className="ml-1 text-2xl">Filter</div>
+                    </div>
                   </Grid>
-                </>
-              )}
+                  <Grid xs={12} className="flex justify-center">
+                    <div className="flex">
+                      <div onClick={() => handleFilterClick("All")}>
+                        <JobsFilterButton name="ALL" used={filters.All} />
+                      </div>
+                      <div onClick={() => handleFilterClick("CSE")}>
+                        <JobsFilterButton name="CSE" used={filters.CSE} />
+                      </div>
+                      <div onClick={() => handleFilterClick("DSAI")}>
+                        <JobsFilterButton name="DSAI" used={filters.DSAI} />
+                      </div>
+                      <div onClick={() => handleFilterClick("ECE")}>
+                        <JobsFilterButton name="ECE" used={filters.ECE} />
+                      </div>
+                    </div>
+                  </Grid>
+                  <Grid xs={12} className="flex justify-center">
+                    <div className="flex">
+                      <div
+                        onClick={() => handleFilterClick("year2022")}
+                        className=""
+                      >
+                        <JobsFilterButton
+                          name="2022 BATCH"
+                          used={filters.year2022}
+                        />
+                      </div>
+                      <div
+                        onClick={() => handleFilterClick("year2023")}
+                        className=""
+                      >
+                        <JobsFilterButton
+                          name="2023 BATCH"
+                          used={filters.year2023}
+                        />
+                      </div>
+                    </div>
+                  </Grid>
+                  <Grid xs={12} className="flex justify-center">
+                    <div className="flex">
+                      <div
+                        onClick={() => handleFilterClick("year2024")}
+                        className=""
+                      >
+                        <JobsFilterButton
+                          name="2024 BATCH"
+                          used={filters.year2024}
+                        />
+                      </div>
+                      <div
+                        onClick={() => handleFilterClick("year2025")}
+                        className=""
+                      >
+                        <JobsFilterButton
+                          name="2025 BATCH"
+                          used={filters.year2025}
+                        />
+                      </div>
+                    </div>
+                  </Grid>
+                  <Grid xs={12} className="flex justify-center">
+                    <div className="flex">
+                      <div
+                        onClick={() => handleFilterClick("year2026")}
+                        className=""
+                      >
+                        <JobsFilterButton
+                          name="2026 BATCH"
+                          used={filters.year2026}
+                        />
+                      </div>
+                      <div
+                        onClick={() => handleFilterClick("year2027")}
+                        className=""
+                      >
+                        <JobsFilterButton
+                          name="2027 BATCH"
+                          used={filters.year2027}
+                        />
+                      </div>
+                    </div>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid className="hidden xl:flex items-center justify-center">
+                <div className="h-full bg-greyLine w-0.5 2xl:mx-8 mx-4"></div>
+              </Grid>
+
+              <Grid item container xs={8} spacing={4} direction={"column"}>
+                {isLoading ? (
+                  <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4">
+                    Loading...
+                  </p>
+                ) : currentPageData?.length === 0 ? (
+                  <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4">
+                    No results found.....
+                  </p>
+                ) : (
+                  <>
+                    {currentPageData?.map((alumni, index) => (
+                      <Grid item key={index}>
+                        <AlumniCard
+                          rank={user?.basic?.rank}
+                          name={alumni.name}
+                          batch={alumni.batch}
+                          branch={_.toUpper(alumni.branch)}
+                          position={_.startCase(alumni.position)}
+                          company={alumni.companyName}
+                          imageSrc={alumni.profilePicURL}
+                          userId={alumni.userID}
+                        />
+                      </Grid>
+                    ))}
+                    <Grid item>
+                      <Grid
+                        container
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                      >
+                        <Pagination
+                          count={numOfPages}
+                          page={currentPage}
+                          onChange={handlePageChange}
+                          variant="outlined"
+                          sx={{
+                            "& .MuiPaginationItem-root": {
+                              color: "#FA005E",
+                              borderColor: "#FA005E",
+                              backgroundColor: "white",
+                            },
+                          }}
+                          size="large"
+                          //color="secondary"
+                          //hidePrevButton
+                          //hideNextButton
+                        />
+                      </Grid>
+                    </Grid>
+                  </>
+                )}
+              </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
+        </div>
+        <div
+          className={`${
+            (user?.basic?.rank === 3 || user?.basic?.rank === -1) &&
+            "absolute bottom-0 w-screen"
+          }`}
+        >
+          <Footer />
+        </div>
       </div>
-      <Footer />
     </>
   );
 };
