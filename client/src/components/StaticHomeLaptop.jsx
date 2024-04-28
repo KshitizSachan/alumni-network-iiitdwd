@@ -3,9 +3,8 @@ import Ibm from '../assets/Ibm.svg'
 import Intel from '../assets/Intel.svg'
 import Nvidia from '../assets/Nvidia.svg'
 import NetworkHome from '../assets/NetworkHome.svg'
-import jobHome from '../assets/jobHome.svg'
-import newsHome from '../assets/newsHome.svg'
-import {PrimaryButton} from "../components/Buttons";
+import jobHomeLaptop from '../assets/jobHomeLaptop.svg'
+import newsHomeLaptop from '../assets/newsHomeLaptop.svg'
 import { Link } from "react-router-dom";
 import CountUp from 'react-countup';
 import { useInView } from 'react-intersection-observer';
@@ -15,9 +14,8 @@ import SmallTextGeneration from './animations/TextRelated/SmallTextGeneration';
 import SmallPinkTextGeneration from './animations/TextRelated/SmallPinkTextGeneration';
 import BigTextGeneration from './animations/TextRelated/BigTextGeneration';
 import BigPinkTextGeneration from './animations/TextRelated/BigPinkTextGeneration';
-import { AwesomeButton } from "react-awesome-button";
 import { TypeAnimation } from 'react-type-animation';
-import OutlinedButton from '../components/animations/OutlinedButton';
+import OutlinedButton from './animations/OutlinedButton';
 
 const StaticHome = ()=>
 {
@@ -37,7 +35,7 @@ const StaticHome = ()=>
       };
 
     return(
-    <div className='flex flex-col gap-24 m-8'>
+    <div className='flex flex-col gap-24 m-8 mt-16'>
         <div className='flex justify-between'>
             <div className='flex flex-col gap-5'>
                 <div className='flex gap-2'>
@@ -59,9 +57,6 @@ const StaticHome = ()=>
                 <SmallTextGeneration words={'Outstanding features which help in increasing '} />
                 <SmallPinkTextGeneration words={'opportunities, collaboration, and innovation'} />
                 <SmallTextGeneration words={'of ideas'} />
-                {/* <p className='text-3xl'>
-            Outstanding features which help in increasing <span className='text-primaryPink'>opportunities, collaboration, and innovation</span> of ideas.
-        </p> */}
             </div>
         </div>
 
@@ -105,12 +100,11 @@ const StaticHome = ()=>
                     <p className='text-5xl font-semibold bg-gradient-to-r mt-2 from-[#FA003C]/20 inline-block p-3 rounded-sm' style={{ lineHeight: '1.5' }}>
                     <TypeAnimation
   sequence={[
-    // Same substring at the start will only be typed once, initially
     'Job Opportunities',
     1000,
     'Intern Opportunities',
     1000,
-    'Felloship Opportunities',
+    'Fellowship Opportunities',
     1000,
     'Research Opportunities',
     1000,
@@ -124,24 +118,22 @@ const StaticHome = ()=>
                 <div className='flex justify-start items-center gap-6'>
                     <p className='text-3xl font-semibold text-'>Looking for openings?</p>
                     <Link to="/jobs">
-                        {/* <PrimaryButton name="Find Jobs" /> */}
                         <OutlinedButton clr="#FA005E" title={'Find Jobs'} />
                     </Link>
                 </div>
             </div>
-            <img src={jobHome} alt='companylogo' style={{ width: '50%', height: 'auto' }} />
+            <img src={jobHomeLaptop} alt='companylogo' style={{ width: '50%', height: 'auto' }} />
         </div>
 
 
         <div className='flex justify-between gap-6'>
-            <img src={newsHome} alt='companylogo' style={{ width: '50%', height: 'auto' }} />
+            <img src={newsHomeLaptop} alt='companylogo' style={{ width: '50%', height: 'auto' }} />
             <div className='flex flex-col justify-evenly'>
                 <div>
                     <p className='text-5xl font-semibold text-wrap' style={{ lineHeight: '1.5' }}>Stay Connected: Students Stay Abreast of Information with the Latest Updates on </p>
                     <p className='text-5xl font-semibold bg-gradient-to-r mt-2 from-[#FA003C]/20 p-3 inline-block rounded-sm' style={{ lineHeight: '1.5' }}>
                     <TypeAnimation
   sequence={[
-    // Same substring at the start will only be typed once, initially
     'College Events',
     1000,
     'Scholarships',
