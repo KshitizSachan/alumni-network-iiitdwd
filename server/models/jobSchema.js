@@ -62,6 +62,9 @@ const jobSchema = new mongoose.Schema({
     stipend: {
         type: Number,
         required: true
+    },
+    jobURL:{
+        type: String
     }
 });
 
