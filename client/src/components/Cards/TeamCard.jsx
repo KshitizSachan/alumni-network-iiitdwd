@@ -10,8 +10,9 @@ import {Stack} from '@mui/material'
 
 export default function TeamCard({Image, name, data2, data3, linkLinkedin, linkInsta, linkX}) {
   return (
-    <CardContainer className="inter-var">
-      <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto h-auto rounded-xl p-6 border">
+    <div className="pt-12">
+    <CardContainer className="inter-var" >
+      <CardBody className="bg-gray-50 py-0 group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-72 h-auto rounded-xl p-6  border">
         <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white">
           {name}
         </CardItem>
@@ -61,5 +62,6 @@ export default function TeamCard({Image, name, data2, data3, linkLinkedin, linkI
         </Stack>
       </CardBody>
     </CardContainer>
+    </div>
   );
 }
