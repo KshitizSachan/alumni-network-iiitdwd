@@ -17,6 +17,9 @@ import BigPinkTextGeneration from './animations/TextRelated/BigPinkTextGeneratio
 import { TypeAnimation } from 'react-type-animation';
 import OutlinedButton from './animations/OutlinedButton';
 import CompanyMarquee from './animations/sliding-marquee-companies';
+import AlumniMarquee  from './animations/alumni-marquee';
+import GlobeAnimation from './animations/GlobeAnimation';
+import {Grid} from "@mui/material";
 
 const StaticHome = ()=>
 {
@@ -37,7 +40,10 @@ const StaticHome = ()=>
 
     return(
     <div className='flex flex-col gap-24 m-8 mt-16'>
-        <div className='flex justify-between'>
+
+        <Grid container>
+            <Grid item xs={6}>
+        <div className='flex justify-between mt-2'>
             <div className='flex flex-col gap-5'>
                 <div className='flex gap-2'>
                     <BigTextGeneration words={'Connect with'} /><BigPinkTextGeneration words={'Alumni'} />
@@ -47,19 +53,28 @@ const StaticHome = ()=>
                 <BigTextGeneration words={'Boost your'} /><BigPinkTextGeneration words={'Career'} />
                 </div>
             </div>
-
         </div>
+            </Grid> <Grid item
+                          xs={6}>
+            <img src={NetworkHome}
+                 alt="network"
+                 width="600"
+                 height="400" />
+            {/*<GlobeAnimation />*/} {/*<AlumniMarquee />*/}
+        </Grid>
+
+        </Grid>
 
 
-        <div className='flex'>
-            <img src={NetworkHome} alt='network' width="600" height="400" />
-            <div className='flex flex-col justify-around'>
-                <TextGeneration words={'Intuitive Networking Platform Bridging Students and Alumni'} />
-                <SmallTextGeneration words={'Outstanding features which help in increasing '} />
-                <SmallPinkTextGeneration words={'opportunities, collaboration, and innovation'} />
-                <SmallTextGeneration words={'of ideas'} />
-            </div>
-        </div>
+        {/*<div className="flex">*/}
+        {/*    <img src={NetworkHome} alt='network' width="600" height="400" />*/}
+        {/*    <div className='flex flex-col justify-around'>*/}
+        {/*        <TextGeneration words={'Intuitive Networking Platform Bridging Students and Alumni'} />*/}
+        {/*        <SmallTextGeneration words={'Outstanding features which help in increasing '} />*/}
+        {/*        <SmallPinkTextGeneration words={'opportunities, collaboration, and innovation'} />*/}
+        {/*        <SmallTextGeneration words={'of ideas'} />*/}
+        {/*    </div>*/}
+        {/*</div>*/}
 
         <div className='flex justify-evenly'>
             <div className='flex flex-col bg-gradient-to-r from-[#FA003C]/20 p-3 rounded-sm' ref={ref}>
