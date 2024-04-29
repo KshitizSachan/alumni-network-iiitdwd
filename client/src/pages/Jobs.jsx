@@ -275,8 +275,7 @@ const Jobs = () => {
                   </div>
                 </Grid>
                 <Grid xs={12} className="flex justify-center">
-                  <div className="flex">
-                    {user.basic.rank === 1 && (
+                {user.basic.rank === 1 && (
                       <div onClick={() => handleFilterClick("myjobs")}>
                         <JobsFilterButton
                           name="MY JOBS"
@@ -284,6 +283,9 @@ const Jobs = () => {
                         />
                       </div>
                     )}
+                </Grid>
+                <Grid xs={12} className="flex justify-center">
+                  <div className="flex">
                     <div onClick={() => handleFilterClick("jobs")} className="">
                       <JobsFilterButton name="JOBS" used={filters.jobs} />
                     </div>
@@ -425,6 +427,8 @@ const Jobs = () => {
                       startDate={new Date(job.startDate).toLocaleDateString(
                         "en-GB"
                       )}
+                      jobURL={job.jobURL}
+                      floatedByID={job.floatedByID}
                     />
                   </div>
                 ))}

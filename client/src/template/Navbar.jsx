@@ -48,7 +48,7 @@ const Navbar = () => {
       <>
         <div className="shadow-navbarShadow z-50 h-auto top-0 left-0 right-0 bg-white m-5 rounded-lg fixed flex justify-between items-center px-2 py-2 ">
 
-            <Link to="/" className="home-link flex">
+            <Link to="/" className="home-link flex justify-center items-center">
                 <img src={logo}
                      alt="logo"
                      style={{
@@ -58,7 +58,7 @@ const Navbar = () => {
                      className="" />
                 <div className="text-black hover:text-primaryPink flex ml-2">
                 <h1 className="w-full text-2xl">AlmaMatter</h1>
-                    <p className="text-sm pt-3 pl-1">Beta</p>
+                    <p className="text-sm pt-3 pl-1">Alpha</p>
                 </div>
             </Link>
 
@@ -143,7 +143,7 @@ const Navbar = () => {
             )}
             {isLaptop && user.basic.isLoggedIn &&(
               <Link to="/profile">
-                  <Avatar alt='profile' src={Avatar1} />
+                  <Avatar alt='profile' src={user?.profilePic || Avatar1} />
               </Link>
             )}
             <div onClick={handleNav} className="block md:hidden">
