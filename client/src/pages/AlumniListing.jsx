@@ -15,13 +15,17 @@ import { get_fetcher } from "../utils/Fetcher";
 import AlumniCard from "../components/Cards/AlumniCard";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../store/atoms/User";
+import { fetcherGet } from "../utils/axiosAPI";
 const _ = require("lodash");
 
 const AlumniListing = () => {
-  const { data, isLoading } = useSWR(
-    "http://localhost:5000/user/getAll",
-    get_fetcher
-  );
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // const { data, isLoading } = useSWR(
+  //   "http://localhost:5000/admin/getAll",
+  //   get_fetcher
+  // );
   const user = useRecoilValue(userAtom);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,8 +33,22 @@ const AlumniListing = () => {
   const [numOfPages, setNumOfPages] = useState(0);
   const cardsPerPage = 5;
 
+  const getData = async () => {
+    setIsLoading(true);
+    const url = "/alumni/getAll";
+    const tokenHeader = { authorization: localStorage.getItem('token') };
+    const res = await fetcherGet(url);
+    setData(res);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getData();
+    console.log(user);
+  }, [user])
+
   const [filters, setFilters] = useState({
-    All: true,
+    //All: true,
     CSE: false,
     DSAI: false,
     ECE: false,
@@ -44,26 +62,61 @@ const AlumniListing = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
+  const filterBatches = (user) => {
+    if (filters.year2022) {
+      if (filters.year2023) {
+        if (filters.year2024) {
+          if (filters.year2025) return true;
+          return user.batch !== 2025
+        }
+        return (filters.year2025 && user.batch === 2025) || user.batch === 2023
+      }
+      return user.batch === 2022;
+    }
+    else if (filters.year2023) {
+      if (filters.year2024) {
+        if (filters.year2025) return user.batch !== 2022;
+        return user.batch !== 2025 && user.batch !== 2022
+      }
+      return user.batch === 2023
+    }
+    else if (filters.year2024) {
+      if (filters.year2025) return user.batch === 2024 || user.batch === 2025;
+      return user.batch === 2024
+    }
+    else if (filters.year2025) return user.batch === 2025;
+    return true;
+  };
+
+  const filterBranches = (user) => {
+    if (filters.CSE) {
+      if (filters.DSAI && filters.ECE) return true;
+      if (filters.DSAI && user.branch.toLowerCase() === "dsai") return true;
+      if (filters.ECE && user.branch.toLowerCase() === "ece") return true;
+      return user.branch.toLowerCase() === "cse"
+    }
+    else if (filters.DSAI) {
+      if (filters.ECE && user.branch.toLowerCase() === "ece") return true;
+      return user.branch.toLowerCase() === "dsai"
+    }
+    else if (filters.ECE) return user.branch.toLowerCase() === "ece"
+    return true;
+  };
+
   useEffect(() => {
     if (!data) return;
 
     let filteredAlumni = data.filter((user) => {
-      if (filters.year2022 && user.batch !== 2022) return false;
-      if (filters.year2023 && user.batch !== 2023) return false;
-      if (filters.year2024 && user.batch !== 2024) return false;
-      if (filters.year2025 && user.batch !== 2025) return false;
-      if (filters.year2026 && user.batch !== 2026) return false;
-      if (filters.year2027 && user.batch !== 2027) return false;
-      if (filters.CSE && user.branch.toLowerCase() != "cse") return false;
-      if (filters.ECE && user.branch.toLowerCase() != "ece") return false;
-      if (filters.DSAI && user.branch.toLowerCase() != "dsai") return false;
-      if (
-        searchQuery &&
-        !user.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-        return false;
-
-      return true;
+      //if (filters.year2022 && user.batch !== 2022) return false;
+      //if (filters.year2023 && user.batch !== 2023) return false;
+      //if (filters.year2024 && user.batch !== 2024) return false;
+      //if (filters.year2025 && user.batch !== 2025) return false;
+      //if (filters.year2026 && user.batch !== 2026) return false;
+      //if (filters.year2027 && user.batch !== 2027) return false;
+      if (searchQuery) {
+        return filterBatches(user) && filterBranches(user) && user.name.toLowerCase().includes(searchQuery.toLowerCase());
+      }
+      return filterBatches(user) && filterBranches(user);
     });
 
     setFilteredData(filteredAlumni);
@@ -75,9 +128,12 @@ const AlumniListing = () => {
   const handleFilterClick = (filterName) => {
     setFilters((prevFilters) => ({
       ...Object.fromEntries(
-        Object.entries(prevFilters).map(([key, _]) => [key, false])
-      ),
-      [filterName]: !prevFilters[filterName],
+        Object.entries(prevFilters).map(([key, _]) => {
+          if (key === filterName) return [key, !prevFilters[key]]
+          return [key, _]
+        })
+      )
+      // [filterName]: !prevFilters[filterName],
     }));
   };
 
@@ -180,9 +236,9 @@ const AlumniListing = () => {
                   </Grid>
                   <Grid xs={12} className="flex justify-center">
                     <div className="flex">
-                      <div onClick={() => handleFilterClick("All")}>
+                      {/* <div onClick={() => handleFilterClick("All")}>
                         <JobsFilterButton name="ALL" used={filters.All} />
-                      </div>
+                      </div> */}
                       <div onClick={() => handleFilterClick("CSE")}>
                         <JobsFilterButton name="CSE" used={filters.CSE} />
                       </div>
@@ -238,7 +294,7 @@ const AlumniListing = () => {
                       </div>
                     </div>
                   </Grid>
-                  <Grid xs={12} className="flex justify-center">
+                  {/* <Grid xs={12} className="flex justify-center">
                     <div className="flex">
                       <div
                         onClick={() => handleFilterClick("year2026")}
@@ -259,7 +315,7 @@ const AlumniListing = () => {
                         />
                       </div>
                     </div>
-                  </Grid>
+                  </Grid> */}
                 </Box>
               </Grid>
               <Grid className="hidden xl:flex items-center justify-center">

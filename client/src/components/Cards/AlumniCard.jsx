@@ -16,7 +16,7 @@ const AlumniCard = (props) => {
         <Grid item container xs={12} md={9}>
           <Grid item xs={12} md={3} className="flex justify-center lg:justify-start">
             <Avatar
-              src="https://picsum.photos/536/354"
+              src={props.imageSrc || '/blank-profile-picture.webp'}
               alt={props.name}
               sx={{ width: 100, height: 100 }}
             />

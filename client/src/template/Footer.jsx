@@ -1,5 +1,4 @@
-
-
+import logo from '../assets/logo.png';
 import React from 'react';
 import './Footer.css'
 import { Link } from "react-router-dom";
@@ -7,15 +6,14 @@ import { FaSquareInstagram } from "react-icons/fa6";
 import { AiFillLinkedin } from "react-icons/ai";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaSquareFacebook } from "react-icons/fa6";
-import Logo from "../assets/AlmaMatter.png"
 
 const Footer = () => {
     return (
-        <div className="footer-wrapper bg-white" id='contactUs'>
+        <div className="footer-wrapper bg-white font-poppins" id='contactUs'>
             <div className="ft-content">
                 <div className="contactUs">
                     <div className="f-heading">
-                       <h4> Contact Us</h4>
+                       <p className='text-md font-poppins'>Contact Us</p>
                     </div>
                     <div className="CU-body">
                         <span>
@@ -24,14 +22,14 @@ const Footer = () => {
                         </span>
                         <span>
                             <h6 className='py-2'>alma.matter.iiitdwd@gmail.com</h6>
-                            <h6>+91 9876543210</h6>
-                            <h6>+91 1234567890</h6>
+                            <h6>+91 9036976542</h6>
+                            <h6>+91 9929130153</h6>
                         </span>
                     </div>
                 </div>
                 <div className="help">
                     <div className="f-heading">
-                        <h4>Help</h4> 
+                        <p className='text-md font-poppins'>Help</p> 
                     </div>
                     <div className="help-body">
                     <Link to="/"><h6 className=" hover:text-pink-600">Home</h6></Link>
@@ -43,10 +41,10 @@ const Footer = () => {
                 </div>
                 <div className="about">
                     <div className="f-heading">
-                        <Link className="flex place-items-center gap-2" to="/">
+                        <Link className="flex place-items-center gap-2 text-md font-poppins" to="/">
                             <div className="">
                                 <div className="">
-                                    <img src={Logo} alt="" width="40" height="40" />
+                                    <img src={logo} alt="" width="40" height="40" />
                                 </div>
                             </div>
                             AlmaMatter

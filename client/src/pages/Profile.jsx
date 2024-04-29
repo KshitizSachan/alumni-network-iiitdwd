@@ -18,7 +18,7 @@ import {
   Stack,
   IconButton,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Close, NotificationsNone } from "@mui/icons-material";
 import { fetcherPost, fetcherPut } from "../utils/axiosAPI";
 import { useLocation } from "react-router-dom";
 
@@ -59,7 +59,7 @@ const Profile = () => {
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const viewUserId = queryParams.get('view');
+  const viewUserId = queryParams.get("view");
 
   const getUserProfileData = async (userID) => {
     setLoading(true);
@@ -172,7 +172,7 @@ const Profile = () => {
                     {data?.jobLocation}
                   </p>
                 </div>
-                <div className="flex justify-between items-center w-full">
+                <div className="flex justify-center gap-8 items-center w-full">
                   <a
                     href={
                       data?.githubURL ? data.githubURL : "https://github.com/"
@@ -207,16 +207,21 @@ const Profile = () => {
                 <p className="font-poppins text-3xl xl:text-4xl">
                   {data?.name}
                 </p>
-                <div className="flex gap-3">
-                  <div className="px-5 sm:px-7 py-2 bg-[#F5DEE7] border-2 border-[#FA005E] rounded-3xl text-xs sm:text-sm font-bold h-fit">
-                    Alumni
-                  </div>
-                  {data?.rank === 1 && (
+                {data?.rank === 1 && (
+                  <div className="flex gap-3">
+                    <div className="px-5 sm:px-7 py-2 bg-[#F5DEE7] border-2 border-[#FA005E] rounded-3xl text-xs sm:text-sm font-bold h-fit">
+                      Alumni
+                    </div>
                     <div className="px-5 sm:px-7 py-2 bg-[#D9EFD3] border-2 border-[#3ACC16] rounded-3xl text-xs sm:text-sm font-bold text-center h-fit">
                       Open for Mentorship
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+                {data?.rank === 2 && (
+                  <div className="px-5 sm:px-7 py-2 bg-[#F5DEE7] border-2 border-[#FA005E] rounded-3xl text-xs sm:text-sm font-bold h-fit">
+                    Student
+                  </div>
+                )}
               </div>
 
               {/* Details and notifications */}
@@ -232,6 +237,12 @@ const Profile = () => {
                 <div className="border border-solid border-black/20"></div>
 
                 <div className="flex flex-col gap-6 h-[350px] px-3 pt-2 pb-5 overflow-y-auto w-fit">
+                  <div className="flex flex-row gap-1">
+                    <p className="font-poppins text-lg text-black/60">
+                      Notifications
+                    </p>
+                    <NotificationsNone className="text-black/60" />
+                  </div>
                   {data?.notifications?.map((item) => (
                     <Notification
                       key={item._id}

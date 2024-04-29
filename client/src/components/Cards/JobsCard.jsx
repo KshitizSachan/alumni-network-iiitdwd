@@ -7,6 +7,7 @@ import Batch from "../../assets/Components/Cards/Batch.svg";
 import { BorderButton, PrimaryButton } from "../Buttons";
 import { toast } from "react-toastify";
 import { Grid, Typography, Box, Paper } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 const JobsCard = (props) => {
   const rank = props.rank;
@@ -161,13 +162,12 @@ const JobsCard = (props) => {
               </Grid>
               <Grid item>
                 {rank === 0 || rank === 1 || rank === 2 ? (
-                  <BorderButton
-                    onClick={() =>
-                      toast.error("Login from iiitdwd account to view profile")
-                    }
+                  <NavLink to={`/profile?view=${props.floatedByID}`}>
+                    <BorderButton
                     name="View Profile"
                     isDisabled={false}
                   />
+                  </NavLink>
                 ) : (
                   <BorderButton name="View Profile" isDisabled={true} />
                 )}
