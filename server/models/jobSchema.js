@@ -12,6 +12,10 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    floatedByID: {
+        type: String,
+        required: true
+    },
     appliedBy:{
         type: [String],
         default:[]

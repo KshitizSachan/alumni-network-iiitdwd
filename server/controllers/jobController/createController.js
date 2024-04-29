@@ -1,10 +1,10 @@
 const jobModel = require('../../models/jobSchema');
 const create = async (req,res) =>{
-    const { floatedBy, title, category, handler, whatsappNo, startDate, referral, jobLocation, companyName, eligibleBatch, stipend, jobURL } = req.body;
-    // const date = startDate instanceof Date ? startDate : Date(startDate);
+    const { floatedBy, floatedByID, title, category, handler, whatsappNo, startDate, referral, jobLocation, companyName, eligibleBatch, stipend, jobURL } = req.body;
     try{
         await jobModel.create({
             floatedBy:floatedBy,
+            floatedByID:floatedByID,
             title:title,
             category: category,
             handler: handler,
