@@ -13,9 +13,6 @@ import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../store/atoms/User";
 
-
-
-
 const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
   const [jobDetails, setJobDetails] = useState({
     position: "",
@@ -27,6 +24,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
     postedBy: "",
     category: "",
     contact: "",
+    jobUrl: ""
   });
 
   const user = useRecoilValue(userAtom);
@@ -56,7 +54,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
       !jobDetails.startDate ||
       !jobDetails.stipend ||
       !jobDetails.category ||
-      !jobDetails.contact 
+      !jobDetails.contact || !jobDetails.jobUrl
     ) {
       toast.error("Please fill in all required fields");
       return;
@@ -65,7 +63,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
 
 
     const body = {
-
+      jobURL: jobDetails.jobUrl,
       floatedBy: user.basic.name,
       jobLocation: jobDetails.location,
       companyName: jobDetails.company,
@@ -132,6 +130,15 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
           name="company"
           fullWidth
           value={jobDetails.company}
+          onChange={handleChange}
+          margin="dense"
+        />
+        <TextField
+          label="Job Link"
+          type="text"
+          name="jobUrl"
+          fullWidth
+          value={jobDetails.jobUrl}
           onChange={handleChange}
           margin="dense"
         />

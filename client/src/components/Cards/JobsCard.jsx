@@ -16,7 +16,9 @@ const JobsCard = (props) => {
     return "";
   };
 
-  //comment
+  const handleApplyClick = () => {
+    window.open(props.jobURL, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <>
@@ -125,16 +127,19 @@ const JobsCard = (props) => {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} container spacing={2} justifyContent={'center'} alignItems={'center'}>
+            <Grid
+              item
+              xs={12}
+              container
+              spacing={2}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
               <Grid item>
                 {rank === 0 || rank === 1 || rank === 2 ? (
-                  <PrimaryButton
-                    onClick={() =>
-                      toast.error("Login from iiitdwd account to apply")
-                    }
-                    name="Apply"
-                    isDisabled={false}
-                  />
+                  <div onClick={handleApplyClick}>
+                    <PrimaryButton name="Apply" isDisabled={false} />
+                  </div>
                 ) : (
                   <PrimaryButton name="Apply" isDisabled={true} />
                 )}

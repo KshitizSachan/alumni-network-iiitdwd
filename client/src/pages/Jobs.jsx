@@ -425,6 +425,7 @@ const Jobs = () => {
                       startDate={new Date(job.startDate).toLocaleDateString(
                         "en-GB"
                       )}
+                      jobURL={job.jobURL}
                     />
                   </div>
                 ))}
