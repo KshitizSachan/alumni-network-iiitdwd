@@ -22,7 +22,7 @@ const Jobs = () => {
 
   const getData = async () => {
     setIsLoading(true);
-    const url = "http://localhost:5000/job/getAll"
+    const url = "http://localhost:5000/job/getAll";
     const res = await get_fetcher(url);
     setData(res);
     setIsLoading(false);
@@ -41,7 +41,7 @@ const Jobs = () => {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
   //  useEffect(() => {
   //    if (data) {
@@ -92,8 +92,15 @@ const Jobs = () => {
   const [sortedData, setSortedData] = useState([]);
 
   useEffect(() => {
-    setSortedData(filteredData);
-  }, [filteredData, filters]);
+    if (filteredData) {
+      setSortedData(filteredData);
+      console.log(filteredData);
+      setNumOfPages(Math.ceil(filteredData.length / cardsPerPage));
+      getCurrentPageData(1);
+    }
+    setCurrentPage(1);
+    // eslint-disable-next-line
+  }, [filteredData]);
 
   useEffect(() => {
     if (sortedData.length > 0) {
@@ -167,23 +174,13 @@ const Jobs = () => {
   };
 
   useEffect(() => {
-    if (filteredData) {
-      console.log(filteredData);
-      setNumOfPages(Math.ceil(filteredData.length / cardsPerPage));
-      getCurrentPageData(1);
-    }
-    setCurrentPage(1);
-    // eslint-disable-next-line
-  }, [filteredData]);
-
-  useEffect(() => {
     getCurrentPageData(currentPage);
     // eslint-disable-next-line
   }, [currentPage]);
 
-  //  useEffect(() => {
-  //    console.log(filters);
-  //  }, [filters]);
+  useEffect(() => {
+    console.log(filters);
+  }, [filters]);
 
   useEffect(() => {
     if (sortedData) {
@@ -231,7 +228,11 @@ const Jobs = () => {
             <Grid item xs={4} className="flex justify-center xl:justify-end">
               <Box
                 component={Paper}
-                sx={{ padding: "2em", width: "fit-content", height: "fit-content" }}
+                sx={{
+                  padding: "2em",
+                  width: "fit-content",
+                  height: "fit-content",
+                }}
               >
                 {user.basic.rank === 1 && (
                   <Grid xs={12} className="flex justify-center mb-2">
@@ -275,14 +276,11 @@ const Jobs = () => {
                   </div>
                 </Grid>
                 <Grid xs={12} className="flex justify-center">
-                {user.basic.rank === 1 && (
-                      <div onClick={() => handleFilterClick("myjobs")}>
-                        <JobsFilterButton
-                          name="MY JOBS"
-                          used={filters.myjobs}
-                        />
-                      </div>
-                    )}
+                  {user.basic.rank === 1 && (
+                    <div onClick={() => handleFilterClick("myjobs")}>
+                      <JobsFilterButton name="MY JOBS" used={filters.myjobs} />
+                    </div>
+                  )}
                 </Grid>
                 <Grid xs={12} className="flex justify-center">
                   <div className="flex">
@@ -298,6 +296,18 @@ const Jobs = () => {
                         used={filters.internships}
                       />
                     </div>
+                  </div>
+                </Grid>
+                <Grid xs={12} className="flex justify-center my-2">
+                  <div className="flex font-bold">
+                    <div>
+                      <img
+                        src="/filter_icon.svg"
+                        alt="filter-icon"
+                        className="mt-1.5 mr-1 h-6"
+                      />
+                    </div>
+                    <div className="ml-1 text-2xl">Batches</div>
                   </div>
                 </Grid>
                 <Grid xs={12} className="flex justify-center">
