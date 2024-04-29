@@ -28,7 +28,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
   });
 
   const user = useRecoilValue(userAtom);
-
+  
 
   useEffect(() =>{
       console.log('User details from atom: ', user);
@@ -65,6 +65,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
     const body = {
       jobURL: jobDetails.jobUrl,
       floatedBy: user.basic.name,
+      floatedByID: user.basic.id,
       jobLocation: jobDetails.location,
       companyName: jobDetails.company,
       eligibleBatch: jobDetails.batch.split(","),
@@ -76,7 +77,7 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
       whatsappNo: jobDetails.contact,
       createdAt: Date.now()
     };
-
+    console.log(user);
     console.log(body);
 
     try {
@@ -243,159 +244,3 @@ export default AddJobDialog;
 
 
 
-// import React, { useState, useEffect } from 'react';
-// import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
-// import { fetcherPost } from '../utils/axiosAPI';
-
-// const AddJobDialog = ({ isOpen, onClose }) => {
-//   const [jobDetails, setJobDetails] = useState({
-//     position: '',
-//     company: '',
-//     location: '',
-//     startDate: '',
-//     stipend: '',
-//     batch: '',
-//     postedBy: '',
-//     category: '',
-//   });
-
-//   useEffect(() => {
-//     console.log(jobDetails);
-//   }, [jobDetails]);
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setJobDetails((prevDetails) => ({
-//       ...prevDetails,
-//       [name]: value,
-//     }));
-//   };
-
-//   const url = "/job/create"
-//   const handleAddJob = async () => {
-//     console.log(jobDetails);
-//     const body = {
-//       floatedBy: jobDetails.postedBy,
-//       jobLocation: jobDetails.location,
-//       companyName: jobDetails.company,
-//       eligibleBatch: jobDetails.batch,
-//       title: jobDetails.position,
-//       stipend: jobDetails.stipend,
-//       startDate: jobDetails.startDate,
-//       category: jobDetails.category,
-//       handler: jobDetails.postedBy,
-//       whatsappNo: jobDetails.contact
-
-//     };
-//     console.log('Sending data to backend:', body);
-//     try {
-//       const response = await fetcherPost(url, {body});
-//       if(response.msg==="Job Floated Successfully."){
-//           onClose();
-// }
-//       else {
-//       console.error('Failed to add job:', response); // Log the response if not successful
-//       }
-//     } catch (error) {
-//       console.error('Error adding job:', error);
-//     }
-//   };
-
-//   return (
-//     <Dialog open={isOpen} onClose={onClose}>
-//       <DialogTitle>Add Job</DialogTitle>
-//       <DialogContent>
-// <TextField
-//   label="Job Position"
-//   type="text"
-//   name="position"
-//   fullWidth
-//   value={jobDetails.position}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-
-// <TextField
-//   label="category('0'-Job/'1'-Internship)"
-//   type="text"
-//   name="category"
-//   fullWidth
-//   value={jobDetails.category}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-// <TextField
-//   label="Location"
-//   type="text"
-//   name="location"
-//   fullWidth
-//   value={jobDetails.location}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-// <TextField
-//   label="Batch(es)"
-//   type="text"
-//   name="batch"
-//   fullWidth
-//   value={jobDetails.batch}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-// <TextField
-//   label="Start Date"
-//   type="text"
-//   name="startDate"
-//   fullWidth
-//   value={jobDetails.startDate}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-// <TextField
-//   label="Stipend"
-//   type="text"
-//   name="stipend"
-//   fullWidth
-//   value={jobDetails.stipend}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-// <TextField
-//   label="Posted On (yyyy-mm-dd)"
-//   type="text"
-//   name="posted"
-//   fullWidth
-//   value={jobDetails.posted}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-// <TextField
-//   label="Posted By"
-//   type="text"
-//   name="postedBy"
-//   fullWidth
-//   value={jobDetails.postedBy}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-//  <TextField
-//   label="Contact Number"
-//   type="phone"
-//   name="contact"
-//   fullWidth
-//   value={jobDetails.contact}
-//   onChange={handleChange}
-//   margin="dense"
-// />
-//       </DialogContent>
-//       <DialogActions>
-//         <Button onClick={handleAddJob} variant="contained" color="primary">
-//           Add
-//         </Button>
-//         <Button onClick={onClose}>Cancel</Button>
-//       </DialogActions>
-//     </Dialog>
-//   );
-// };
-
-// export default AddJobDialog;
