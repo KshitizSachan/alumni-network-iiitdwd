@@ -10,6 +10,7 @@ import {useRecoilValue} from "recoil";
 import {userAtom} from "../store/atoms/User";
 import {Avatar} from "@mui/material";
 import Avatar1 from "../assets/avatar-22.png";
+import logo from '../assets/logo.png';
 
 const Navbar = () => {
     const [nav, setNav] = useState(false);
@@ -46,10 +47,17 @@ const Navbar = () => {
     return (
       <>
         <div className="shadow-navbarShadow z-50 h-auto top-0 left-0 right-0 bg-white m-5 rounded-lg fixed flex justify-between items-center px-2 py-2 ">
+
             <Link to="/" className="home-link flex">
-                {/*<img src={logo2} alt="logo" className="" />*/}
-                <div className="text-black hover:text-primaryPink flex">
-                    <h1 className="w-full text-2xl">AlmaMatter</h1>
+                <img src={logo}
+                     alt="logo"
+                     style={{
+                         width: '60px',
+                         height: '40px'
+                     }}
+                     className="" />
+                <div className="text-black hover:text-primaryPink flex ml-2">
+                <h1 className="w-full text-2xl">AlmaMatter</h1>
                     <p className="text-sm pt-3 pl-1">Beta</p>
                 </div>
             </Link>
