@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import { JobsFilterButton } from "../components/jobsFilterButton";
 import React, { useEffect, useState } from "react";
-import useSWR from "swr";
-import { get_fetcher } from "../utils/Fetcher";
+// import useSWR from "swr";
+// import { get_fetcher } from "../utils/Fetcher";
 import AlumniCard from "../components/Cards/AlumniCard";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../store/atoms/User";
@@ -36,7 +36,7 @@ const AlumniListing = () => {
   const getData = async () => {
     setIsLoading(true);
     const url = "/alumni/getAll";
-    const tokenHeader = { authorization: localStorage.getItem('token') };
+    // const tokenHeader = { authorization: localStorage.getItem('token') };
     const res = await fetcherGet(url);
     setData(res);
     setIsLoading(false);
@@ -381,7 +381,7 @@ const AlumniListing = () => {
         <div
           className={`${
             (user?.basic?.rank === 3 || user?.basic?.rank === -1) &&
-            "absolute bottom-0 w-screen"
+            "flex lg:absolute lg:bottom-0 w-screen"
           }`}
         >
           <Footer />

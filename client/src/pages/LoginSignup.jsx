@@ -254,7 +254,7 @@ const LoginSignup = ({
           </Stack>
           <form onSubmit={formik.handleSubmit}>
             <DialogContent
-              sx={{ width: { xs: "400px", md: "450px" }, pt: 1, pb: 4 }}
+              sx={{ width: { xs: "260px", md: "450px" }, pt: 1, pb: 4 }}
             >
               <Stack spacing={3} sx={{ px: 1 }}>
                 <FormControl fullWidth>
