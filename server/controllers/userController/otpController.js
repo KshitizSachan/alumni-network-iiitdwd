@@ -7,7 +7,7 @@ const otpModel = require('../../models/otpSchema');
 const verify = async (req,res) =>
 {
   var otp;
-  const { email, otpAttempt, rank } = req.body;
+  const { email, otpAttempt, rank, name, password} = req.body;
 
     otp = await otpModel.findOne({email:email});
 
@@ -24,7 +24,6 @@ const verify = async (req,res) =>
     switch (rank) {
         case 0: // Admin
         {
-          const { name, email, password } = req.body;
           bcrypt.hash(password, 8, async (err, hash) => {
             if (err) {
               return res.status(500).json({ msg: "Error Hashing Password:", err }); // 500 Internal Server Error
@@ -103,7 +102,7 @@ const verify = async (req,res) =>
                   accDetails.email = email;
                   accDetails.password = hash;
                   accDetailsString = JSON.stringify(accDetails);
-                  const admin = await userModel.findOne({ email: "admin@admin.com" });
+                  const admin = await userModel.findOne({ email: "admin2024@gmail.com" });
                   try{
                     admin.notifications.push({
                       type: "Verification",
@@ -126,11 +125,11 @@ const verify = async (req,res) =>
         }
         case 2: //verified student
         {
-          const { name, email, password, otpAttempt } = req.body;
-          if(otpAttempt != req.session.otp)
-          {
-            return res.status().json({msg:"Incorrect OTP."})
-          }
+          // const { name, email, password, otpAttempt } = req.body;
+          // if(otpAttempt != req.session.otp)
+          // {
+          //   return res.status().json({msg:"Incorrect OTP."})
+          // }
           bcrypt.hash(password, 8, async (err, hash) => {
             if (err) {
               return res.status(500).json({ msg: "Error Hashing Password:", err });//500 Internal Server Error
@@ -138,11 +137,11 @@ const verify = async (req,res) =>
               try {
                 const collegeVerificationSubstring = email.substring(9);
                 if (collegeVerificationSubstring !== "iiitdwd.ac.in") {
-                  return res.status(400).json({ msg: "Invalid College Email ID." });//400 Bad Request
+                  return res.status(400).json({ msg: "Invalid College Email ID.", collegeVerificationSubstring });//400 Bad Request
                 }
                 
                 try {
-                  const batch = Number(email.substring(0, 2)) + 4;  
+                  const batch = (Number(email.substring(0, 2)) + 4)+2000;  
                   const branchSubstring = email.substring(3, 5);
                   const branch = branchSubstring === "cs" ? "cse" : branchSubstring === "ec" ? "ece" : "dsai";
                   
@@ -163,7 +162,7 @@ const verify = async (req,res) =>
                     return res.status(500).json({ msg: "Error Generating JWT:", err }); // 500 Internal Server Error
                   }
                 } catch (err) {
-                  return res.status(400).json({ msg: "Invalid College Email ID." });//400 Bad Request
+                  return res.status(400).json({ msg: "Invalid College Email ID.",err });//400 Bad Request
                 }
               } catch (err) {
                 return res.status(422).json({ msg: "Unable to create user object:", err });//422 Unprocessable Entity
