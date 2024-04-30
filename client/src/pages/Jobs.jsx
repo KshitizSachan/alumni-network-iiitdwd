@@ -248,7 +248,7 @@ const Jobs = () => {
                     </div>
                   </Grid>
                 )}
-                <Grid xs={12} className="flex lg:justify-center">
+                <Grid xs={12} className="flex justify-center">
                   <div className="flex">
                     {/* <div onClick={() => handleFilterClick("myjobs")}>
                       <JobsFilterButton name="MY JOBS" used={filters.myjobs} />
