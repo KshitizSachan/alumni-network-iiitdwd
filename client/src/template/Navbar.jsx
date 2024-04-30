@@ -178,18 +178,25 @@ const Navbar = () => {
                     <li className="p-4 border-b border-gray-600">
                         <Link to="/about">About Us</Link>
                     </li>
-                    <li className="p-4 border-b border-gray-600">
-                        <div className="cursor-pointer" onClick={() => setDialogOpen("login")}>
-                            Login/Signup
-                        </div>
-                    </li>
+                    {user.basic.isLoggedIn &&(
+                      <li className="p-4 border-b border-gray-600">
+                          <Link to="/profile">Profile</Link>
+                      </li>
+                    )} {!user.basic.isLoggedIn && (
+                  <li className="p-4 border-b border-gray-600">
+                          <div className="cursor-pointer"
+                               onClick={() => setDialogOpen("login")}>
+                              Login/Signup
+                          </div>
+                      </li>
+                    )}
                 </div>
             </ul>
         </div>
-        {dialogOpen!=="" && <LoginSignup type={dialogOpen} handleClose={() => setDialogOpen("")} callToast={notify} />}
-        <ToastContainer
-            position="top-right"
-            autoClose={3000}
+          {dialogOpen !== "" && <LoginSignup type={dialogOpen}
+                                             handleClose={() => setDialogOpen("")}
+                                             callToast={notify} />} <ToastContainer position="top-right"
+                                                                                    autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
