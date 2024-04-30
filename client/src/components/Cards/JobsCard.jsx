@@ -86,7 +86,8 @@ const JobsCard = (props) => {
                       <img src={Stipend} alt="Stipend" className="w-4 h-4" />
                     </Grid>
                     <Grid item>
-                      <p>Stipend</p>
+                    {props.category ? <p>Stipend</p> : <p>CTC</p>}
+                      {/* <p>Stipend</p> */}
                     </Grid>
                   </Grid>
                   <p className={`ml-5 ${shouldBlur("stipend")}`}>
@@ -146,7 +147,7 @@ const JobsCard = (props) => {
                 )}
               </Grid>
               <Grid item>
-                {rank === 0 || rank === 1 || rank === 2 || rank === 3 ? (
+                {rank === 0 || rank === 1 || rank === 2 ? (
                   <BorderButton
                     onClick={() =>
                       toast.error(

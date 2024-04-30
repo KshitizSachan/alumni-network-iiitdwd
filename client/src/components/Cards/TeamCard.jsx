@@ -13,7 +13,7 @@ export default function TeamCard({Image, name, data2, data3, linkLinkedin, linkI
     <div className="pt-12">
     <CardContainer className="inter-var" >
       <CardBody className="bg-gray-50 py-0 group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-72 h-auto rounded-xl p-6  border">
-        <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 dark:text-white">
+        <CardItem translateZ="50" className="text-xl font-bold text-neutral-600 ">
           {name}
         </CardItem>
         <CardItem as="p" translateZ="60" className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300">
@@ -40,21 +40,21 @@ export default function TeamCard({Image, name, data2, data3, linkLinkedin, linkI
           <CardItem
             translateZ={20}
             target="__blank"
-            className="rounded-xl text-xs font-normal dark:text-white"
+            className="rounded-xl text-xs font-normal "
           >
             <a href={linkLinkedin} target="_blank" rel="noReferrer" className="icon"><AiFillLinkedin style={{fontSize:'41px', margin: '0px 5px'}}/></a>
           </CardItem>
           <CardItem
             translateZ={20}
             target="__blank"
-            className=" rounded-xl text-xs font-normal dark:text-white"
+            className=" rounded-xl text-xs font-normal "
           >
             <a href={linkInsta} target="_blank" rel="noReferrer" className="" ><FaSquareInstagram style={{fontSize:'36px', margin: '0px 5px'}} /></a>
           </CardItem>
           <CardItem
             translateZ={20}
             target="__blank"
-            className=" rounded-xl text-xs font-normal dark:text-white"
+            className=" rounded-xl text-xs font-normal "
           >
             <a href={linkX} target="_blank" rel="noReferrer" className="icon"><FaSquareXTwitter style={{fontSize:'36px', margin: '0px 5px'}} /></a>
           </CardItem>
