@@ -52,13 +52,13 @@ const JobsCard = (props) => {
               <Grid item>
                 <img src={Location} alt="Location" className="w-4 h-4" />
               </Grid>
-              <Grid item>{_.capitalize(props.location)}</Grid>
+              <Grid item className="pb-[3px]">{_.capitalize(props.location)}</Grid>
             </Grid>
             <Grid item container spacing={1} alignItems={"center"}>
               <Grid item>
                 <img src={Clock} alt="Posted " className="w-4 h-4" />
               </Grid>
-              <Grid item>Posted: {props.posted}</Grid>
+              <Grid item className="pb-[3px]">Posted: {props.posted}</Grid>
             </Grid>
             <Grid item container spacing={2}>
               <Grid item container spacing={1} alignItems={"center"}>
@@ -75,7 +75,7 @@ const JobsCard = (props) => {
                       <p>START DATE:</p>
                     </Grid>
                   </Grid>
-                  <p className={`ml-4 ${shouldBlur("startDate")}`}>
+                  <p className={`ml-4 pl-1.5 ${shouldBlur("startDate")}`}>
                     {props.startDate}
                   </p>
                 </Grid>
@@ -90,7 +90,7 @@ const JobsCard = (props) => {
                       {/* <p>Stipend</p> */}
                     </Grid>
                   </Grid>
-                  <p className={`ml-5 ${shouldBlur("stipend")}`}>
+                  <p className={`ml-5 pl-1 ${shouldBlur("stipend")}`}>
                     ₹{props.stipend}
                   </p>
                 </Grid>
@@ -106,8 +106,8 @@ const JobsCard = (props) => {
                   </Grid>
                   <div className={`ml-5 ${shouldBlur("batch")}`}>
                     {props.batch.map((item, index) => (
-                      <span key={index}>
-                        {index > 0 && ","} {item}
+                      <span className="pl-1" key={index}>
+                        {index > 0 && ","}{item}
                       </span>
                     ))}
                   </div>
@@ -122,7 +122,7 @@ const JobsCard = (props) => {
                       <p>Posted By</p>
                     </Grid>
                   </Grid>
-                  <p className={`ml-5 ${shouldBlur("postedBy")}`}>
+                  <p className={`ml-5 pl-1 ${shouldBlur("postedBy")}`}>
                     {props.postedBy}
                   </p>
                 </Grid>
@@ -133,7 +133,7 @@ const JobsCard = (props) => {
               item
               xs={12}
               container
-              spacing={2}
+              spacing={1}
               justifyContent={"center"}
               alignItems={"center"}
             >

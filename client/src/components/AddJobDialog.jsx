@@ -26,7 +26,13 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
     contact: "",
     jobUrl: ""
   });
-
+  const [errors, setErrors] =  useState({
+    batch: false,
+    location: false,
+    stipend: false,
+    contact: false
+  });;
+  const currentYear = new Date().getFullYear();
   const user = useRecoilValue(userAtom);
   
 
@@ -34,8 +40,86 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
       console.log('User details from atom: ', user);
   }, [user])
 
+  const validateBatch = (batchArray) => {
+    const isValid = batchArray.every(
+      (num) => num >= 20 && num <= (currentYear + 4)%2000
+    );
+    if (!isValid) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        batch: true
+      }));
+      
+    } else {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        batch: false
+      }));
+      
+    }
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // if(name =="batch")
+    // {
+    //   const batchArray = value.split(",").map(num => parseInt(num.trim(), 10)); // Trim spaces and parse as numbers
+    //   validateBatch(batchArray);
+    // }
+    switch (name) {
+      case "batch":
+        const batchArray = value.split(",").map(num => parseInt(num.trim(), 10)); // Trim spaces and parse as numbers
+        validateBatch(batchArray);
+        break;
+    
+      case "location":
+        if (value.length > 30) {
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            location: true
+          }));
+        }
+        else{
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            location: false
+          }));
+        }
+        break;
+    
+      case "stipend":
+        if (!/^\d+$/.test(value)) {
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            stipend: true
+          }));
+        }
+        else{
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            stipend: false
+          }));
+        }
+        break;
+    
+      case "contact":
+        if (!/^\d{10}$/.test(value)) {
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            contact: true
+          }));
+        }
+        else{
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            contact: false
+          }));
+        }
+        break;
+      default:
+        break;
+    }
+    
+    
     setJobDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
@@ -44,7 +128,11 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
 
   const handleAddJob = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-
+    if(Object.values(errors).some(error => error))
+      {
+        toast.error("Please fill all the fields correctly.");
+      return;
+      }
     // Check if all required fields are filled in
     if (
       !jobDetails.position ||
@@ -168,6 +256,11 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
           onChange={handleChange}
           margin="dense"
         />
+        {errors.location ? (
+          <p style={{ color: "red" }}>
+            Input must not exceed 30 charcters.
+          </p>
+        ) : null} 
         <TextField
           label="Batch(es)"
           type="text"
@@ -178,8 +271,11 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
           onChange={handleChange}
           margin="dense"
         />
-        
-        <TextField
+ {errors.batch ? (
+          <p style={{ color: "red" }}>
+            All batch numbers must be between 20 and {(currentYear + 4) % 100}
+          </p>
+        ) : null}        <TextField
           label="Stipend (in ₹)"
           type="text"
           name="stipend"
@@ -188,6 +284,11 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
           onChange={handleChange}
           margin="dense"
         />
+        {errors.stipend ? (
+          <p style={{ color: "red" }}>
+            Enter only the amount, without $ or ₹
+          </p>
+        ) : null} 
         
         {/* <TextField
           label="Posted By"
@@ -217,6 +318,11 @@ const AddJobDialog = ({ isOpen, onClose, setFilters, refreshData }) => {
           margin="dense"
           inputProps={{ minLength: 10,maxLength: 10 }}
         />
+        {errors.contact ? (
+          <p style={{ color: "red" }}>
+            The contact number must be exactly a ten digits number
+          </p>
+        ) : null} 
         <div className="flex">
         <p className=" mt-6 mr-8 ml-1">START DATE:</p>
         <TextField
