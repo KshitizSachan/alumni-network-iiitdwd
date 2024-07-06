@@ -64,71 +64,86 @@ const Navbar = () => {
 
             <ul className="hidden md:flex ">
                 {currentPage==="/" ? (
+                  <Link to="/">
                   <li className={buttonStyle2}>
                       <div className="">
-                          <Link to="/">Home</Link>
+                          Home
                       </div>
                   </li>
+                  </Link>
                 ):(
+                  <Link to="/">
                 <li className={buttonStyle1}>
                     <div className="">
-                        <Link to="/">Home</Link>
+                        Home
                     </div>
                 </li>
+                  </Link>
                 )}
 
                 {currentPage==="/alumni" ? (
+                  <Link to="/alumni">
                 <li className={buttonStyle2}>
                     <div className="">
-                        <Link to="/alumni">Alumni</Link>
+                        Alumni
                     </div>
                 </li>
+                  </Link>
                   ): (
+                  <Link to="/alumni">
                   <li className={buttonStyle1}>
                       <div className="">
-                          <Link to="/alumni">Alumni</Link>
+                          Alumni
                       </div>
-                  </li>
+                  </li></Link>
                 )}
                 {currentPage==="/jobs" ? (
+                  <Link to="/jobs">
                 <li className={buttonStyle2}>
                     <div className="">
-                        <Link to="/jobs">Jobs</Link>
+                        Jobs
                     </div>
                 </li>
+                  </Link>
                   ): (
+                  <Link to="/jobs">
                   <li className={buttonStyle1}>
                       <div className="">
-                          <Link to="/jobs">Jobs</Link>
+                          Jobs
                       </div>
-                  </li>
+                  </li></Link>
                 )}
                 {currentPage==="/news" ? (
+                  <Link to="/news">
                 <li className={buttonStyle2}>
                     <div className="">
-                        <Link to="/news">NewsHub</Link>
+                        NewsHub
                     </div>
-                </li>
+                </li></Link>
                   ): (
+                  <Link to="/news">
                   <li className={buttonStyle1}>
                       <div className="">
-                          <Link to="/news">NewsHub</Link>
+                          NewsHub
                       </div>
-                  </li>
+                  </li></Link>
                 )}
                 {currentPage==="/about" ? (
+                  <Link to="/about">
                   <li
                     className={buttonStyle2}>
                       <div className="">
-                          <Link to="/about">About Us</Link>
+                          About Us
                       </div>
-                  </li>
+                  </li></Link>
                 ): (
+                  <Link to="/about">
                   <li className={buttonStyle1}>
                       <div className="">
-                          <Link to="/about">About Us</Link>
+                          About Us
                       </div>
                   </li>
+                  </Link>
                 )}
             </ul>
             {isLaptop && !user.basic.isLoggedIn &&(
