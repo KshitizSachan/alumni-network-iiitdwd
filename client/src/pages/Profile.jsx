@@ -6,7 +6,7 @@ import Notification from "../components/Notification";
 import Footer from "../template/Footer";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRecoilValue } from "recoil";
+import {useRecoilValue, useSetRecoilState} from "recoil";
 import { userAtom } from "../store/atoms/User";
 import {
   Dialog,
@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { Close, NotificationsNone } from "@mui/icons-material";
 import { fetcherPost, fetcherPut } from "../utils/axiosAPI";
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 // const sample = {
 //   _id: 223123213,
@@ -56,6 +56,9 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [editData, setEditData] = useState(null);
+  const navigate=useNavigate();
+  const setUser = useSetRecoilState(userAtom);
+
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -130,6 +133,43 @@ const Profile = () => {
     setSubmitting(false);
   };
 
+  const handleLogout =() =>{
+    setUser({
+      basic: {
+        name: '',
+        email: '',
+        rank: -1,
+        isLoggedIn: false
+      },
+      profilePic: '',
+      socials: {
+        githubUrl: '',
+        linkedInUrl: '',
+        xUrl: ''
+      },
+      notifications:[],
+      address: {
+        city: '',
+        state: ''
+      },
+      activity: {
+        projectsFloated: 0,
+        jobsFloated: 0,
+        internshipsFloated: 0
+      },
+      collegeDetails: {
+        branch: '',
+        batch: ''
+      },
+      jobRelated: {
+        company: '',
+        jobTitle: '',
+      }
+    })
+    localStorage.clear();
+    navigate('/');
+  }
+
   return (
     <>
       <Navbar />
@@ -147,12 +187,18 @@ const Profile = () => {
                 className="w-full object-cover relative top-0 md:-top-[6em] -z-[1]"
               />
             </div>
-            <div
-              className="absolute bottom-0 right-3"
-              onClick={handleEditFormOpen}
-            >
-              <BorderButton name={"Edit Profile"} />
-            </div>
+            <Stack spacing={1}
+                   direction={'row'}>
+              <div className="absolute bottom-0 right-24"
+                   onClick={handleEditFormOpen}>
+                <BorderButton name={"Edit Profile"} />
+              </div>
+              <div className="absolute bottom-2 right-2">
+                <Button color={'secondary'} variant={'contained'} onClick={handleLogout}>
+                  Log Out
+                </Button>
+              </div>
+            </Stack>
           </div>
 
           <div className="flex flex-col md:flex-row">
@@ -182,16 +228,16 @@ const Profile = () => {
                     <img src="/github.svg" alt="github-icon" />
                   </a>
                   <a
-                    href={data?.xURL ? data.xURL : "https://github.com/"}
+                    href={data?.xURL ? data.xURL : "https://x.com/"}
                     target="blank"
                   >
-                    <img src="/twittor.svg" alt="twittor-icon" />
+                    <img src="/twittor.svg" alt="X-icon" />
                   </a>
                   <a
                     href={
                       data?.linkedinURL
                         ? data.linkedinURL
-                        : "https://github.com/"
+                        : "https://linkedin.com/"
                     }
                     target="blank"
                   >

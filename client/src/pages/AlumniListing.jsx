@@ -334,7 +334,7 @@ const AlumniListing = () => {
                 ) : (
                   <>
                     {currentPageData?.map((alumni, index) => (
-                      <Grid item key={index}>
+                      <Grid item key={index} >
                         <AlumniCard
                           rank={user?.basic?.rank}
                           name={alumni.name}

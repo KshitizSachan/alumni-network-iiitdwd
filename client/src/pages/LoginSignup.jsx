@@ -18,7 +18,7 @@ import {
 import { Visibility, VisibilityOff, Close } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { fetcherPost } from "../utils/axiosAPI";
+import {fetcherGet, fetcherPost} from "../utils/axiosAPI";
 import {toast} from 'react-toastify';
 import {useSetRecoilState} from "recoil";
 import {userAtom} from "../store/atoms/User";
@@ -122,9 +122,14 @@ const LoginSignup = ({
           const response = await fetcherPost(url, { body });
           if (response?.msg === "Logged In Successfully") {
             const userId = response.userID;
+            const token= response.token;
+
+            localStorage.setItem('token', token);
+
             const body={
               userID: userId
             }
+
             const userDetails = await fetcherPost('user/get', {body})
             console.log('User details: ', userDetails);
             setUser((prevData) => ({

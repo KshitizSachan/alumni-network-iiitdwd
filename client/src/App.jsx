@@ -11,10 +11,23 @@ import Jobs from "./pages/Jobs";
 import NewsHub from "./pages/NewsHub";
 import Profile from "./pages/Profile";
 import Page404 from "./pages/Page404";
+import PersistLogin from "./utils/PersistLogin";
+import {ThemeProvider, createTheme} from "@mui/material/styles";
 // import LoginSignup from "./pages/LoginSignup";
 
 const App =() => {
-  const {ErrorBoundary,didCatch, error, reset} = useErrorBoundary()
+  const {ErrorBoundary,didCatch, error, reset} = useErrorBoundary();
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#FA005E'
+      },
+      secondary: {
+        main: '#000000'
+      }
+    }
+  });
 
   return (
 <>
@@ -23,6 +36,8 @@ const App =() => {
   ) : (
   <ErrorBoundary>
   <RecoilRoot>
+    <ThemeProvider theme={theme}>
+    <PersistLogin />
     <Router>
       <Routes>
         <Route exact path="/" element={<HomePage/>} />
@@ -31,10 +46,12 @@ const App =() => {
         <Route exact path="/news" element={<NewsHub/>} />
         <Route exact path="/profile" element={<Profile/>} />
         <Route exact path="/jobs" element={<Jobs/>} />
+        {/*<Route exact path="/login" element={<Login/>} />*/}
         {/* <Route exact path="/login" element={<LoginSignup/>} /> */}
         <Route path="*" element={<Page404/>} />
       </Routes>
     </Router>
+    </ThemeProvider>
   </RecoilRoot>
   </ErrorBoundary>
       )}

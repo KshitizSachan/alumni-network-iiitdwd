@@ -14,12 +14,16 @@ axiosInstance.interceptors.response.use(
 
 export const fetcherGet = async (args) => {
     const [url, config] = Array.isArray(args) ? args : [args];
+    const token= localStorage.getItem('token');
+
     try {
-        const res = await axiosInstance.get(url, { ...config });
-        if (res.status !== 200) {
+        const res = await axiosInstance.get(url, { ...config, headers: {
+            "Content-Type": "application/json",
+            authorization: token }});
+        if (res?.status !== 200) {
             throw new Error('Error fetching data (from utils/axiosInstance), Status Text: ', res.statusText);
         }
-        return res.data;
+        return res?.data;
     } catch (error) {
         console.error('Error fetching data (from utils/axiosInstance):', error);
     }
@@ -34,9 +38,12 @@ export const fetcherGet = async (args) => {
 // const url='/createContent';
 // const response = await fetcherPost(url, { token, wisperContent });
 
-export const fetcherPost = async (url, { token = '', body = {}} = {}) => {
+export const fetcherPost = async (url, { body = {}} = {}) => {
     console.log('Post Request Body:', body)
     console.log('Post Request URL:', url)
+
+    const token= localStorage.getItem('token');
+
     try {
         const res = await axiosInstance.post(
             url,

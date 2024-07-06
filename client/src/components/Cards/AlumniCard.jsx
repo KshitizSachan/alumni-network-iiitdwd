@@ -5,10 +5,11 @@ import { useNavigate, NavLink } from "react-router-dom";
 const AlumniCard = (props) => {
   return (
     <>
-      <Box sx={{ width: { xs: "100%" } }}>
+      <Box sx={{ width: { xs: "100%" }, backgroundColor: 'white' }}>
       <Grid
         container
         spacing={{ xs: 3, md: 2 }}
+        sx={{backgroundColor: 'white'}}
         justifyContent={{ xs: "center", md: "space-between" }}
         alignItems={"center"}
         className="p-4 shadow-md rounded-md"
