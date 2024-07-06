@@ -8,13 +8,13 @@
   }
   
 
-  @media screen and (max-width: 425px) {
+  @media screen and (max-width: 490px) {
     .home-content > *:nth-child(1) {
       display: none;
     }
   }
   
-  @media screen and (min-width: 426px) {
+  @media screen and (min-width: 491px) {
     .home-content > *:nth-child(2) {
       display: none;
     }

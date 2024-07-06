@@ -21,6 +21,7 @@ import {
 import { Close, NotificationsNone } from "@mui/icons-material";
 import { fetcherPost, fetcherPut } from "../utils/axiosAPI";
 import {useLocation, useNavigate} from "react-router-dom";
+import { px } from "framer-motion";
 
 // const sample = {
 //   _id: 223123213,
@@ -189,7 +190,7 @@ const Profile = () => {
             </div>
             <Stack spacing={1}
                    direction={'row'}>
-              <div className="absolute bottom-0 right-24"
+              <div className="absolute bottom-0 right-28"
                    onClick={handleEditFormOpen}>
                 <BorderButton name={"Edit Profile"} />
               </div>
@@ -225,13 +226,13 @@ const Profile = () => {
                     }
                     target="blank"
                   >
-                    <img src="/github.svg" alt="github-icon" />
+                    <img src="/github.svg" alt="github-icon" width="35px" height="35px"/>
                   </a>
                   <a
                     href={data?.xURL ? data.xURL : "https://x.com/"}
                     target="blank"
                   >
-                    <img src="/twittor.svg" alt="X-icon" />
+                    <img src="/twittor.svg" alt="X-icon" width="35px" height="35px"/>
                   </a>
                   <a
                     href={
@@ -241,7 +242,7 @@ const Profile = () => {
                     }
                     target="blank"
                   >
-                    <img src="/linkedin.svg" alt="linkedin-icon" />
+                    <img src="/linkedin.svg" alt="linkedin-icon" width="35px" height="35px"/>
                   </a>
                 </div>
               </div>

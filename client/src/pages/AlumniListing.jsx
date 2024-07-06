@@ -176,7 +176,7 @@ const AlumniListing = () => {
         }`}
       >
         <Navbar />
-        <div className="mx-14 py-14">
+        <div className="py-14">
           <p style={{ marginTop: "75px" }}></p>
           {user?.basic?.rank === 3 && (
             <Grid container justifyContent={"center"} alignItems={"center"}>
@@ -201,8 +201,8 @@ const AlumniListing = () => {
           {(user?.basic?.rank === 1 || user?.basic?.rank === 2) && (
             <Grid
               container
-              spacing={{ xs: 4 }}
-              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 8 }}
+              direction={{ xs: "column", md: "row" }}
             >
               <Grid item xs={3} className="flex justify-center xl:justify-end">
                 <Box
