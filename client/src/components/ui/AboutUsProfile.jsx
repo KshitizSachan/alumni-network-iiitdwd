@@ -37,27 +37,33 @@ const AboutUSProfile = ({image, name, title, link1, link2, link3}) =>{
          target="_blank"
          rel="noReferrer"
          className="icon">
-        <LinkedinFilled />
+        <span style={{color: '#0e76a8'}}>
+          <LinkedinFilled />
+        </span>
       </a>
 
       <a href={link2}
          target="_blank"
          rel="noReferrer"
          className="icon">
-        <InstagramFilled />
+        <span style={{color: '#E1306C'}}>
+          <InstagramFilled />
+        </span>
       </a>
 
       <a href={link3}
          target="_blank"
          rel="noReferrer"
          className="icon">
-        <TwitterCircleFilled />
+        <span style={{color: '#1DA1F2'}}>
+          <TwitterCircleFilled />
+        </span>
       </a>
 
 
-
     </Stack> </Stack>
-  </>)
+  </>
+)
 }
 
 

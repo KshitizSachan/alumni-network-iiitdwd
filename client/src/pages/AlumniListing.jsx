@@ -176,7 +176,7 @@ const AlumniListing = () => {
         }`}
       >
         <Navbar />
-        <div className="py-14">
+        <div className="mx-14 py-14">
           <p style={{ marginTop: "75px" }}></p>
           {user?.basic?.rank === 3 && (
             <Grid container justifyContent={"center"} alignItems={"center"}>
@@ -201,8 +201,8 @@ const AlumniListing = () => {
           {(user?.basic?.rank === 1 || user?.basic?.rank === 2) && (
             <Grid
               container
-              spacing={{ xs: 8 }}
-              direction={{ xs: "column", md: "row" }}
+              spacing={{ xs: 4 }}
+              direction={{ xs: "column", lg: "row" }}
             >
               <Grid item xs={3} className="flex justify-center xl:justify-end">
                 <Box
@@ -237,8 +237,8 @@ const AlumniListing = () => {
                   <Grid xs={12} className="flex justify-center">
                     <div className="flex">
                       {/* <div onClick={() => handleFilterClick("All")}>
-                        <JobsFilterButton name="ALL" used={filters.All} />
-                      </div> */}
+                       <JobsFilterButton name="ALL" used={filters.All} />
+                       </div> */}
                       <div onClick={() => handleFilterClick("CSE")}>
                         <JobsFilterButton name="CSE" used={filters.CSE} />
                       </div>
@@ -295,27 +295,27 @@ const AlumniListing = () => {
                     </div>
                   </Grid>
                   {/* <Grid xs={12} className="flex justify-center">
-                    <div className="flex">
-                      <div
-                        onClick={() => handleFilterClick("year2026")}
-                        className=""
-                      >
-                        <JobsFilterButton
-                          name="2026 BATCH"
-                          used={filters.year2026}
-                        />
-                      </div>
-                      <div
-                        onClick={() => handleFilterClick("year2027")}
-                        className=""
-                      >
-                        <JobsFilterButton
-                          name="2027 BATCH"
-                          used={filters.year2027}
-                        />
-                      </div>
-                    </div>
-                  </Grid> */}
+                   <div className="flex">
+                   <div
+                   onClick={() => handleFilterClick("year2026")}
+                   className=""
+                   >
+                   <JobsFilterButton
+                   name="2026 BATCH"
+                   used={filters.year2026}
+                   />
+                   </div>
+                   <div
+                   onClick={() => handleFilterClick("year2027")}
+                   className=""
+                   >
+                   <JobsFilterButton
+                   name="2027 BATCH"
+                   used={filters.year2027}
+                   />
+                   </div>
+                   </div>
+                   </Grid> */}
                 </Box>
               </Grid>
               <Grid className="hidden xl:flex items-center justify-center">
@@ -334,7 +334,7 @@ const AlumniListing = () => {
                 ) : (
                   <>
                     {currentPageData?.map((alumni, index) => (
-                      <Grid item key={index} >
+                      <Grid item key={index}>
                         <AlumniCard
                           rank={user?.basic?.rank}
                           name={alumni.name}

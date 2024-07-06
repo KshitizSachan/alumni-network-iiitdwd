@@ -12,6 +12,7 @@ import NewsHub from "./pages/NewsHub";
 import Profile from "./pages/Profile";
 import Page404 from "./pages/Page404";
 import PersistLogin from "./utils/PersistLogin";
+import ViewProfilePage from './pages/ViewProfilePage';
 import {ThemeProvider, createTheme} from "@mui/material/styles";
 // import LoginSignup from "./pages/LoginSignup";
 
@@ -45,6 +46,7 @@ const App =() => {
         <Route exact path="/alumni" element={<AlumniListing/>} />
         <Route exact path="/news" element={<NewsHub/>} />
         <Route exact path="/profile" element={<Profile/>} />
+        <Route exact path="/view" element={<ViewProfilePage/>} />
         <Route exact path="/jobs" element={<Jobs/>} />
         {/*<Route exact path="/login" element={<Login/>} />*/}
         {/* <Route exact path="/login" element={<LoginSignup/>} /> */}

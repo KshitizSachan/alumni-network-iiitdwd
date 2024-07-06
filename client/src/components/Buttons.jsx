@@ -6,7 +6,7 @@ const PrimaryButton = ({ name, isDisabled = false }) => {
   };
   return (
     <button
-      className={`flex justify-center items-center p-2 m-2 text-md font-semibold max-h-9 rounded-md transition duration-300 ease-in-out ${
+      className={`flex pb-3 justify-center items-center p-2 m-2 text-md font-semibold max-h-9 rounded-md transition duration-300 ease-in-out ${
         isDisabled
           ? 'bg-gray-200 text-gray-300 border border-gray-300 cursor-not-allowed'
           : 'text-white bg-primaryPink border-primaryPink hover:bg-hoverpink hover:text-white border hover:border-transparent'
@@ -26,7 +26,7 @@ const BorderButton = ({ name, isDisabled = false }) => {
   return (
 
     <button
-    className={`flex justify-center items-center p-2 m-2 text-md font-semibold max-h-9 rounded-md transition duration-300 ease-in-out ${
+    className={`flex pb-3 justify-center items-center p-2 m-2 text-md font-semibold max-h-9 rounded-md transition duration-300 ease-in-out ${
       isDisabled
         ? 'bg-gray-200 text-gray-300 border border-gray-300 cursor-not-allowed'
         : 'text-primaryPink bg-white rounded-md border-primaryPink hover:bg-primaryPink hover:text-white hover:shadow-md border hover:border-transparent'

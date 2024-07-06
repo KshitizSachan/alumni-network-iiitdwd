@@ -65,10 +65,10 @@ const AboutUs = () => {
         </Grid>
 
 
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12} sm={10} sx={{marginBottom: '5rem'}}>
           <Grid container spacing={3}>
             <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '2rem'}}>
-              <Typography variant={'h4'} color={'secondary'}>Meet The Team</Typography>
+              <Typography variant={'h4'}  color={'secondary'}>Meet The Team</Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <AboutUsCard image={Image2} name={'Aditya Sethiya'} title={'Frontend Dev'} link1={'https://in.linkedin.com/in/aditya-sethiya-073b6b231'} link2={'https://www.instagram.com/adityasethiya21/'} link3={'https://twitter.com/'} />

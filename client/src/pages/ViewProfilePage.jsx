@@ -50,7 +50,7 @@ import { px } from "framer-motion";
 //   }
 // ];
 
-const Profile = () => {
+const ViewProfile = () => {
   const [data, setData] = useState(null);
   const user = useRecoilValue(userAtom);
   const [editOpen, setEditOpen] = useState(false);
@@ -61,9 +61,9 @@ const Profile = () => {
   const setUser = useSetRecoilState(userAtom);
 
 
-//  const location = useLocation();
-//  const queryParams = new URLSearchParams(location.search);
-//  const viewUserId = queryParams.get("view");
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const viewUserId = queryParams.get("id");
 
   const getUserProfileData = async (userID) => {
     setLoading(true);
@@ -92,8 +92,12 @@ const Profile = () => {
 
   useEffect(() => {
     //console.log("User: ", user);
+    if (viewUserId) {
+      getUserProfileData(viewUserId);
+    } else {
       if (user?.basic?.id) getUserProfileData(user.basic.id);
-  }, [user]);
+    }
+  }, [viewUserId, user]);
 
   const handleDetailChange = (title, value) => {
     setEditData((prevdata) => ({ ...prevdata, [title]: value }));
@@ -184,18 +188,18 @@ const Profile = () => {
                 className="w-full object-cover relative top-0 md:-top-[6em] -z-[1]"
               />
             </div>
-            <Stack spacing={1}
-                   direction={'row'}>
-              <div className="absolute bottom-0 right-28"
-                   onClick={handleEditFormOpen}>
-                <BorderButton name={"Edit Profile"} />
-              </div>
-              <div className="absolute bottom-2 right-2">
-                <Button color={'secondary'} variant={'contained'} onClick={handleLogout}>
-                  LogOut
-                </Button>
-              </div>
-            </Stack>
+            {/*<Stack spacing={1}*/}
+            {/*       direction={'row'}>*/}
+            {/*  <div className="absolute bottom-0 right-28"*/}
+            {/*       onClick={handleEditFormOpen}>*/}
+            {/*    <BorderButton name={"Edit Profile"} />*/}
+            {/*  </div>*/}
+            {/*  <div className="absolute bottom-2 right-2">*/}
+            {/*    <Button color={'secondary'} variant={'contained'} onClick={handleLogout}>*/}
+            {/*      Log Out*/}
+            {/*    </Button>*/}
+            {/*  </div>*/}
+            {/*</Stack>*/}
           </div>
 
           <div className="flex flex-col md:flex-row">
@@ -270,29 +274,19 @@ const Profile = () => {
               {/* Details and notifications */}
               <div className="flex flex-col xl:flex-row gap-10 xl:gap-5 2xl:gap-14">
                 <div className="flex flex-col gap-3">
-                  <Detail type={"Position"} detail={data?.position} />
-                  <Detail type={"Company"} detail={data?.companyName} />
-                  <Detail type={"Email"} detail={data?.email} />
                   <Detail type={"Batch"} detail={data?.batch} />
                   <Detail type={"Branch"} detail={data?.branch} />
+                  <Detail type={"Email"} detail={data?.email} />
                 </div>
 
                 <div className="border border-solid border-black/20"></div>
 
-                <div className="flex flex-col gap-6 h-[350px] px-3 pt-2 pb-5 overflow-y-auto w-fit">
-                  <div className="flex flex-row gap-1">
-                    <p className="font-poppins text-lg text-black/60">
-                      Notifications
-                    </p>
-                    <NotificationsNone className="text-black/60" />
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-3">
+                    <Detail type={"Position"}
+                            detail={data?.position} /> <Detail type={"Company"}
+                                                               detail={data?.companyName} />
                   </div>
-                  {data?.notifications?.map((item) => (
-                    <Notification
-                      key={item._id}
-                      type={item.type}
-                      text={item.objID}
-                    />
-                  ))}
                 </div>
               </div>
             </div>
@@ -392,4 +386,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ViewProfile;

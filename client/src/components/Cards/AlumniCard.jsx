@@ -14,15 +14,15 @@ const AlumniCard = (props) => {
         alignItems={"center"}
         className="p-4 shadow-md rounded-md"
       >
-        <Grid item container xs={12} md={9}>
-          <Grid item xs={12} md={3} className="flex justify-center lg:justify-start">
+        <Grid item container xs={12} sm={9}>
+          <Grid item xs={12} sm={3} className="flex justify-center lg:justify-start">
             <Avatar
               src={props.imageSrc || '/blank-profile-picture.webp'}
               alt={props.name}
               sx={{ width: 100, height: 100 }}
             />
           </Grid>
-          <Grid item xs={12} md={9} className="pt-4 lg:pt-0">
+          <Grid item xs={12} sm={9} className="pt-4 lg:pt-0">
             <Grid container spacing={1} direction={"column"}>
               <Grid item className="flex justify-center lg:justify-start">
                 <Typography variant="h5" fontWeight="bold">
@@ -42,9 +42,9 @@ const AlumniCard = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item container xs={12} md={3}>
+        <Grid item container xs={12} sm={3}>
           <Grid item xs={12}>
-            <NavLink to={`/profile?view=${props.userId}`}>
+            <NavLink to={`/view?id=${props.userId}`}>
             <Button
               variant="outlined"
               fullWidth

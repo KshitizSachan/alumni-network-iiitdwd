@@ -163,7 +163,7 @@ const JobsCard = (props) => {
               </Grid>
               <Grid item>
                 {rank === 0 || rank === 1 || rank === 2 ? (
-                  <NavLink to={`/profile?view=${props.floatedByID}`}>
+                  <NavLink to={`/view?id=${props.floatedByID}`}>
                     <BorderButton
                     name="View Profile"
                     isDisabled={false}
