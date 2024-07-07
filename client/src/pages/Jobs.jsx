@@ -10,6 +10,7 @@ import { userAtom } from "../store/atoms/User";
 import { useRecoilValue } from "recoil";
 import AddJobDialog from "../components/AddJobDialog";
 import _ from "lodash";
+import {fetcherGet} from "../utils/axiosAPI";
 
 const Jobs = () => {
   const [data, setData] = useState(null);
@@ -20,13 +21,22 @@ const Jobs = () => {
   //   get_fetcher
   // );
 
-  const getData = async () => {
-    setIsLoading(true);
-    const url = "http://localhost:5000/job/getAll";
-    const res = await get_fetcher(url);
-    setData(res);
-    setIsLoading(false);
-  };
+    const getData = async () => {
+      setIsLoading(true); // Start loading
+      try {
+        const url = "/job/getAll";
+        const res = await fetcherGet(url);
+        setData(res);
+        // Process data here if necessary before setting it
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false); // End loading
+      }
+    };
+
+
+
 
   const user = useRecoilValue(userAtom);
 
@@ -410,13 +420,13 @@ const Jobs = () => {
               <div className="h-full bg-greyLine w-0.5"></div>
             </Grid>
             {isLoading ? (
-              <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
+              <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4 ">
                 Loading...
               </p>
             ) : currentPageData?.length === 0 ? (
-              <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4 ">
+              <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4 ">
                 {" "}
-                No results found.....
+                No results found
               </p>
             ) : (
               <Grid item xs={7}>

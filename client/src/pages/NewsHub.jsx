@@ -7,14 +7,33 @@ import Footer from "../template/Footer";
 import NewsCard from "../components/Cards/NewsCard";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../store/atoms/User";
-import { Typography, Pagination } from "@mui/material";
+import {Typography, Pagination, Box} from "@mui/material";
+import {fetcherGet} from "../utils/axiosAPI";
 
 const NewsHub = () => {
-  const { data, isLoading } = useSWR(
-    "http://localhost:5000/news/getall",
-    get_fetcher
-  );
   const user = useRecoilValue(userAtom);
+
+const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true); // Start loading
+      try {
+        const url = "/news/getAll";
+        const res = await fetcherGet(url);
+        setData(res);
+        // Process data here if necessary before setting it
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false); // End loading
+      }
+    };
+
+    getData();
+  }, [user]);
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageData, setCurrentPageData] = useState([]);
@@ -188,13 +207,17 @@ const NewsHub = () => {
 
       <div className="ml-3">
         {isLoading ? (
-          <p className="text-primaryPink font-bold font-poppins text-3xl px-6 py-4">
+            <Box style={{display: 'flex', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center'}}>
+          <p className="text-primaryPink font-bold font-poppins text-xl">
             Loading...
           </p>
+            </Box>
         ) : currentPageData?.length === 0 ? (
-          <p className="text-primaryPink font-bold font-poppins text-3xl px-6 py-4">
-            No results found...
+            <Box style={{display: 'flex', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center'}}>
+          <p className="text-primaryPink font-bold font-poppins text-xl">
+            No results found
           </p>
+            </Box>
         ) : (
           currentPageData.map((news, index) => (
             <div key={index} className="mb-14">

@@ -33,19 +33,23 @@ const AlumniListing = () => {
   const [numOfPages, setNumOfPages] = useState(0);
   const cardsPerPage = 5;
 
-  const getData = async () => {
-    setIsLoading(true);
-    const url = "/alumni/getAll";
-    // const tokenHeader = { authorization: localStorage.getItem('token') };
-    const res = await fetcherGet(url);
-    setData(res);
-    setIsLoading(false);
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true); // Start loading
+      try {
+        const url = "/alumni/getAll";
+        const res = await fetcherGet(url);
+        setData(res);
+        // Process data here if necessary before setting it
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false); // End loading
+      }
+    };
+
     getData();
-    console.log(user);
-  }, [user])
+  }, [user]);
 
   const [filters, setFilters] = useState({
     //All: true,
@@ -324,13 +328,17 @@ const AlumniListing = () => {
 
               <Grid item container xs={8} spacing={4} direction={"column"}>
                 {isLoading ? (
-                  <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4">
+                  <Box style={{display: 'flex', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center'}}>
+                  <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4">
                     Loading...
                   </p>
+                  </Box>
                 ) : currentPageData?.length === 0 ? (
-                  <p className=" text-primaryPink font-bold font-poppins text-3xl px-6 py-4">
-                    No results found.....
+                  <Box style={{display: 'flex', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center'}}>
+                  <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4">
+                    No results found
                   </p>
+                  </Box>
                 ) : (
                   <>
                     {currentPageData?.map((alumni, index) => (
