@@ -7,7 +7,7 @@
 5. Data Updations
 6. On platform voting
 7. Notifications to whatsapp
-8. Cloudflare integration for images
+8. Cloudinary integration for images
 9. Lodaing in profile page
 10. Revoking access immediately using tokenization setup.
 11. Remove password from alumni signup.

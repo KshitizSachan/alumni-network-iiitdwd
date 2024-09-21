@@ -21,11 +21,29 @@ import AlumniMarquee  from './animations/alumni-marquee';
 import GlobeAnimation from './animations/GlobeAnimation';
 import {Grid} from "@mui/material";
 
+import React from 'react'
+import { Cloudinary } from '@cloudinary/url-gen';
+import { auto } from '@cloudinary/url-gen/actions/resize';
+import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
+import { AdvancedImage } from '@cloudinary/react';
+
+
 const StaticHome = ()=>
 {
     const countUpRef = useRef(null); 
     const [isCountUpStarted, setIsCountUpStarted] = useState(false);
     const { ref, inView } = useInView({ threshold: 0.5 });
+    
+    const cld = new Cloudinary({ cloud: { cloudName: 'dtls6ok72' } });
+  
+    // Use this sample image or upload your own via the Media Explorer
+    const img = cld
+          .image('alma matter/home/hpdzsbssylnwea7nrjmu')
+          .format('auto') // Optimize delivery by resizing and applying auto-format and auto-quality
+          .quality('auto')
+          .resize(auto().gravity(autoGravity()).width(700).height(400)); // Transform the image: auto-crop
+  
+
     useEffect(() => {
         if (inView && !isCountUpStarted) {
         setIsCountUpStarted(true);
@@ -56,10 +74,11 @@ const StaticHome = ()=>
         </div>
             </Grid> <Grid item
                           xs={6}>
-            <img src={NetworkHome}
+                          <AdvancedImage cldImg={img} alt="network"/>
+            {/* <img src={NetworkHome}
                  alt="network"
                  width="600"
-                 height="400" />
+                 height="400" /> */}
             {/*<GlobeAnimation />*/} {/*<AlumniMarquee />*/}
         </Grid>
 
