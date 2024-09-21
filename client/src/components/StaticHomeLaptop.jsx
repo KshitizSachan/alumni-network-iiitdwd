@@ -27,15 +27,19 @@ import { auto } from '@cloudinary/url-gen/actions/resize';
 import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
 import { AdvancedImage } from '@cloudinary/react';
 
+const cld = new Cloudinary({
+    cloud: { cloudName: process.env.REACT_APP_CLOUINARY_CLOUD_NAME },
+  });
 
 const StaticHome = ()=>
 {
     const countUpRef = useRef(null); 
     const [isCountUpStarted, setIsCountUpStarted] = useState(false);
     const { ref, inView } = useInView({ threshold: 0.5 });
+
+    console.log("process.env.CLOUINARY_CLOUD_NAME: ", process.env.REACT_APP_CLOUINARY_CLOUD_NAME);
     
-    const cld = new Cloudinary({ cloud: { cloudName: 'dtls6ok72' } });
-  
+    
     // Use this sample image or upload your own via the Media Explorer
     const img = cld
           .image('alma matter/home/hpdzsbssylnwea7nrjmu')
