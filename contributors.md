@@ -1,6 +1,8 @@
 ## Contributors and Roles
 
 
+# Founding Team
+
 Aditya Sethiya
 Frontend
 
@@ -12,3 +14,12 @@ Frontend
 
 Kshitiz Sachan
 Lead, Frontend, Backend
+
+# Other Contributors
+
+Divyansh Mishra
+Non Tech
+
+Bhargav Abhilash
+Non Tech
+
