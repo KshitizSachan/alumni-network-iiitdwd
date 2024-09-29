@@ -8,6 +8,7 @@ import { BorderButton, PrimaryButton } from "../Buttons";
 import { toast } from "react-toastify";
 import { Grid, Typography, Box, Paper } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import {fetcherPost} from "../../utils/axiosAPI";
 
 const JobsCard = (props) => {
   const rank = props.rank;
@@ -20,6 +21,29 @@ const JobsCard = (props) => {
   const handleApplyClick = () => {
     window.open(props.jobURL, "_blank", "noopener,noreferrer");
   };
+
+  const handleRequestReferral = async () =>{
+      const url = "/job/referral";
+      const body = {
+        floatedByID: props.floatedByID,
+        title: props.jobPosition,
+        company: props.company,
+        jobID: props.jobID
+      };
+
+      try {
+        const response = await fetcherPost(url, { body });
+        if (response && response.status === 200) {
+          toast.success(response.msg);
+        } else {
+          toast.error(response.msg);
+        }
+      } catch (error) {
+        console.error("Error adding job:", error);
+        toast.error("Error adding job");
+      }
+
+  }
 
   return (
     <>
@@ -148,15 +172,12 @@ const JobsCard = (props) => {
               </Grid>
               <Grid item>
                 {rank === 0 || rank === 1 || rank === 2 ? (
+                  <div onClick={handleRequestReferral}>
                   <BorderButton
-                    onClick={() =>
-                      toast.error(
-                        "Login from iiitdwd account to ask for referal"
-                      )
-                    }
                     name="Request for Referal"
                     isDisabled={false}
                   />
+                  </div>
                 ) : (
                   <BorderButton name="Request for referal" isDisabled={true} />
                 )}

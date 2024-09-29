@@ -290,7 +290,7 @@ const Profile = () => {
                     <Notification
                       key={item._id}
                       type={item.type}
-                      text={item.objID}
+                      text={item.name}
                     />
                   ))}
                 </div>

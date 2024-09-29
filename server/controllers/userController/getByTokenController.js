@@ -3,7 +3,7 @@ const userModel = require("../../models/userSchema");
 const getByToken = async (req, res) => {
   try {
     const { userID } = req.user;
-    console.log('userID:', req.user)
+//    console.log('userID:', req.user)
     const user = await userModel.findOne({userID: userID});
     if (!user) {
       return res.status(404).json({msg: "User Not Found"}); // 404 Not Found

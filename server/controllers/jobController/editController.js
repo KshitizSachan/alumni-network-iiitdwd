@@ -1,4 +1,6 @@
 const jobModel = require('../../models/jobSchema');
+
+
 const edit = async (req,res) =>{
     const { jobID, floatedBy, floatedByID, title,appliedBy, category, handler, whatsappNo, startDate, referral, jobLocation, companyName, eligibleBatch, stipend, jobURL } = req.body;
     try {

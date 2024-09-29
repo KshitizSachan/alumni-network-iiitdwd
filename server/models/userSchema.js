@@ -12,7 +12,7 @@ const notificationSchema = new mongoose.Schema({
 //------------------------------------------------Default Notifications----------------------------------------------
 const defaultNotification = {
     type: "Account Creation",
-    name: "admin",
+    name: "Yahoo! Account Created.",
     objID: "Yahoo! Account Created."
   };
 //------------------------------------------------Subschema for jobLocation----------------------------------------

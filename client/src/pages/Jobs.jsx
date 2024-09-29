@@ -433,6 +433,7 @@ const Jobs = () => {
                 {currentPageData.map((job, index) => (
                   <div key={index} className="mb-14">
                     <JobsCard
+                      jobID={job.jobID}
                       rank={user?.basic?.isLoggedIn ? user?.basic?.rank : -1}
                       jobPosition={job.title}
                       company={job.companyName}
