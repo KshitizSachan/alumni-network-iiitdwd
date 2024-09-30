@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import Page404 from "./pages/Page404";
 import PersistLogin from "./utils/PersistLogin";
 import ViewProfilePage from './pages/ViewProfilePage';
+import AdminPanel from "./pages/AdminPanel";
 import {ThemeProvider, createTheme} from "@mui/material/styles";
 // import LoginSignup from "./pages/LoginSignup";
 
@@ -50,6 +51,7 @@ const App =() => {
         <Route exact path="/jobs" element={<Jobs/>} />
         {/*<Route exact path="/login" element={<Login/>} />*/}
         {/* <Route exact path="/login" element={<LoginSignup/>} /> */}
+        <Route exact path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<Page404/>} />
       </Routes>
     </Router>
