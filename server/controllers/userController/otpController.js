@@ -57,35 +57,35 @@ const verify = async (req,res) =>
           }
           case 1: //Verified alumni
           {
-            const { isOld } = req.body;
-            if (isOld === 1) { //isOld = 0 (Alumni did not have a previos Verified Student Account)
-              const { oldEmail, newEmail, password } = req.body;
-            bcrypt.compare(password, account.password, async (err, result) => {
-              if(err) {
-                return res.status(401).json({ msg: "Incorrect Password:",err }); //401 Unauthorized
-              }
-              else {
-                const account = await userModel.findOne({email : oldEmail});
-                if (!account) {
-                  return res.status(404).json({ msg: "User not found" }); //404 Not Found
-                }
-                if (account.rank !== 2) {
-                  return res.status(403).json({ msg: "Access denied. User is not a verified college student." });//403 Forbidden
-                }
-                account.rank = 1;
-                account.email = newEmail;
-                account.save().then((err) => {
-                  if(!err){
-                    return res.status(201).json({ msg: "User Upgraded Successfully" });//201 Created
-                  }
-                  else{
-                    return res.status(422).json({ msg: "Unable to create user object:", err }); //422 Unprocessable Entity
-                  }
-                });
-              } 
-            });
-          } 
-          else //isOld = 0 (Alumni did not have a previos Verified Student Account)
+          //   const { isOld } = req.body;
+          //   if (isOld === 1) { //isOld = 0 (Alumni did not have a previos Verified Student Account)
+          //     const { oldEmail, newEmail, password } = req.body;
+          //   bcrypt.compare(password, account.password, async (err, result) => {
+          //     if(err) {
+          //       return res.status(401).json({ msg: "Incorrect Password:",err }); //401 Unauthorized
+          //     }
+          //     else {
+          //       const account = await userModel.findOne({email : oldEmail});
+          //       if (!account) {
+          //         return res.status(404).json({ msg: "User not found" }); //404 Not Found
+          //       }
+          //       if (account.rank !== 2) {
+          //         return res.status(403).json({ msg: "Access denied. User is not a verified college student." });//403 Forbidden
+          //       }
+          //       account.rank = 1;
+          //       account.email = newEmail;
+          //       account.save().then((err) => {
+          //         if(!err){
+          //           return res.status(201).json({ msg: "User Upgraded Successfully" });//201 Created
+          //         }
+          //         else{
+          //           return res.status(422).json({ msg: "Unable to create user object:", err }); //422 Unprocessable Entity
+          //         }
+          //       });
+          //     } 
+          //   });
+          // } 
+          // else //isOld = 0 (Alumni did not have a previos Verified Student Account)
           {
             const { name, email, password } = req.body;
             const account = await userModel.findOne({email : email});
@@ -97,18 +97,20 @@ const verify = async (req,res) =>
                 return res.status(500).json({ msg: "Error Hashing Password:", err }); //500 Internal Server Error
               } else {
                 try{
-                  var accDetails = { name: "", email: "", password: "" };
+                  var accDetails = { name: "", email: "", password: "", verificationStatus:0, rank:1 };
                   accDetails.name = name;
                   accDetails.email = email;
                   accDetails.password = hash;
-                  accDetailsString = JSON.stringify(accDetails);
-                  const admin = await userModel.findOne({ email: "admin2024@gmail.com" });
+                  // accDetailsString = JSON.stringify(accDetails);
+                  // const admin = await userModel.findOne({ email: "admin2024@gmail.com" });
                   try{
-                    admin.notifications.push({
-                      type: "Verification",
-                      objID: accDetailsString
-                    });
-                    admin.save();
+                    // admin.notifications.push({
+                    //   type: "Verification",
+                    //   objID: accDetailsString
+                    // });
+                    // admin.save();
+                    const newUser = new userModel(accDetails);
+                    newUser.save();
                     return res.status(201).json({ msg: "Account Info Sent to Admin. Wait for Verification." });//201 Created
                   }
                   catch(err){

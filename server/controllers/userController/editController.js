@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const userModel = require("../../models/userSchema");
 
 const edit = async (req, res) => {
-  const { userID, name, email, password, profilePicURL, githubURL, xURL, linkedinURL, jobLocation, companyName, position, floatedProjects, floatedJobs, offeredReferrals, notifications } = req.body;
+  const { userID, name, email, password, profilePicURL, githubURL, xURL, linkedinURL, jobLocation, companyName, position, floatedProjects, floatedJobs, offeredReferrals, notifications, verificationStatus } = req.body;
 
   try {
     const user = await userModel.findOne({ userID });
@@ -21,6 +21,7 @@ const edit = async (req, res) => {
       jobLocation,
       companyName,
       position,
+      verificationStatus,
       floatedProjects: floatedProjects ? [...user.floatedProjects, ...(floatedProjects instanceof Array ? floatedProjects : [floatedProjects])] : user.floatedProjects,
       floatedJobs: floatedJobs ? [...user.floatedJobs,...(floatedJobs instanceof Array ? floatedJobs : [floatedJobs])] : user.floatedJobs,
       offeredReferrals: offeredReferrals ? [...user.offeredReferrals, ...(offeredReferrals instanceof Array ? offeredReferrals : [offeredReferrals])] : user.offeredReferrals,
