@@ -22,16 +22,21 @@ import {
 import JobEditDialog from "./Dialogs/JobEditDialog";
 import DeleteDialog from "./Dialogs/DeleteDialog";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
-import { fetcherGet } from "../../utils/axiosAPI";
-
+import { fetcherDelete } from "../../utils/axiosAPI";
+import { toast } from "react-toastify";
 const JobUpdateCard = (props) => {
   const [submitting, setSubmitting] = useState(false);
   const [openDialog, setOpenDialog] = useState("");
 
   const handleDelete = async () => {
     setSubmitting(true);
-    const url = alumniEps?.jobs?.delete(props.id);
-    // Handle response
+    const url = alumniEps?.jobs?.delete;
+    try {
+      const res = await fetcherDelete(url,{userID:props.id});
+      toast.success("Job Deleted Successfully");
+    } catch (err) {
+      toast.error(err);
+    }
     setSubmitting(false);
   }
 

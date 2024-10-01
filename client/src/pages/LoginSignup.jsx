@@ -18,7 +18,7 @@ import {
 import { Visibility, VisibilityOff, Close } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import {fetcherGet, fetcherPost} from "../utils/axiosAPI";
+import {fetcherPost} from "../utils/axiosAPI";
 import {toast} from 'react-toastify';
 import {useSetRecoilState} from "recoil";
 import {userAtom} from "../store/atoms/User";
@@ -165,9 +165,9 @@ const LoginSignup = ({
             toast.error(response?.msg);
           }
           // console.log('Response', response);
-        } catch (err) {
-          toast.error('Some Error')
-          console.log("Error while login/signup: ", err);
+        } catch (error) {
+          toast.error(error)
+          // console.log(error);
         }
       } else {
         const url = "/user/signup";

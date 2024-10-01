@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Typography, Stack, Box, Button, Link, Paper } from "@mui/material";
 import { Email, LinkedIn } from "@mui/icons-material";
-import { fetcherGet } from "../../utils/axiosAPI";
+// import { fetcherGet } from "../../utils/axiosAPI";
+import { fetcherPut } from "../../utils/axiosAPI";
+import { fetcherDelete } from "../../utils/axiosAPI";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
 import VerifyConfirmDialog from "./Dialogs/VerfiyConfirmDialog";
+import { toast } from "react-toastify";
 
 const VerifyCard = ({ name, email, linkedin, id }) => {
   const [submitting, setSubmitting] = useState(false);
@@ -11,17 +14,26 @@ const VerifyCard = ({ name, email, linkedin, id }) => {
 
   const handleApprove = async () => {
     setSubmitting(true);
-    const url = alumniEps?.verification?.approve(id);
-    const res = await fetcherGet(url);
-    // Handle the response
+    const url = alumniEps?.verification?.approve;
+    try {
+      const res = await fetcherPut(url,{userID:id,verificationStatus:1});
+      toast.success("Successfully Approved");
+    } catch (err) {
+      toast.error(err);
+    }
+    
     setSubmitting(false);
   };
 
   const handleReject = async () => {
     setSubmitting(true);
-    const url = alumniEps?.verification?.approve(id);
-    const res = await fetcherGet(url);
-    // Handle the response
+    const url = alumniEps?.verification?.reject;
+    try {
+      const res = await fetcherDelete(url,{userID:id});
+      toast.success("Alumni Rejected");
+    } catch (err) {
+      toast.error(err);
+    }
     setSubmitting(false);
   };
 
