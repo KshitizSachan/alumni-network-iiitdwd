@@ -1,10 +1,4 @@
-import Amazon from '../assets/Amazon.svg'
-import Ibm from '../assets/Ibm.svg'
-import Intel from '../assets/Intel.svg'
-import Nvidia from '../assets/Nvidia.svg'
-import NetworkHome from '../assets/NetworkHome.svg'
-import jobHomeLaptop from '../assets/jobHomeLaptop.svg'
-import newsHomeLaptop from '../assets/newsHomeLaptop.svg'
+
 import { Link } from "react-router-dom";
 import CountUp from 'react-countup';
 import { useInView } from 'react-intersection-observer';
@@ -37,15 +31,23 @@ const StaticHome = ()=>
     const [isCountUpStarted, setIsCountUpStarted] = useState(false);
     const { ref, inView } = useInView({ threshold: 0.5 });
 
-    console.log("process.env.CLOUINARY_CLOUD_NAME: ", process.env.REACT_APP_CLOUINARY_CLOUD_NAME);
-    
-    
-    // Use this sample image or upload your own via the Media Explorer
     const img = cld
           .image('alma matter/home/hpdzsbssylnwea7nrjmu')
           .format('auto') // Optimize delivery by resizing and applying auto-format and auto-quality
           .quality('auto')
           .resize(auto().gravity(autoGravity()).width(700).height(400)); // Transform the image: auto-crop
+
+  const jobs_img = cld
+    .image('jobHomeLaptop_fvmgei')
+    .format('auto') // Optimize delivery by resizing and applying auto-format and auto-quality
+    .quality('auto')
+    .resize(auto().gravity(autoGravity()).width(600)); // Transform the image: auto-crop
+
+  const scholarships_img = cld
+    .image('newsHomeLaptop_bsvnyc')
+    .format('auto') // Optimize delivery by resizing and applying auto-format and auto-quality
+    .quality('auto')
+    .resize(auto().gravity(autoGravity()).width(650)); // Transform the image: auto-crop
   
 
     useEffect(() => {
@@ -161,12 +163,14 @@ const StaticHome = ()=>
                     </Link>
                 </div>
             </div>
-            <img src={jobHomeLaptop} alt='companylogo' style={{ width: '50%', height: 'auto' }} />
+          <AdvancedImage cldImg={jobs_img} alt="jobs_page"/>
+            {/*<img src={jobHomeLaptop} alt='companylogo' style={{ width: '50%', height: 'auto' }} />*/}
         </div>
 
 
         <div className='flex justify-between gap-6'>
-            <img src={newsHomeLaptop} alt='companylogo' style={{ width: '50%', height: 'auto' }} />
+            {/*<img src={newsHomeLaptop} alt='companylogo' style={{ width: '50%', height: 'auto' }} />*/}
+          <AdvancedImage cldImg={scholarships_img} alt="scholarships_page"/>
             <div className='flex flex-col justify-evenly'>
                 <div>
                     <p className='text-5xl font-semibold text-wrap' style={{ lineHeight: '1.5' }}>Stay Connected: Students Stay Abreast of Information with the Latest Updates on </p>

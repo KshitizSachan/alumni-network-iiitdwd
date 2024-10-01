@@ -33,10 +33,8 @@ const JobsCard = (props) => {
 
       try {
         const response = await fetcherPost(url, { body });
-        if (response && response.status === 200) {
+        if (response) {
           toast.success(response.msg);
-        } else {
-          toast.error(response.msg);
         }
       } catch (error) {
         console.error("Error adding job:", error);
