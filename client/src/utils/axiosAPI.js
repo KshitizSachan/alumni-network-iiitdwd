@@ -27,7 +27,13 @@ export const fetcherGet = async (args) => {
         }
         return res?.data;
     } catch (error) {
-        console.error('Error fetching data (from utils/axiosInstance):', error);
+        if (error.msg) {
+            // Throw the error response so it can be handled in the calling function
+            throw error.msg;
+        } else {
+            // Throw a generic error if there's no response
+            throw new Error('Error fetching data (from utils/axiosInstance):', error);
+        }
     }
 };
 
@@ -61,7 +67,14 @@ export const fetcherPost = async (url, { body = {}} = {}) => {
         );
         return res.data;
     } catch (error) {
-        throw new Error('Error fetching data (from utils/axiosInstance):', error);
+        if (error.msg) {
+            // Throw the error response so it can be handled in the calling function
+            throw error.msg;
+        } else {
+            // Throw a generic error if there's no response
+            throw new Error('Error fetching data (from utils/axiosInstance):', error);
+        }
+        
     }
 };
 
@@ -85,7 +98,13 @@ export const fetcherPut = async (url, { token = '', body = {}} = {}) => {
         }
         return res.data;
     } catch (error) {
-        console.error('Error fetching data (from utils/axiosInstance):', error);
+        if (error.msg) {
+            // Throw the error response so it can be handled in the calling function
+            throw error.msg;
+        } else {
+            // Throw a generic error if there's no response
+            throw new Error('Error fetching data (from utils/axiosInstance):', error);
+        }
     }
 };
 
@@ -108,6 +127,12 @@ export const fetcherDelete = async (url, { token = '', body = {}} = {}) => {
         }
         return res.data;
     } catch (error) {
-        console.error('Error fetching data (from utils/axiosInstance):', error);
+        if (error.msg) {
+            // Throw the error response so it can be handled in the calling function
+            throw error.msg;
+        } else {
+            // Throw a generic error if there's no response
+            throw new Error('Error fetching data (from utils/axiosInstance):', error);
+        }
     }
 };

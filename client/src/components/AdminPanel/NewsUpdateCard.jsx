@@ -16,7 +16,8 @@ import {
 import NewsEditDialog from "./Dialogs/NewsEditDialog";
 import DeleteDialog from "./Dialogs/DeleteDialog";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
-import { fetcherGet } from "../../utils/axiosAPI";
+import { fetcherDelete } from "../../utils/axiosAPI";
+import { toast } from "react-toastify";
 
 const NewsUpdateCard = (props) => {
   const [submitting, setSubmitting] = useState(false);
@@ -24,8 +25,13 @@ const NewsUpdateCard = (props) => {
 
   const handleDelete = async () => {
     setSubmitting(true);
-    const url = alumniEps?.news?.delete(props.id);
-    // Handle response
+    const url = alumniEps?.news?.delete;
+    try {
+      const res = await fetcherDelete(url,{newsID:props.id});
+      toast.success("News Deleted Successfully");
+    } catch (err) {
+      toast.error(err);
+    }
     setSubmitting(false);
   }
 

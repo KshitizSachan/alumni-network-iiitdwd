@@ -3,15 +3,21 @@ import { Grid, Typography, Button, Avatar, Box, Paper, Stack } from "@mui/materi
 import { DeleteOutlined } from "@mui/icons-material";
 import DeleteDialog from "./Dialogs/DeleteDialog";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
-import { fetcherGet } from "../../utils/axiosAPI";
-
+import { fetcherDelete } from "../../utils/axiosAPI";
+import { toast } from "react-toastify";
 const UserDeleteCard = (props) => {
   const [submitting, setSubmitting] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const handleUserDelete = async () => {
     setSubmitting(true);
-    const url = alumniEps?.user?.delete(props.userId)
+    const url = alumniEps?.user?.delete;
+    try {
+      const res = await fetcherDelete(url,{userID:props.userId});
+      toast.success("Successfully Deleted");
+    } catch (err) {
+      toast.error(err);
+    }
     // Handle response
     setSubmitting(false);
   };

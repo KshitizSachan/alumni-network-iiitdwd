@@ -7,7 +7,7 @@ import {
   TextField,
   MenuItem, Select, FormControl, InputLabel, Stack
 } from "@mui/material";
-import { fetcherPost } from "../../../utils/axiosAPI";
+import { fetcherPut } from "../../../utils/axiosAPI";
 import { toast } from "react-toastify";
 import { alumniEps } from "../../../utils/AdminPanel/endpoints";
 
@@ -150,6 +150,7 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
     
     
         const body = {
+          jobID: jobData.id,
           jobURL: jobDetails.jobUrl,
           floatedBy: jobData?.postedBy ?? "",
           floatedByID: jobData?.posterID ?? "",
@@ -165,7 +166,7 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
         // console.log(body);
     
         try {
-          const response = await fetcherPost(url, { body });
+          const response = await fetcherPut(url, { body });
           if (response && response.msg === "Job Updated Successfully.") {
             onClose();
             toast.success("Job Updated Successfully");
@@ -175,8 +176,7 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
             toast.error("Failed to update job");
           }
         } catch (error) {
-          console.error("Error updating job:", error);
-          toast.error("Error updating job");
+          toast.error(error);
         }
       };
     
