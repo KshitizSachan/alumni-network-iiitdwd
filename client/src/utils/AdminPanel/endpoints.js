@@ -13,6 +13,7 @@ const alumniEps = {
     },
     jobs: {
         getAll: "/job/getAll",
+        add: "/jobs/create",
         edit: "/job/edit",
         // {
         //     "jobID": "65b59c6f976eb5e8d0f41794",
@@ -23,6 +24,7 @@ const alumniEps = {
     news: {
         getAll: "/news/getAll",
         edit: "/news/edit",
+        add: "/news/create",
         // {
         //     "newsID": "65b695304a879833c71bae5e",
         //     "title": "IIIT Dharwad Launches Innovative AI Curriculum",

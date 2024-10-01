@@ -5,6 +5,7 @@ import DeleteDialog from "./Dialogs/DeleteDialog";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
 import { fetcherDelete } from "../../utils/axiosAPI";
 import { toast } from "react-toastify";
+
 const UserDeleteCard = (props) => {
   const [submitting, setSubmitting] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -15,6 +16,7 @@ const UserDeleteCard = (props) => {
     try {
       const res = await fetcherDelete(url,{userID:props.userId});
       toast.success("Successfully Deleted");
+      props.getAllUsers();
     } catch (err) {
       toast.error(err);
     }
