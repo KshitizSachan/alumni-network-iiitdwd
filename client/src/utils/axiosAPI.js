@@ -110,7 +110,8 @@ export const fetcherPut = async (url, { token = '', body = {}} = {}) => {
 
 export const fetcherDelete = async (url, { token = '', body = {}} = {}) => {
     try {
-        const res = await axiosInstance.delete(
+        console.log(body);
+        const res = await axiosInstance.post(
             url,
             {
                 ...body

@@ -1,13 +1,13 @@
 const newsModel = require('../../models/newsSchema');
 const edit = async (req,res) =>{
-    const { newsID, floatedBy, title, description, tags } = req.body;
+    const { newsID, floatedBy, title, description, tags, link } = req.body;
     try {
         const news = await newsModel.findOne({ newsID });
         if (!news) {
           return res.status(401).json({ msg: "News Not Found" });
         }
         const update = {
-          floatedBy, title, description,
+          floatedBy, title, description, link,
           tags: tags ? [...news.tags,...(tags instanceof Array ? tags : [tags])] : news.tags
         };
         const updatedNews = await newsModel.findOneAndUpdate(
