@@ -7,7 +7,7 @@ import {
   TextField,
   Stack,
 } from "@mui/material";
-import { fetcherPost } from "../../../utils/axiosAPI";
+import { fetcherPost, fetcherPut } from "../../../utils/axiosAPI";
 import { toast } from "react-toastify";
 import { alumniEps } from "../../../utils/AdminPanel/endpoints";
 
@@ -65,6 +65,48 @@ const NewsEditDialog = ({ isOpen, onClose, refreshData, newsData, type }) => {
     }));
   };
 
+  const handleAddNews = async () => {
+    // e.preventDefault(); // Prevent default form submission behavior
+    if (Object.values(errors).some((error) => error)) {
+      toast.error("Please fill all the fields correctly.");
+      return;
+    }
+    // Check if all required fields are filled in
+    if (
+      !newsDetails.title ||
+      !newsDetails.description ||
+      !newsDetails.link ||
+      !newsDetails.tags
+    ) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+    const url = alumniEps?.news?.add;
+
+    const body = {
+      title: newsDetails.title,
+      link: newsDetails.link,
+      description: newsDetails.description,
+      tags: newsDetails.tags.split(", "),
+      floatedBy: "AdminUser"
+    };
+
+    // console.log(body);
+
+    try {
+      const response = await fetcherPost(url, { body });
+      if (response) {
+        onClose();
+        toast.success("News Added Successfully");
+        refreshData();
+      } else {
+        toast.error("Failed to add news");
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   const handleEditNews = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     if (Object.values(errors).some((error) => error)) {
@@ -84,6 +126,7 @@ const NewsEditDialog = ({ isOpen, onClose, refreshData, newsData, type }) => {
     const url = alumniEps?.news?.edit;
 
     const body = {
+      newsID: newsData.id,
       title: newsDetails.title,
       link: newsDetails.link,
       description: newsDetails.description,
@@ -93,8 +136,8 @@ const NewsEditDialog = ({ isOpen, onClose, refreshData, newsData, type }) => {
     // console.log(body);
 
     try {
-      const response = await fetcherPost(url, { body });
-      if (response && response.msg === "News Updated Successfully.") {
+      const response = await fetcherPut(url, { body });
+      if (response) {
         onClose();
         toast.success("News Updated Successfully");
         refreshData();
@@ -102,16 +145,13 @@ const NewsEditDialog = ({ isOpen, onClose, refreshData, newsData, type }) => {
         toast.error("Failed to update news");
       }
     } catch (error) {
-      console.error("Error updating news:", error);
-      toast.error("Error updating news");
+      toast.error(error);
     }
   };
 
   return (
     <Dialog open={isOpen} onClose={onClose}>
-      <DialogTitle>
-        {type === "edit" ? "Edit News" : "Add News"}
-      </DialogTitle>
+      <DialogTitle>{type === "edit" ? "Edit News" : "Add News"}</DialogTitle>
       <DialogContent>
         <TextField
           label="Title"
@@ -164,9 +204,15 @@ const NewsEditDialog = ({ isOpen, onClose, refreshData, newsData, type }) => {
         sx={{ padding: "1em" }}
       >
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleEditNews} variant="contained" color="primary">
-          {type === "edit" ? "Save" : "Add"}
-        </Button>
+        {type === "edit" ? (
+          <Button onClick={handleEditNews} variant="contained" color="primary">
+            Save
+          </Button>
+        ) : (
+          <Button onClick={handleAddNews} variant="contained" color="primary">
+            Add
+          </Button>
+        )}
       </Stack>
     </Dialog>
   );

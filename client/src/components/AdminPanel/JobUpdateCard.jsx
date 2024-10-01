@@ -24,6 +24,7 @@ import DeleteDialog from "./Dialogs/DeleteDialog";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
 import { fetcherDelete } from "../../utils/axiosAPI";
 import { toast } from "react-toastify";
+
 const JobUpdateCard = (props) => {
   const [submitting, setSubmitting] = useState(false);
   const [openDialog, setOpenDialog] = useState("");
@@ -32,13 +33,14 @@ const JobUpdateCard = (props) => {
     setSubmitting(true);
     const url = alumniEps?.jobs?.delete;
     try {
-      const res = await fetcherDelete(url,{userID:props.id});
+      const res = await fetcherDelete(url, { userID: props.id });
       toast.success("Job Deleted Successfully");
+      props.getAllJobs();
     } catch (err) {
       toast.error(err);
     }
     setSubmitting(false);
-  }
+  };
 
   return (
     <>

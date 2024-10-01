@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Typography, Stack, Box, Button, Link, Paper } from "@mui/material";
 import { Email, LinkedIn } from "@mui/icons-material";
 // import { fetcherGet } from "../../utils/axiosAPI";
-import { fetcherPut } from "../../utils/axiosAPI";
-import { fetcherDelete } from "../../utils/axiosAPI";
+import { fetcherPut, fetcherPost } from "../../utils/axiosAPI";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
 import VerifyConfirmDialog from "./Dialogs/VerfiyConfirmDialog";
 import { toast } from "react-toastify";
 
-const VerifyCard = ({ name, email, linkedin, id }) => {
+const VerifyCard = ({ name, email, linkedin, id, refreshData }) => {
   const [submitting, setSubmitting] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState("");
 
@@ -16,12 +15,14 @@ const VerifyCard = ({ name, email, linkedin, id }) => {
     setSubmitting(true);
     const url = alumniEps?.verification?.approve;
     try {
-      const res = await fetcherPut(url,{userID:id,verificationStatus:1});
+      const body = { userID: id, verificationStatus: 1 }
+      const res = await fetcherPut(url,{ body });
       toast.success("Successfully Approved");
+      refreshData();
     } catch (err) {
       toast.error(err);
     }
-    
+    setOpenConfirmDialog("");
     setSubmitting(false);
   };
 
@@ -29,11 +30,14 @@ const VerifyCard = ({ name, email, linkedin, id }) => {
     setSubmitting(true);
     const url = alumniEps?.verification?.reject;
     try {
-      const res = await fetcherDelete(url,{userID:id});
+      const body = { userID: id }
+      const res = await fetcherPost(url,{ body });
       toast.success("Alumni Rejected");
+      refreshData();
     } catch (err) {
       toast.error(err);
     }
+    setOpenConfirmDialog("");
     setSubmitting(false);
   };
 
@@ -42,6 +46,8 @@ const VerifyCard = ({ name, email, linkedin, id }) => {
       <Box
         component={Paper}
         sx={{
+          width: '100%',
+          height: 'fit-content',
           boxShadow: 2,
           borderRadius: "0.5rem",
           padding: "0.625rem 0.875rem",
