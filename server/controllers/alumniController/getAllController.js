@@ -1,7 +1,14 @@
 const userModel = require("../../models/userSchema");
 
 const getAll = async (req, res) => {
+
+
   try {
+
+    if(req.user_rank >= 3){
+      return res.status(200).json([]);
+    }
+
     const users = await userModel.find({ rank: 1 }); // Only fetch users with rank = 1
     if (!users.length) {
       return res.status(404).json({ msg: "No Users" }); // 404 Not Found

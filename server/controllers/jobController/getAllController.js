@@ -3,15 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const getAll = async (req,res) =>{
 
-  const token = req.headers.authorization;
-  let user_rank=4;
+  let user_rank = req.user_rank ?? 4;
 
-  if (!token) {
-    user_rank=4;
-  }else{
-     const decoded = jwt.verify(token, process.env.jwtPassword);
-     user_rank = decoded.rank;
-  }
 
     try {
         let jobs = await jobModel.find({});
