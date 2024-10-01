@@ -59,6 +59,10 @@ const userSchema = new mongoose.Schema({
             required: true,
             enum: [0,1,2,3]
     },
+    verificationStatus: {
+            type: Number,
+            enum: [-1,0,1],
+    },
     profilePicURL: {
         type: String,
         default: "" // Yet to be filled,

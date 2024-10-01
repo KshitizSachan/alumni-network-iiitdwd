@@ -7,11 +7,14 @@ const login = async (req, res) => {
     const user = await userModel.findOne({email : email});
     if(!user)
     {
-        return res.status(401).json({msg:"No Account Associated With The E-Mail"}) //401 Unauthorized
+      return res.status(401).json({msg:"No Account Associated With The E-Mail"}) //401 Unauthorized
+    }
+    if(user.verificationStatus === 0){
+      return res.status(401).json({msg:"Account Verification Pending."});  //401 Unauthorized
     }
     if(user.rank != rank)
     {
-        return res.status(401).json({msg:"Wrong Account Type Selected"}) //401 Unauthorized
+        return res.status(401).json({msg:"Wrong Account Type Selected"}); //401 Unauthorized
     }
     bcrypt.compare(password, user.password, async (err, result) => {
         if(!result) {
