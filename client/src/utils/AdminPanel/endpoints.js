@@ -13,6 +13,9 @@ const alumniEps = {
         getAll: "",
         edit: "",
         delete: ""
+    },
+    user: {
+        delete: ""
     }
 }
 
