@@ -212,9 +212,15 @@ const LoginSignup = ({
       try {
         const response = await fetcherPost(url, { body });
         console.log('Response', response);
-        toast.success('Account Created Successfully');
+        if(ranks[formik.values.usertype] == 1){
+          // do nothing for now as another toast will be displayed for alumni
+          // later need to send whatsapp msg here
+          toast.success(response.msg ? response.msg : 'Request sent successfully, awaiting approval');
+        }else {
+          toast.success(response.msg ? response.msg : 'Account Created Successfully');
+        }
         handleDialogClose();
-        callToast(response?.msg);
+//        callToast(response?.msg);
         setDialogContent("login");
       } catch (err) {
         console.log(err);
