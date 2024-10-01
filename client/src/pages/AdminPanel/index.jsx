@@ -1,7 +1,8 @@
 import { Briefcase, Newspaper,Users,LogOut, UserPen, UserRoundCheck } from "lucide-react";
 import Sidebar, { SidebarItem } from "../../components/AdminPanel/Sidebar"
 import { useState } from "react"
-
+import Verifications from "./Verifications"
+import NewsHandle from "./NewsHandle"
 function AdminPanel() {
   const [activeItem, setActiveItem] = useState(1);
   const handleSidebarClick = (id) =>{
@@ -20,6 +21,8 @@ function AdminPanel() {
           <SidebarItem id={5} icon={<UserPen size={20} />} text="Edit Profile" active={activeItem===5} onClick={() => handleSidebarClick(5)} />
           <SidebarItem id={6} icon={<LogOut size={20} />} text="Sign Out" active={activeItem===6} onClick={() => handleSidebarClick(6)} />
         </Sidebar>
+        {activeItem === 1 && <Verifications />}
+        {activeItem === 3 && <NewsHandle />}
       </div>
       
     </>

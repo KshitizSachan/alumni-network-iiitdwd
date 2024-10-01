@@ -18,6 +18,6 @@ router.get("/get",jwtAuth, getByToken); // Get User By ID via header token
 router.get("/getPending",jwtAuth, getPending); // Get Alumni with pending verification
 router.get("/getAll",jwtAuth, getAll); // Get All Users
 router.put("/edit", jwtAuth, edit); // Edit User Info
-router.delete("/delete",jwtAuth, remove);// Delete User
+router.post("/delete",jwtAuth, remove);// Delete User
 router.post("/signup/verify",verify); // OTP Verification
 module.exports = router;

@@ -31,6 +31,10 @@ const newsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    link: {
+        type: String,
+        required: true,
+    }
 });
 
 const newsModel = mongoose.model('news', newsSchema);

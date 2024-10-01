@@ -1,12 +1,13 @@
 const newsModel = require('../../models/newsSchema');
 const create = async (req,res) =>{
-    const { floatedBy, title, description, tags } = req.body;
+    const { floatedBy, title, description, tags, link } = req.body;
     try{
         await newsModel.create({
             floatedBy:floatedBy,
             title:title,
             description:description,
-            tags:tags
+            tags:tags,
+            link:link
         });
         return res.status(201).json({msg:"News Published Successfully."});// 201 Created
     }

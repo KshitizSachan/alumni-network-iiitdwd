@@ -9,6 +9,6 @@ router.post("/create",jwtAuth, create); // News Creation
 router.get("/get",jwtAuth, get); // Get News By ID
 router.get("/getAll", getAll); // Get All News
 router.put("/edit",jwtAuth, edit); // Edit News Info
-router.delete("/delete",jwtAuth, remove); // Delete News
+router.post("/delete",jwtAuth, remove); // Delete News
 
 module.exports = router;
