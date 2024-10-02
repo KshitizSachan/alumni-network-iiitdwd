@@ -57,7 +57,7 @@ const Verifications = () => {
                 name={item.name}
                 email={item.email}
                 id={item.userID}
-                linkedin=""
+                linkedin={item.linkedinURL}
                 refreshData={getData}
               />
             ))}

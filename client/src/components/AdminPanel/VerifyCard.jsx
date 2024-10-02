@@ -66,9 +66,9 @@ const VerifyCard = ({ name, email, linkedin, id, refreshData }) => {
           </Stack>
           <Stack direction={"row"} spacing={1} alignItems={"center"}>
             <LinkedIn />
-            <Link href={linkedin} underline="hover" color={"inherit"}>
-              {linkedin}
-            </Link>
+            <a href={linkedin} target="_blank" rel="noopener noreferrer">
+              {linkedin?.slice(12)}
+            </a>
             {/* <Typography variant='body1' fontWeight={500}>LinkedIn:</Typography> */}
             {/* <Typography variant='body1' fontWeight={400}>LinkedIn profile URL</Typography> */}
           </Stack>

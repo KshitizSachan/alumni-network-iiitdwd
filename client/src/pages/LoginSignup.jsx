@@ -106,7 +106,7 @@ const LoginSignup = ({
       password: "",
       usertype: "",
       confirm: "",
-      alumniDesc: "",
+      linkedinURL: "",
     },
     validationSchema:
       currentTab === 0 ? loginValidationSchema : signupValidationSchema,
@@ -145,7 +145,7 @@ const LoginSignup = ({
               profilePic: userDetails.profilePicURL,
               socials: {
                 githubUrl: userDetails.githubURL,
-                linkedInUrl: userDetails.linkedinURL,
+                linkedinUrl: userDetails.linkedinURL,
                 xUrl: userDetails.xURL
               },
               notifications: userDetails.notifications,
@@ -178,7 +178,7 @@ const LoginSignup = ({
           name: values.name,
         };
         if (values.usertype === "alumni") {
-          body = { ...body, description: values.alumniDesc };
+          body = { ...body, linkedinURL: values.linkedinURL };
         }
         try {
           const response = await fetcherPost(url, { body });
@@ -207,6 +207,7 @@ const LoginSignup = ({
         email: formik.values.email,
         password: formik.values.password,
         name: formik.values.name,
+        linkedinURL: formik.values.linkedinURL,
         otpAttempt: values.otp,
       };
       try {
@@ -328,15 +329,15 @@ const LoginSignup = ({
                   <FormControl fullWidth>
                     <TextField
                       size="small"
-                      label="Alumni Description"
-                      value={formik.values.alumniDesc}
+                      label="LinkedIn URL"
+                      value={formik.values.linkedinURL}
                       onChange={(event) =>
-                        formik.setFieldValue("alumniDesc", event.target.value)
+                        formik.setFieldValue("linkedinURL", event.target.value)
                       }
                     />
-                    {formik.touched.alumniDesc && formik.errors.alumniDesc && (
+                    {formik.touched.linkedinURL && formik.errors.linkedinURL && (
                       <FormHelperText error id="alumni-desc-helper">
-                        {formik.errors.alumniDesc}
+                        {formik.errors.linkedinURL}
                       </FormHelperText>
                     )}
                   </FormControl>

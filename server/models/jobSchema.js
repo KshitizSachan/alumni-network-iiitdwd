@@ -31,7 +31,6 @@ const jobSchema = new mongoose.Schema({
     },
     handler: {
         type: String,
-        required: true
     },
     createdAt: {
         type: Date,
@@ -42,7 +41,6 @@ const jobSchema = new mongoose.Schema({
     },
     whatsappNo: {
         type: String,
-        required: true,
         minLength: 10,
         maxLength: 10
     },

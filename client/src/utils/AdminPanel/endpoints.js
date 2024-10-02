@@ -13,7 +13,7 @@ const alumniEps = {
     },
     jobs: {
         getAll: "/job/getAll",
-        add: "/jobs/create",
+        add: "/job/create",
         edit: "/job/edit",
         // {
         //     "jobID": "65b59c6f976eb5e8d0f41794",
