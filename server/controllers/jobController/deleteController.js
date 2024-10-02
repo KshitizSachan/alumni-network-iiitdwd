@@ -6,7 +6,7 @@ const remove = async (req,res) =>{
         if (!job.deletedCount) {
             return res.status(404).json({ msg: "Job not found" });
           }
-        return res.status(204)// 204 No Content
+        return res.status(204).json({msg:"Jobs Deleted Succesfully."})// 204 No Content
     }
     catch(err){
         console.log(err)

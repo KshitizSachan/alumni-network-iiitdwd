@@ -11,8 +11,8 @@ const edit = async (req,res) =>{
         }
         const update = {
             jobID, floatedBy, floatedByID, title, category, jobURL, handler, whatsappNo, referral, jobLocation, companyName, stipend,
-          appliedBy: appliedBy ? [...job.appliedBy,...(appliedBy instanceof Array ? appliedBy : [appliedBy])] : job.appliedBy,
-          eligibleBatch: eligibleBatch ? [...job.eligibleBatch,...(eligibleBatch instanceof Array ? eligibleBatch : [eligibleBatch])] : job.eligibleBatch,
+          appliedBy: appliedBy ? [...(appliedBy instanceof Array ? appliedBy : [appliedBy])] : job.appliedBy,
+          eligibleBatch: eligibleBatch ? [...(eligibleBatch instanceof Array ? eligibleBatch : [eligibleBatch])] : job.eligibleBatch,
           startDate: date
         };
         const updatedJob = await jobModel.findOneAndUpdate(
