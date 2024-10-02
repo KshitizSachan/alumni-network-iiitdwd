@@ -3,7 +3,7 @@ import { Grid, Typography, Button, Avatar, Box, Paper, Stack } from "@mui/materi
 import { DeleteOutlined } from "@mui/icons-material";
 import DeleteDialog from "./Dialogs/DeleteDialog";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
-import { fetcherDelete } from "../../utils/axiosAPI";
+import { fetcherPost } from "../../utils/axiosAPI";
 import { toast } from "react-toastify";
 
 const UserDeleteCard = (props) => {
@@ -14,13 +14,13 @@ const UserDeleteCard = (props) => {
     setSubmitting(true);
     const url = alumniEps?.user?.delete;
     try {
-      const res = await fetcherDelete(url,{userID:props.userId});
+      const body = { userID: props.userId }
+      const res = await fetcherPost(url,{ body });
       toast.success("Successfully Deleted");
       props.getAllUsers();
     } catch (err) {
       toast.error(err);
     }
-    // Handle response
     setSubmitting(false);
   };
 

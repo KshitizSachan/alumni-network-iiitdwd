@@ -4,6 +4,7 @@ import { useState } from "react"
 import Verifications from "./Verifications"
 import NewsHandle from "./NewsHandle"
 import JobsHandle from "./JobsHandle";
+import UserHandle from "./UserHandle";
 
 function AdminPanel() {
   const [activeItem, setActiveItem] = useState(1);
@@ -26,6 +27,7 @@ function AdminPanel() {
         {activeItem === 1 && <Verifications />}
         {activeItem === 2 && <JobsHandle />}
         {activeItem === 3 && <NewsHandle />}
+        {activeItem === 4 && <UserHandle />}
       </div>
       
     </>
