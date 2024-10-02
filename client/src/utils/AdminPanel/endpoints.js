@@ -38,7 +38,8 @@ const alumniEps = {
         // {
         //     "userID": "65b57caa8c3b62d3b9feef97",
         // }
-        getAll: "/user/getAll"
+        getAll: "/user/getAll",
+        login: "/user/login"
     }
 }
 

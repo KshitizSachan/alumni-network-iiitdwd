@@ -17,6 +17,7 @@ const UserDeleteCard = (props) => {
       const body = { userID: props.userId }
       const res = await fetcherPost(url,{ body });
       toast.success("Successfully Deleted");
+      console.log("Toast ke baad aa gaye");
       props.getAllUsers();
     } catch (err) {
       toast.error(err);

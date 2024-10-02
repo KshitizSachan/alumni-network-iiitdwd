@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
 import { fetcherGet } from "../../utils/axiosAPI";
 import { Stack, Typography, Box, CircularProgress } from "@mui/material";
-import JobUpdateCard from "../../components/AdminPanel/JobUpdateCard";
 import UserDeleteCard from "../../components/AdminPanel/UserDeleteCard";
 
 const UserHandle = () => {

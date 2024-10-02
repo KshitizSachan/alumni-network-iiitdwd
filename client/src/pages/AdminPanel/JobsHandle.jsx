@@ -43,7 +43,7 @@ const JobsHandle = () => {
               color="secondary"
               onClick={() => setOpenAddDialog(true)}
             >
-              Add News
+              Add Job
             </Button>
           </Stack>
           {loading ? (
@@ -70,10 +70,10 @@ const JobsHandle = () => {
                   posted={new Date(item.createdAt).toLocaleDateString(
                     "en-GB"
                   )}
-                  startDate={new Date(item.startDate).toLocaleDateString(
+                  startDate={new Date(item.startDate).toISOString().split('T')[0]}
+                  displayStartDate={new Date(item.startDate).toLocaleDateString(
                     "en-GB"
                   )}
-                  displayStartDate={item.startDate}
                   batch={item.eligibleBatch}
                   getAllJobs={getAllJobs}
                 />
