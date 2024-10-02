@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
-import NewsUpdateCard from "../../components/AdminPanel/NewsUpdateCard";
 import { toast } from "react-toastify";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
 import { fetcherGet } from "../../utils/axiosAPI";
 import { Stack, Typography, Button, Box, CircularProgress } from "@mui/material";
-import NewsEditDialog from "../../components/AdminPanel/Dialogs/NewsEditDialog";
+import JobEditDialog from "../../components/AdminPanel/Dialogs/JobEditDialog";
+import JobUpdateCard from "../../components/AdminPanel/JobUpdateCard";
 
-const NewsHandle = () => {
-  const [allNews, setAllNews] = useState([]);
+const JobsHandle = () => {
+  const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openAddDialog, setOpenAddDialog] = useState(false);
 
-  const getAllNews = async () => {
+  const getAllJobs = async () => {
     setLoading(true);
-    const url = alumniEps?.news?.getAll;
+    const url = alumniEps?.jobs?.getAll;
     try {
       const res = await fetcherGet(url);
-      setAllNews(res);
+      setAllJobs(res);
     } catch (err) {
       toast.error(err);
     }
@@ -24,7 +24,7 @@ const NewsHandle = () => {
   };
 
   useEffect(() => {
-    getAllNews();
+    getAllJobs();
   }, []);
 
   return (
@@ -37,34 +37,45 @@ const NewsHandle = () => {
             alignItems={"center"}
             justifyContent={"space-between"}
           >
-            <Typography variant="h4">News</Typography>
+            <Typography variant="h4">Jobs</Typography>
             <Button
               variant="outlined"
               color="secondary"
               onClick={() => setOpenAddDialog(true)}
             >
-              Add News
+              Add Job
             </Button>
           </Stack>
           {loading ? (
             <Stack justifyContent={'center'} alignItems={'center'} width={1} height={100}>
               <CircularProgress size={"2.5rem"} />
             </Stack>
-          ) : allNews?.length === 0 ? (
+          ) : allJobs?.length === 0 ? (
             <Stack justifyContent={'center'} alignItems={'center'} width={1} height={100}>
-              <Typography variant="h5" fontWeight={600}>No News Added</Typography>
+              <Typography variant="h5" fontWeight={600}>No Jobs Added</Typography>
             </Stack>
           ) : (
             <Stack spacing={3}>
-              {allNews?.map((item) => (
-                <NewsUpdateCard
-                  key={item.newsID}
-                  id={item.newsID}
-                  title={item.title}
-                  description={item.description}
-                  tags={item.tags}
-                  link={item.link}
-                  getAllNews={getAllNews}
+              {allJobs?.map((item) => (
+                <JobUpdateCard
+                  key={item.jobID}
+                  id={item.jobID}
+                  jobPosition={item.title}
+                  company={item.companyName}
+                  location={item.jobLocation}
+                  category={item.category}
+                  jobURL={item.jobURL}
+                  stipend={item.stipend}
+                  postedBy={item.floatedBy}
+                  posted={new Date(item.createdAt).toLocaleDateString(
+                    "en-GB"
+                  )}
+                  startDate={new Date(item.startDate).toISOString().split('T')[0]}
+                  displayStartDate={new Date(item.startDate).toLocaleDateString(
+                    "en-GB"
+                  )}
+                  batch={item.eligibleBatch}
+                  getAllJobs={getAllJobs}
                 />
               ))}
             </Stack>
@@ -72,15 +83,15 @@ const NewsHandle = () => {
         </Stack>
       </Box>
       {openAddDialog && (
-        <NewsEditDialog
+        <JobEditDialog
           isOpen={openAddDialog}
           onClose={() => setOpenAddDialog(false)}
           type={"add"}
-          refreshData={getAllNews}
+          refreshData={getAllJobs}
         />
       )}
     </>
   );
 };
 
-export default NewsHandle;
+export default JobsHandle;

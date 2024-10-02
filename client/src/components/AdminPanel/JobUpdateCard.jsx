@@ -22,7 +22,7 @@ import {
 import JobEditDialog from "./Dialogs/JobEditDialog";
 import DeleteDialog from "./Dialogs/DeleteDialog";
 import { alumniEps } from "../../utils/AdminPanel/endpoints";
-import { fetcherDelete } from "../../utils/axiosAPI";
+import { fetcherPost } from "../../utils/axiosAPI";
 import { toast } from "react-toastify";
 
 const JobUpdateCard = (props) => {
@@ -33,7 +33,7 @@ const JobUpdateCard = (props) => {
     setSubmitting(true);
     const url = alumniEps?.jobs?.delete;
     try {
-      const res = await fetcherDelete(url, { userID: props.id });
+      const res = await fetcherPost(url, { userID: props.id });
       toast.success("Job Deleted Successfully");
       props.getAllJobs();
     } catch (err) {

@@ -123,8 +123,8 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
     }));
   };
 
-  const handleAddJob = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+  const handleAddJob = async () => {
+    // e.preventDefault(); // Prevent default form submission behavior
     if (Object.values(errors).some((error) => error)) {
       toast.error("Please fill all the fields correctly.");
       return;
@@ -174,8 +174,8 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
     }
   };
 
-  const handleEditJob = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+  const handleEditJob = async () => {
+    // e.preventDefault(); // Prevent default form submission behavior
     if (Object.values(errors).some((error) => error)) {
       toast.error("Please fill all the fields correctly.");
       return;
@@ -335,13 +335,15 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
         sx={{ padding: "1em" }}
       >
         <Button onClick={onClose}>Cancel</Button>
-        <Button
-          onClick={type === "edit" ? handleEditJob() : handleAddJob()}
-          variant="contained"
-          color="primary"
-        >
-          {type === "edit" ? "Save" : "Add"}
-        </Button>
+        {type === "edit" ? (
+          <Button onClick={handleEditJob} variant="contained" color="primary">
+            Save
+          </Button>
+        ) : (
+          <Button onClick={handleAddJob} variant="contained" color="primary">
+            Add
+          </Button>
+        )}
       </Stack>
     </Dialog>
   );

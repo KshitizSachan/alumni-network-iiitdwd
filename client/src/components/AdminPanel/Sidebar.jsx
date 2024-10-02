@@ -4,11 +4,11 @@ import { createContext, useContext, useState } from "react"
 
 const SidebarContext = createContext();
 
-export default function Sidebar({ children }) {
+export default function Sidebar({ children, user }) {
     const [expanded, setExpanded] = useState(true)
     return (
         <>
-            <aside className="h-screen">
+            <aside className="h-screen sticky top-0">
                 <nav className="h-full flex flex-col bg-white border-r shadow-sm">
                     <div className="p-4 pb-2 flex justify-between items-center">
                         <div></div>
@@ -22,17 +22,20 @@ export default function Sidebar({ children }) {
                         <ul className="flex-1 pl-3">{React.Children.toArray(children).slice(0, -2)}</ul>
                     </SidebarContext.Provider>
 
-                    <div className={expanded ? "flex flex-col pt-3" :"flex"  }>
+                    <div className={expanded ? "flex flex-col pt-3 w-full" :"flex"  }>
                         <SidebarContext.Provider value={{ expanded }}>
                             <ul className="flex-1 pl-3">{React.Children.toArray(children).slice(-2)}</ul>
                         </SidebarContext.Provider>
-                        {/* <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"} `}>
-                            <div className="leading-4">
-                                <h4 className="font-semibold">constGenius</h4>
-                                <span className="text-xs text-gray-600">constgenius@gmail.com</span>
+                        {user?.basic?.name && user?.basic?.email && (
+                            <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-full" : "w-0"} `}>
+                                <div className="leading-4 w-full">
+                                    <hr className='w-full' />
+                                    <h4 className="font-semibold m-1 pl-5">{user?.basic?.name}</h4>
+                                    <span className="text-sm text-gray-600 m-1 pl-5">{user?.basic?.email}</span>
+                                </div>
+                                
                             </div>
-                            
-                        </div> */}
+                        )}
                     </div>
                 </nav>
             </aside>
