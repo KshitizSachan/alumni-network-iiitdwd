@@ -3,13 +3,15 @@ import Sidebar, { SidebarItem } from "../../components/AdminPanel/Sidebar"
 import { useState } from "react"
 import Verifications from "./Verifications"
 import NewsHandle from "./NewsHandle"
+import JobsHandle from "./JobsHandle";
+
 function AdminPanel() {
   const [activeItem, setActiveItem] = useState(1);
-  const handleSidebarClick = (id) =>{
-    setActiveItem(id);
 
-    
+  const handleSidebarClick = (id) =>{
+    setActiveItem(id);    
   }
+
   return (
     <>
       <div className="flex">
@@ -22,6 +24,7 @@ function AdminPanel() {
           <SidebarItem id={6} icon={<LogOut size={20} />} text="Sign Out" active={activeItem===6} onClick={() => handleSidebarClick(6)} />
         </Sidebar>
         {activeItem === 1 && <Verifications />}
+        {activeItem === 2 && <JobsHandle />}
         {activeItem === 3 && <NewsHandle />}
       </div>
       

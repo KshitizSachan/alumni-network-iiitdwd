@@ -107,8 +107,8 @@ const NewsEditDialog = ({ isOpen, onClose, refreshData, newsData, type }) => {
     }
   };
 
-  const handleEditNews = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+  const handleEditNews = async () => {
+    // e.preventDefault(); // Prevent default form submission behavior
     if (Object.values(errors).some((error) => error)) {
       toast.error("Please fill all the fields correctly.");
       return;
