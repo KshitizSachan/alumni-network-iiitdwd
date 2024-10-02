@@ -87,7 +87,7 @@ const verify = async (req,res) =>
           // } 
           // else //isOld = 0 (Alumni did not have a previos Verified Student Account)
           {
-            const { name, email, password } = req.body;
+            const { name, email, password,linkedinURL } = req.body;
             const account = await userModel.findOne({email : email});
             if (account) {
               return res.status(422).json({ msg: "Email Already In Use." }); //404 Not Found
@@ -97,18 +97,12 @@ const verify = async (req,res) =>
                 return res.status(500).json({ msg: "Error Hashing Password:", err }); //500 Internal Server Error
               } else {
                 try{
-                  var accDetails = { name: "", email: "", password: "", verificationStatus:0, rank:1 };
+                  var accDetails = { name: "", email: "", password: "", linkedinURL: "",verificationStatus:0, rank:1 };
                   accDetails.name = name;
                   accDetails.email = email;
                   accDetails.password = hash;
-                  // accDetailsString = JSON.stringify(accDetails);
-                  // const admin = await userModel.findOne({ email: "admin2024@gmail.com" });
+                  accDetails.linkedinURL = linkedinURL
                   try{
-                    // admin.notifications.push({
-                    //   type: "Verification",
-                    //   objID: accDetailsString
-                    // });
-                    // admin.save();
                     const newUser = new userModel(accDetails);
                     newUser.save();
                     return res.status(201).json({ msg: "Account Info Sent to Admin. Wait for Verification." });//201 Created

@@ -33,13 +33,16 @@ const JobUpdateCard = (props) => {
     setSubmitting(true);
     const url = alumniEps?.jobs?.delete;
     try {
-      const res = await fetcherPost(url, { userID: props.id });
+      const body = { jobID: props.id }
+      const res = await fetcherPost(url, { body });
+      console.log("Ho gaya wait");
       toast.success("Job Deleted Successfully");
       props.getAllJobs();
     } catch (err) {
       toast.error(err);
     }
     setSubmitting(false);
+    setOpenDialog("");
   };
 
   return (
@@ -173,13 +176,13 @@ const JobUpdateCard = (props) => {
                     <LinkOutlined color="disabled" />
                   </Grid>
                   <Grid item>
-                    <Link
+                    <a
                       href={props.jobURL}
-                      color={"inherit"}
-                      underline="hover"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      {props.jobURL}
-                    </Link>
+                      Job Application Link
+                    </a>
                   </Grid>
                 </Grid>
               </Grid>

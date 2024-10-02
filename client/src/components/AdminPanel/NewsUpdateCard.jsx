@@ -27,15 +27,15 @@ const NewsUpdateCard = (props) => {
     setSubmitting(true);
     const url = alumniEps?.news?.delete;
     try {
-      const body = { newsID: props.id }
-      const res = await fetcherPost(url, { body } );
+      const body = { newsID: props.id };
+      const res = await fetcherPost(url, { body });
       toast.success("News Deleted Successfully");
       props.getAllNews();
     } catch (err) {
       toast.error(err);
     }
     setSubmitting(false);
-  }
+  };
 
   return (
     <>
@@ -94,9 +94,13 @@ const NewsUpdateCard = (props) => {
                     <LinkOutlined color="disabled" />
                   </Grid>
                   <Grid item>
-                    <Link href={props.link} color={"inherit"} underline="hover">
-                      {props.link}
-                    </Link>
+                    <a
+                      href={props.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      News Article Link
+                    </a>
                   </Grid>
                 </Grid>
               </Grid>

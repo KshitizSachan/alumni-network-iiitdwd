@@ -136,7 +136,7 @@ const NewsEditDialog = ({ isOpen, onClose, refreshData, newsData, type }) => {
     // console.log(body);
 
     try {
-      const response = await fetcherPut(url, { body });
+      const response = await fetcherPut(url, { token: localStorage.getItem("token"), body });
       if (response) {
         onClose();
         toast.success("News Updated Successfully");

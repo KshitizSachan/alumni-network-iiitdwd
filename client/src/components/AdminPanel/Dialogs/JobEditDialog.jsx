@@ -14,6 +14,8 @@ import {
 import { fetcherPut, fetcherPost } from "../../../utils/axiosAPI";
 import { toast } from "react-toastify";
 import { alumniEps } from "../../../utils/AdminPanel/endpoints";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../../../store/atoms/User";
 
 const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
   const [jobDetails, setJobDetails] = useState({
@@ -32,6 +34,8 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
     stipend: false,
   });
   const currentYear = new Date().getFullYear();
+
+  const user = useRecoilValue(userAtom);
 
   useEffect(() => {
     setJobDetails({
@@ -147,28 +151,24 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
 
     const body = {
       jobURL: jobDetails.jobUrl,
-      floatedBy: jobData?.postedBy ?? "",
-      floatedByID: jobData?.posterID ?? "",
+      floatedBy: user?.basic?.name,
+      floatedByID: user?.basic?.id,
       jobLocation: jobDetails.location,
       companyName: jobDetails.company,
       eligibleBatch: jobDetails.batch.split(","),
       title: jobDetails.position,
       stipend: jobDetails.stipend,
       startDate: jobDetails.startDate,
-      category: jobDetails.category === "job" ? "0" : "1",
+      category: jobDetails.category === "job" ? 0 : 1,
     };
 
     // console.log(body);
 
     try {
       const response = await fetcherPost(url, { body });
-      if (response && response.msg === "Job Added Successfully.") {
-        onClose();
-        toast.success("Job Added Successfully");
-        refreshData();
-      } else {
-        toast.error("Failed to add job");
-      }
+      onClose();
+      toast.success("Job Updated Successfully");
+      refreshData();
     } catch (error) {
       toast.error(error);
     }
@@ -210,17 +210,16 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
       category: jobDetails.category === "job" ? "0" : "1",
     };
 
-    // console.log(body);
+    // console.log(body.eligibleBatch);
 
     try {
-      const response = await fetcherPut(url, { body });
-      if (response && response.msg === "Job Updated Successfully.") {
-        onClose();
-        toast.success("Job Updated Successfully");
-        refreshData();
-      } else {
-        toast.error("Failed to update job");
-      }
+      const response = await fetcherPut(url, {
+        token: localStorage.getItem("token"),
+        body,
+      });
+      onClose();
+      toast.success("Job Updated Successfully");
+      refreshData();
     } catch (error) {
       toast.error(error);
     }
