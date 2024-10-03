@@ -1,5 +1,7 @@
 import React from 'react';
 import { ChevronFirst } from "lucide-react"
+import { ArrowBackIosNew } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 import { createContext, useContext, useState } from "react"
 
 const SidebarContext = createContext();
@@ -13,18 +15,24 @@ export default function Sidebar({ children, user }) {
                     <div className="p-4 pb-2 flex justify-between items-center">
                         <div></div>
                         <img src={"/logo.png"} className={`overflow-hidden transition-all ${expanded ? "w-32" : "w-0"}`}  alt="AlmaMater" />
-                        <button onClick={() => setExpanded((curr) => !curr)} className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100">
-                            {expanded ? <ChevronFirst /> : <img src={"/logo.png"} alt = "logo" width="50" height="50"/>}
-                        </button>
+                        {expanded ? (
+                            <IconButton onClick={() => setExpanded(false)}>
+                                <ArrowBackIosNew />
+                            </IconButton>
+                        ) : (
+                            <button onClick={() => setExpanded(true)} className="rounded-lg hover:bg-gray-100">
+                                <img src={"/logo.png"} alt = "logo" width="50" height="50"/>
+                            </button>
+                        )}
                     </div>
 
                     <SidebarContext.Provider value={{ expanded }}>
-                        <ul className="flex-1 pl-3">{React.Children.toArray(children).slice(0, -2)}</ul>
+                        <ul className="flex-1 pl-3">{React.Children.toArray(children).slice(0, -1)}</ul>
                     </SidebarContext.Provider>
 
                     <div className={expanded ? "flex flex-col pt-3 w-full" :"flex"  }>
                         <SidebarContext.Provider value={{ expanded }}>
-                            <ul className="flex-1 pl-3">{React.Children.toArray(children).slice(-2)}</ul>
+                            <ul className="flex-1 pl-3">{React.Children.toArray(children).slice(-1)}</ul>
                         </SidebarContext.Provider>
                         {user?.basic?.name && user?.basic?.email && (
                             <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-full" : "w-0"} `}>

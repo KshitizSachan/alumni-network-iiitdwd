@@ -24,7 +24,7 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
     location: jobData?.location ?? "",
     startDate: jobData?.startDate ?? "",
     stipend: jobData?.stipend ?? "",
-    batch: jobData?.batch ?? "",
+    batch: jobData?.batch?.join(",") ?? "",
     category: jobData?.category === "0" ? "job" : "internship",
     jobUrl: jobData?.jobURL ?? "",
   });
@@ -44,7 +44,7 @@ const JobEditDialog = ({ isOpen, onClose, refreshData, jobData, type }) => {
       location: jobData?.location ?? "",
       startDate: jobData?.startDate ?? "",
       stipend: jobData?.stipend ?? "",
-      batch: jobData?.batch ?? "",
+      batch: jobData?.batch?.join(",") ?? "",
       category: jobData?.category === "0" ? "job" : "internship",
       jobUrl: jobData?.jobURL ?? "",
     });
