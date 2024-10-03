@@ -28,6 +28,7 @@ function AdminPanel() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     setUser((prev) => ({
       ...prev,
       basic: {
@@ -65,7 +66,7 @@ function AdminPanel() {
 
   return (
     <>
-      {!user?.basic?.isLoggedIn ? (
+      {!user?.basic?.isLoggedIn || user?.basic?.rank !== 0 ? (
         <AdminLogin />
       ) : (
         <div className="flex">
@@ -98,18 +99,18 @@ function AdminPanel() {
               active={activeItem === 4}
               onClick={() => handleSidebarClick(4)}
             />
-            <SidebarItem
+            {/* <SidebarItem
               id={5}
               icon={<UserPen size={20} />}
               text="Edit Profile"
               active={activeItem === 5}
               onClick={() => {}}
-            />
+            /> */}
             <SidebarItem
-              id={6}
+              id={5}
               icon={<LogOut size={20} />}
               text="Logout"
-              active={activeItem === 6}
+              active={activeItem === 5}
               onClick={() => handleLogout()}
             />
           </Sidebar>
