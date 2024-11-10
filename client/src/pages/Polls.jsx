@@ -1,13 +1,5 @@
 import Navbar from "../template/Navbar";
 import Footer from "../template/Footer";
-import {
-  Grid,
-  TextField,
-  Pagination,
-  Typography,
-  Box,
-  Paper,
-} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../store/atoms/User";
@@ -16,7 +8,9 @@ import PollCard from "../components/Cards/PollCard";
 const Polls = () => {
   const user = useRecoilValue(userAtom);
   const [displayPolls, setDisplayPolls] = useState([]);
+  const [allPolls, setAllPolls] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [viewMyPolls, setViewMyPolls] = useState(false);
 
   return (
     <>
@@ -80,7 +74,7 @@ const Polls = () => {
                 Loading...
               </p>
             </div>
-          ) : displayPolls?.length === 0 ? (
+          ) : displayPolls?.length === 1 ? (
             <div className="flex justify-center">
               <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4">
                 No Polls Found
@@ -88,7 +82,7 @@ const Polls = () => {
             </div>
           ) : (
             <>
-                <PollCard />
+                <PollCard title={"Title for Poll1"} isMyPoll={viewMyPolls} options={[]} pollID={""} />
             </>
           )}
         </div>
