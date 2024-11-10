@@ -12,12 +12,19 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 
-const PollCard = ({ title, options = [], pollID, isMyPoll = false }) => {
+const PollCard = ({ title, options = [], pollID, isMyPoll = false, user }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleVoteClick = async () => {
     if(selectedOption === null){
         toast.error("Select an option to vote");
+    }
+    else{
+      try {
+        // write the post or get request handling here
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../store/atoms/User";
 import PollCard from "../components/Cards/PollCard";
+import AddPollDialog from "../components/AddPollDialog";
+import { Grid, Typography } from "@mui/material";
+import { fetcherGet } from "../utils/axiosAPI";
 
 const Polls = () => {
   const user = useRecoilValue(userAtom);
@@ -11,6 +14,25 @@ const Polls = () => {
   const [allPolls, setAllPolls] = useState([]);
   const [loading, setLoading] = useState(false);
   const [viewMyPolls, setViewMyPolls] = useState(false);
+  const [openAddPoll, setOpenAddPoll] = useState(false);
+
+  const getAllPolls = async () => {
+    setLoading(true);
+    try {
+      
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
+  const handleAllPollsClick = () => {
+    setViewMyPolls(false);
+  }
+
+  const handleMyPollsClick = () => {
+    setViewMyPolls(true);
+  }
 
   return (
     <>
@@ -20,7 +42,7 @@ const Polls = () => {
         }`}
       >
         <Navbar />
-        {/* {(user?.basic?.rank === 3 || user?.basic?.rank === -1) && (
+        {(user?.basic?.rank === 3 || user?.basic?.rank === -1) && (
           <div className="mx-14 py-14">
             <p style={{ marginTop: "75px" }}></p>
             <Grid container justifyContent={"center"} alignItems={"center"}>
@@ -32,42 +54,42 @@ const Polls = () => {
               </Typography>
             </Grid>
           </div>
-        )} */}
+        )}
         <div className="pt-32 px-16 flex flex-col gap-5 items-center">
-          <div className="flex gap-4 items-center">
-            <button
-              className="flex p-2 m-2 text-md font-semibold text-black bg-white rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out  "
-              style={{
-                letterSpacing: "0.075em",
-                borderWidth: "1.25px",
-              }}
-            >
-              <img
-                src="/plus.svg"
-                alt="actions-icon"
-                className="mt-1.5 mr-2 ml-1"
-              />
-              Add Poll
-            </button>
-            <button
-              className="flex p-2 m-2 text-md font-semibold text-black bg-white rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out  "
-              style={{
-                letterSpacing: "0.075em",
-                borderWidth: "1.25px",
-              }}
-            >
-              My Polls
-            </button>
-            <button
-              className="flex p-2 m-2 text-md font-semibold text-black bg-white rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out  "
-              style={{
-                letterSpacing: "0.075em",
-                borderWidth: "1.25px",
-              }}
-            >
-              All Polls
-            </button>
-          </div>
+            {(user?.basic?.rank !== 3 && user?.basic?.rank !== -1) && (
+              <div className="flex gap-4 items-center">
+                <button
+                  className="flex p-2 m-2 text-md font-semibold text-black bg-white rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out  "
+                  style={{
+                    letterSpacing: "0.075em",
+                    borderWidth: "1.25px",
+                  }}
+                  onClick={() => setOpenAddPoll(true)}
+                >
+                  Add Poll
+                </button>
+                <button
+                  className={`flex p-2 m-2 text-md font-semibold ${viewMyPolls ? "text-white bg-black" : "text-black bg-white"} rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out`}
+                  style={{
+                    letterSpacing: "0.075em",
+                    borderWidth: "1.25px",
+                  }}
+                  onClick={handleMyPollsClick}
+                >
+                  My Polls
+                </button>
+                <button
+                  className={`flex p-2 m-2 text-md font-semibold ${!viewMyPolls ? "text-white bg-black" : "text-black bg-white"} rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out`}
+                  style={{
+                    letterSpacing: "0.075em",
+                    borderWidth: "1.25px",
+                  }}
+                  onClick={handleAllPollsClick}
+                >
+                  All Polls
+                </button>
+              </div>
+            )}
           {loading ? (
             <div className="flex justify-center">
               <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4">
@@ -82,19 +104,22 @@ const Polls = () => {
             </div>
           ) : (
             <>
-                <PollCard title={"Title for Poll1"} isMyPoll={viewMyPolls} options={[]} pollID={""} />
+                <PollCard title={"Title for Poll1"} user={user} isMyPoll={viewMyPolls} options={[]} pollID={""} />
             </>
           )}
         </div>
-        {/* <div
+        <div
           className={`${
             (user?.basic?.rank === 3 || user?.basic?.rank === -1) &&
             "flex lg:absolute lg:bottom-0 w-screen"
           }`}
         >
           <Footer />
-        </div> */}
+        </div>
       </div>
+      {openAddPoll && (
+        <AddPollDialog open={openAddPoll} onClose={() => setOpenAddPoll(false)} />
+      )}
     </>
   );
 };
