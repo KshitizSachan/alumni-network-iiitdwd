@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-
 const getRank = (req, res, next) => {
 
   const token = req.headers.authorization;
