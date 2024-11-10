@@ -4,6 +4,7 @@ const connection = require('./db');
 const userRoute = require('./routes/userRoute');
 const newsRoute = require('./routes/newsRoute');
 const jobRoute = require('./routes/jobRoute');
+const pollRoute = require('./routes/pollRoute');
 const alumniRoute = require('./routes/alumniRoute');
 require('dotenv').config();
 
@@ -34,6 +35,7 @@ app.use(cors({
 app.use('/user',userRoute);
 app.use('/news',newsRoute);
 app.use('/job',jobRoute);
+app.use('/poll',pollRoute);
 app.use('/alumni',alumniRoute);
 
 //---------------------------------------------------Milldewares--------------------------------------------------
