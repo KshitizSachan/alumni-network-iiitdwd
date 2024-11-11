@@ -75,6 +75,7 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "
       removePoll(pollID);
       setOpenDeleteConfirm(false);
     } catch (err) {
+      if(typeof(err) === 'string') toast.error(err);
       console.log(err);
     }
     setSubmitting(false);
