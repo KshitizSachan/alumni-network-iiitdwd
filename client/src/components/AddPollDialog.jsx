@@ -15,7 +15,7 @@ import { fetcherPost } from "../utils/axiosAPI";
 import { FieldArray, Form, Formik } from "formik";
 import * as yup from "yup";
 
-const AddPollDialog = ({ open, onClose }) => {
+const AddPollDialog = ({ open, onClose, user, refreshPollData }) => {
   const validationSchema = yup.object().shape({
     title: yup.string().required("Required"),
     pollOptions: yup
@@ -40,7 +40,23 @@ const AddPollDialog = ({ open, onClose }) => {
           }}
           validationSchema={validationSchema}
           onSubmit={async (values) => {
-            // add post request and toast confirmation here
+            const optArr = values.pollOptions?.map((option) => {
+              return { optionTitle: option };
+            })
+            const body = {
+              floatedBy: user?.basic?.name,
+              floatedByID: user?.basic?.id,
+              title: values.title,
+              options: optArr
+            }
+            try {
+              const res = await fetcherPost("/poll/create", { body });
+              if(res?.msg) toast.success(res.msg);
+              refreshPollData();
+              onClose();
+            } catch (err) {
+              console.log(err);
+            }
           }}
         >
           {({

@@ -11,22 +11,58 @@ import {
   Radio,
 } from "@mui/material";
 import { toast } from "react-toastify";
+import { fetcherPost, fetcherPut } from "../../utils/axiosAPI";
+import DeleteDialog from "../AdminPanel/Dialogs/DeleteDialog";
 
-const PollCard = ({ title, options = [], pollID, isMyPoll = false, user }) => {
+const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "", removePoll }) => {
   const [selectedOption, setSelectedOption] = useState(null);
+  const [displayStats, setDisplayStats] = useState(isMyPoll);
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [updatedOptionStats, setUpdatedOptionStats] = useState(options);
 
   const handleVoteClick = async () => {
     if(selectedOption === null){
         toast.error("Select an option to vote");
     }
     else{
+      setSubmitting(true);
       try {
-        // write the post or get request handling here
+        const body = {
+          pollID: pollID,
+          optionTitle: selectedOption?.optionTitle,
+          userEmail: userEmail
+        };
+        const res = await fetcherPut("/poll/castVote", { body });
+        if(res?.msg){
+          if(res?.updatedPoll){
+            toast.success(res.msg);
+            setUpdatedOptionStats(res?.updatedPoll?.options);
+            setDisplayStats(true);
+          } else {
+            toast.error(res.msg);
+          }
+        }
       } catch (err) {
         console.log(err);
       }
+      setSubmitting(false);
     }
   };
+
+  const handleDeleteConfirm = async () => {
+    setSubmitting(true);
+    try {
+      const body = { pollID: pollID };
+      const res = await fetcherPost("/poll/delete", { body });
+      if(res?.msg) toast.success(res.msg);
+      removePoll(pollID);
+      setOpenDeleteConfirm(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setSubmitting(false);
+  }
 
   return (
     <>
@@ -51,34 +87,38 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, user }) => {
               value={selectedOption}
               onChange={(event) => setSelectedOption(event.target.value)}
             >
-                {options?.map((option) => (
+                {updatedOptionStats?.map((option) => (
                     <FormControlLabel
                       value={option}
                       control={<Radio />}
-                      label={option}
+                      label={option?.optionTitle}
                     />
                 ))}
-                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                {/* <FormControlLabel value="female" control={<Radio />} label="Female" /> */}
             </RadioGroup>
           </FormControl>
           {!isMyPoll ? (
-            <Stack
-              direction={"row"}
-              spacing={2}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Button variant="outlined" color="success" onClick={handleVoteClick}>
-                Vote
-              </Button>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => setSelectedOption(null)}
-              >
-                Clear
-              </Button>
-            </Stack>
+            <>
+              {!displayStats && (
+                <Stack
+                  direction={"row"}
+                  spacing={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Button variant="outlined" color="success" onClick={handleVoteClick}>
+                    Vote
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => setSelectedOption(null)}
+                  >
+                    Clear
+                  </Button>
+                </Stack>
+              )}
+            </>
           ) : (
             <Stack
               direction={"row"}
@@ -86,13 +126,16 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, user }) => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Button variant="outlined" color="error" onClick={() => {}}>
+              <Button variant="outlined" color="error" onClick={() => setOpenDeleteConfirm(true)}>
                 Delete Poll
               </Button>
             </Stack>
           )}
         </Stack>
       </Box>
+      {openDeleteConfirm && (
+        <DeleteDialog isOpen={openDeleteConfirm} onClose={() => setOpenDeleteConfirm(false)} deleteType={"Poll"} submitting={submitting} handleConfirm={handleDeleteConfirm} />
+      )}
     </>
   );
 };
