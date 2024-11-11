@@ -43,13 +43,21 @@ const Polls = () => {
     ));
     else setDisplayPolls(allPolls);
     // eslint-disable-next-line
-  }, [viewMyPolls]);
+  }, [viewMyPolls, allPolls]);
 
   const handleRemovePoll = (pollID) => {
-    const filteredMyPolls = displayPolls?.filter((poll) => poll.pollID !== pollID);
+    // const filteredMyPolls = displayPolls?.filter((poll) => poll.pollID !== pollID);
     const filteredAllPolls = allPolls?.filter((poll) => poll.pollID !== pollID);
-    setDisplayPolls(filteredMyPolls);
+    // setDisplayPolls(filteredMyPolls);
     setAllPolls(filteredAllPolls);
+  }
+
+  const handleUpdatePoll = (updatedPoll) => {
+    const updPolls = allPolls?.map((poll) => {
+      if(poll.pollID === updatedPoll?.pollID) return updatedPoll;
+      return poll;
+    });
+    setAllPolls(updPolls);
   }
 
   const handleAllPollsClick = () => {
@@ -143,6 +151,7 @@ const Polls = () => {
                   options={poll.options}
                   userEmail={user?.basic?.email}
                   removePoll={handleRemovePoll}
+                  updatePoll={handleUpdatePoll}
                 />
               ))}
             </>

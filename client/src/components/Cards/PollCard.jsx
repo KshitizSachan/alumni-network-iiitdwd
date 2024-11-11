@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Stack,
@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { fetcherPost, fetcherPut } from "../../utils/axiosAPI";
 import DeleteDialog from "../AdminPanel/Dialogs/DeleteDialog";
 
-const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "", removePoll }) => {
+const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "", removePoll, updatePoll }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [displayStats, setDisplayStats] = useState(isMyPoll);
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
@@ -30,25 +30,41 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "
       try {
         const body = {
           pollID: pollID,
-          optionTitle: selectedOption?.optionTitle,
+          optionTitle: selectedOption,
           userEmail: userEmail
         };
-        const res = await fetcherPut("/poll/castVote", { body });
+        const res = await fetcherPut("/poll/castVote", { token: localStorage.getItem("token"), body });
         if(res?.msg){
           if(res?.updatedPoll){
             toast.success(res.msg);
             setUpdatedOptionStats(res?.updatedPoll?.options);
+            updatePoll(res?.updatedPoll);
             setDisplayStats(true);
           } else {
             toast.error(res.msg);
           }
         }
       } catch (err) {
+        if(typeof(err) === 'string') toast.error(err);
         console.log(err);
       }
       setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const checkIfVoted = () => {
+      // eslint-disable-next-line
+      options?.map((opt) => {
+        if(opt?.votedUsers && opt?.votedUsers?.includes(userEmail)){
+          setDisplayStats(true);
+        }
+      });
+    }
+
+    checkIfVoted();
+    // eslint-disable-next-line
+  }, [options])
 
   const handleDeleteConfirm = async () => {
     setSubmitting(true);
@@ -80,23 +96,38 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "
           <Typography variant="h5" fontWeight={500}>
             {title ?? "Poll Title"}
           </Typography>
-          <FormControl>
-            <RadioGroup
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              value={selectedOption}
-              onChange={(event) => setSelectedOption(event.target.value)}
-            >
-                {updatedOptionStats?.map((option) => (
-                    <FormControlLabel
-                      value={option}
-                      control={<Radio />}
-                      label={option?.optionTitle}
-                    />
-                ))}
-                {/* <FormControlLabel value="female" control={<Radio />} label="Female" /> */}
-            </RadioGroup>
-          </FormControl>
+          {displayStats || isMyPoll ? (
+            <Stack spacing={1.5}>
+              {updatedOptionStats?.map((option) => (
+                <Stack key={option._id} spacing={2} direction={"row"} alignItems={"center"}>
+                  <Typography variant="body1" fontWeight={600}>
+                    {`${option.voteCount} Votes`}
+                  </Typography>
+                  <Typography variant="body1">
+                    {`- ${option.optionTitle}`}
+                  </Typography>
+                </Stack>
+              ))}
+            </Stack>
+          ) : (
+            <FormControl>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={selectedOption}
+                onChange={(event) => setSelectedOption(event.target.value)}
+              >
+                  {updatedOptionStats?.map((option) => (
+                      <FormControlLabel
+                        value={option.optionTitle}
+                        control={<Radio />}
+                        label={option.optionTitle}
+                      />
+                  ))}
+                  {/* <FormControlLabel value="female" control={<Radio />} label="Female" /> */}
+              </RadioGroup>
+            </FormControl>
+          )}
           {!isMyPoll ? (
             <>
               {!displayStats && (
