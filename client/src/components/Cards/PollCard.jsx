@@ -14,12 +14,16 @@ import { toast } from "react-toastify";
 import { fetcherPost, fetcherPut } from "../../utils/axiosAPI";
 import DeleteDialog from "../AdminPanel/Dialogs/DeleteDialog";
 
-const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "", removePoll, updatePoll }) => {
+const PollCard = ({ title, canDelete = false, options = [], pollID, displayResults = false, userEmail = "", removePoll, updatePoll }) => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const [displayStats, setDisplayStats] = useState(isMyPoll);
+  const [displayStats, setDisplayStats] = useState(displayResults);
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [updatedOptionStats, setUpdatedOptionStats] = useState(options);
+
+  useEffect(() => {
+    setDisplayStats(displayResults);
+  }, [displayResults])
 
   const handleVoteClick = async () => {
     if(selectedOption === null){
@@ -52,20 +56,6 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "
     }
   };
 
-  useEffect(() => {
-    const checkIfVoted = () => {
-      // eslint-disable-next-line
-      options?.map((opt) => {
-        if(opt?.votedUsers && opt?.votedUsers?.includes(userEmail)){
-          setDisplayStats(true);
-        }
-      });
-    }
-
-    checkIfVoted();
-    // eslint-disable-next-line
-  }, [options])
-
   const handleDeleteConfirm = async () => {
     setSubmitting(true);
     try {
@@ -97,7 +87,7 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "
           <Typography variant="h5" fontWeight={500}>
             {title ?? "Poll Title"}
           </Typography>
-          {displayStats || isMyPoll ? (
+          {displayStats || displayResults ? (
             <Stack spacing={1.5}>
               {updatedOptionStats?.map((option) => (
                 <Stack key={option._id} spacing={2} direction={"row"} alignItems={"center"}>
@@ -120,6 +110,7 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "
               >
                   {updatedOptionStats?.map((option) => (
                       <FormControlLabel
+                        key={option._id}
                         value={option.optionTitle}
                         control={<Radio />}
                         label={option.optionTitle}
@@ -129,7 +120,7 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "
               </RadioGroup>
             </FormControl>
           )}
-          {!isMyPoll ? (
+          {!displayResults ? (
             <>
               {!displayStats && (
                 <Stack
@@ -151,7 +142,7 @@ const PollCard = ({ title, options = [], pollID, isMyPoll = false, userEmail = "
                 </Stack>
               )}
             </>
-          ) : (
+          ) : canDelete && (
             <Stack
               direction={"row"}
               spacing={2}
