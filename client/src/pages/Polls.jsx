@@ -91,69 +91,82 @@ const Polls = () => {
         )}
         <div className="py-32 px-16 flex flex-col gap-5 items-center">
           {user?.basic?.rank !== 3 && user?.basic?.rank !== -1 && (
-            <div className="flex gap-4 items-center">
-              <button
-                className="flex p-2 m-2 text-md font-semibold text-black bg-white rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out  "
-                style={{
-                  letterSpacing: "0.075em",
-                  borderWidth: "1.25px",
-                }}
-                onClick={() => setOpenAddPoll(true)}
-              >
-                Add Poll
-              </button>
-              <button
-                className={`flex p-2 m-2 text-md font-semibold ${
-                  viewMyPolls ? "text-white bg-black" : "text-black bg-white"
-                } rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out`}
-                style={{
-                  letterSpacing: "0.075em",
-                  borderWidth: "1.25px",
-                }}
-                onClick={handleMyPollsClick}
-              >
-                My Polls
-              </button>
-              <button
-                className={`flex p-2 m-2 text-md font-semibold ${
-                  !viewMyPolls ? "text-white bg-black" : "text-black bg-white"
-                } rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out`}
-                style={{
-                  letterSpacing: "0.075em",
-                  borderWidth: "1.25px",
-                }}
-                onClick={handleAllPollsClick}
-              >
-                All Polls
-              </button>
-            </div>
-          )}
-          {loading ? (
-            <div className="flex justify-center">
-              <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4">
-                Loading...
-              </p>
-            </div>
-          ) : displayPolls?.length === 0 ? (
-            <div className="flex justify-center">
-              <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4">
-                No Polls Found
-              </p>
-            </div>
-          ) : (
             <>
-              {displayPolls?.map((poll) => (
-                <PollCard
-                  key={poll.pollID}
-                  pollID={poll.pollID}
-                  isMyPoll={viewMyPolls}
-                  title={poll.title}
-                  options={poll.options}
-                  userEmail={user?.basic?.email}
-                  removePoll={handleRemovePoll}
-                  updatePoll={handleUpdatePoll}
-                />
-              ))}
+              <div className="flex gap-4 items-center">
+                <button
+                  className="flex p-2 m-2 text-md font-semibold text-black bg-white rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out  "
+                  style={{
+                    letterSpacing: "0.075em",
+                    borderWidth: "1.25px",
+                  }}
+                  onClick={() => setOpenAddPoll(true)}
+                >
+                  Add Poll
+                </button>
+                <button
+                  className={`flex p-2 m-2 text-md font-semibold ${
+                    viewMyPolls ? "text-white bg-black" : "text-black bg-white"
+                  } rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out`}
+                  style={{
+                    letterSpacing: "0.075em",
+                    borderWidth: "1.25px",
+                  }}
+                  onClick={handleMyPollsClick}
+                >
+                  My Polls
+                </button>
+                <button
+                  className={`flex p-2 m-2 text-md font-semibold ${
+                    !viewMyPolls ? "text-white bg-black" : "text-black bg-white"
+                  } rounded-md border border-black hover:bg-black hover:text-white hover:shadow-md transition duration-300 ease-in-out`}
+                  style={{
+                    letterSpacing: "0.075em",
+                    borderWidth: "1.25px",
+                  }}
+                  onClick={handleAllPollsClick}
+                >
+                  All Polls
+                </button>
+              </div>
+              {loading ? (
+                <div className="flex justify-center">
+                  <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4">
+                    Loading...
+                  </p>
+                </div>
+              ) : displayPolls?.length === 0 ? (
+                <div className="flex justify-center">
+                  <p className=" text-primaryPink font-bold font-poppins text-xl px-6 py-4">
+                    No Polls Found
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {displayPolls?.map((poll) => {
+                    let voted = false;
+                    poll.options?.map((opt) => {
+                      if(opt?.votedUsers && opt?.votedUsers?.includes(user?.basic?.email)){
+                        voted = true;
+                      }
+                      return true;
+                    });
+
+                    return (
+                      <PollCard
+                        key={poll.pollID}
+                        pollID={poll.pollID}
+                        displayResults={viewMyPolls || voted}
+                        title={poll.title}
+                        options={poll.options}
+                        userEmail={user?.basic?.email}
+                        canDelete={viewMyPolls}
+                        removePoll={handleRemovePoll}
+                        updatePoll={handleUpdatePoll}
+                      />
+                    )
+                  })}
+                </>
+              )}
             </>
           )}
         </div>
