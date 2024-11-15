@@ -5,6 +5,9 @@ import Image1 from "../assets/pages/teams/kshitiz.jpg";
 import Image2 from "../assets/pages/teams/aditya.jpg";
 import Image3 from "../assets/pages/teams/priyal.jpg";
 import Image4 from "../assets/pages/teams/sarthak.jpg";
+import Image5 from "../assets/pages/teams/divyansh.jpg";
+import Image6 from "../assets/pages/teams/bhargav.jpg";
+
 // import TeamTooltip from '../components/animations/TeamTooltip';
 // import TextGeneration from '../components/animations/TextRelated/TextGeneration';
 import {Grid, Typography} from "@mui/material";
@@ -70,6 +73,10 @@ const AboutUs = () => {
             <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '2rem'}}>
               <Typography variant={'h4'}  color={'secondary'}>Meet The Team</Typography>
             </Grid>
+
+            <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '1rem'}}>
+              <Typography variant={'h5'}  color={'secondary'}>Founding Members</Typography>
+            </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <AboutUsCard image={Image2} name={'Aditya Sethiya'} title={'Frontend Dev'} link1={'https://in.linkedin.com/in/aditya-sethiya-073b6b231'} link2={'https://www.instagram.com/adityasethiya21/'} link3={'https://twitter.com/'} />
             </Grid>
@@ -82,6 +89,21 @@ const AboutUs = () => {
                 <Grid item xs={12} sm={6} md={3}>
             <AboutUsCard image={Image4} name={'Sarthak Jain'} title={'Frontend Dev'} link1={'https://in.linkedin.com/in/sarthakjain-coder-developer'} link2={'https://www.instagram.com/sarthak__meh/'} link3={'https://twitter.com/'} />
                 </Grid>
+
+            <Grid item xs={12} sx={{display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '1rem', marginTop: '2rem'}}>
+              <Typography variant={'h5'}  color={'secondary'}>Content And Reachout Team</Typography>
+            </Grid>
+
+            <Grid item container xs={12} sx={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <AboutUsCard image={Image5} name={'Divyansh Mishra'} title={'Non Tech'} link1={'https://www.linkedin.com/in/divyansh-mishra-203664241/'} link2={'https://www.instagram.com/divyanshmishra9364/'} link3={'https://x.com/DIVYANS61141188'} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <AboutUsCard image={Image6} name={'Bharghav Abhilash'} title={'Non Tech'} link1={'https://www.linkedin.com/in/barghav-abhilash-b-r-2ab2ba29a/'} link2={'https://www.instagram.com/abhilash_2557/'} link3={'https://x.com/GFless_Kurrodu'} />
+            </Grid>
+            </Grid>
+
           </Grid>
         </Grid>
       </Grid>
