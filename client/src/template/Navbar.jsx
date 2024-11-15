@@ -59,7 +59,7 @@ const Navbar = () => {
           />
           <div className="text-black hover:text-primaryPink flex ml-2">
             <h1 className="w-full text-2xl">AlmaMatter</h1>
-            <p className="text-sm pt-3 pl-1">Alpha</p>
+            <p className="text-sm pt-3 pl-1">Beta</p>
           </div>
         </Link>
 
