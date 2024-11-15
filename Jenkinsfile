@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'ci/cd_test', url: 'https://github.com/Priyal2403/alumni-network-iiitdwd.git'
+                git branch: 'production', url: 'https://github.com/KshitizSachan/alumni-network-iiitdwd.git'
             }
         }
         stage('Test Server') {
