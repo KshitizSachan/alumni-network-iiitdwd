@@ -7,7 +7,7 @@ Aditya Sethiya
 Frontend
 
 Priyal Ingle
-Backend
+Frontend, Backend
 
 Sarthak Jain
 Frontend
