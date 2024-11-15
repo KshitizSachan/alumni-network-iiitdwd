@@ -16,7 +16,8 @@ app.use(express.json());
 
 const frontendUrl=process.env.FRONTENDURI;
 const allowedOrigins = [
-    frontendUrl
+    frontendUrl,
+    'https://almamatterserver.onrender.com'
 ]
 app.use(cors({
     origin: function(origin, callback){
