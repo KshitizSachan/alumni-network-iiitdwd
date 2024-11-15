@@ -37,6 +37,7 @@ const Footer = () => {
                     <Link to="/news"><h6 className=" hover:text-pink-600">News</h6></Link>
                     <Link to="/alumni"><h6 className=" hover:text-pink-600">Alumni</h6></Link>
                     <Link to="/about"><h6 className=" hover:text-pink-600">About</h6></Link>
+                    <Link to="/admin"><h6 className=" hover:text-pink-600">Console Login</h6></Link>
                     </div>
                 </div>
                 <div className="about">
