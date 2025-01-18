@@ -16,7 +16,7 @@ app.use(express.json());
 
 const frontendUrl=process.env.FRONTENDURI;
 const allowedOrigins = [
-    frontendUrl
+    frontendUrl, 'http://localhost:3000', 
 ]
 app.use(cors({
     origin: function(origin, callback){
